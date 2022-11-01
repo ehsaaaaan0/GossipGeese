@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/show_options"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/showReaction"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:maxWidth="@dimen/_280mdp"
+        android:maxHeight="@dimen/_220mdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_laugh"
+            android:elevation="20dp"
+            android:visibility="gone"
+            android:id="@+id/reactionImage"
+            app:layout_constraintTop_toTopOf="@id/senderMsg"
+            app:layout_constraintStart_toStartOf="@id/senderMsg"
+            app:layout_constraintEnd_toStartOf="@id/senderMsg"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/yellow"
+            app:layout_constraintBottom_toBottomOf="@id/senderImage"
+            app:layout_constraintEnd_toEndOf="@id/senderImage"
+            app:layout_constraintStart_toStartOf="@id/senderImage"
+            app:layout_constraintTop_toTopOf="@id/senderImage" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/senderImage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/_10mdp"
+            android:layout_marginEnd="@dimen/_10mdp"
+            android:layout_marginRight="@dimen/_10mdp"
+            android:padding="2dp"
+            android:src="@drawable/ic_gossipgeese"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/senderMsg"
+            android:layout_marginEnd="11dp"
+            android:background="@drawable/sender_bg"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:minWidth="40dp"
+            android:paddingEnd="5dp"
+            android:maxHeight="@dimen/_220mdp"
+            android:singleLine="false"
+            android:maxLines="4"
+            android:lines="4"
+            android:text="."
+            android:textColor="#FFF"
+            android:textSize="17dp"
+            android:maxWidth="@dimen/_220mdp"
+            app:layout_constraintEnd_toStartOf="@id/senderImage"
+            app:layout_constraintTop_toTopOf="@id/senderImage"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

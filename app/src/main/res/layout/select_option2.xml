@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="20dp"
+        app:cardCornerRadius="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Forward Message"
+                android:id="@+id/forwardMsg"
+                android:textSize="@dimen/_22font_mdp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:gravity="center|start"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:drawableRight="@drawable/forward"
+                android:drawableEnd="@drawable/forward"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#000"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/delete"
+                android:text="Add To Recent"
+                android:textSize="@dimen/_22font_mdp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:gravity="center|start"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:drawableRight="@drawable/delete"
+                android:drawableEnd="@drawable/delete"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="#000"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/copy"
+                android:text="Copy Message"
+                android:textSize="@dimen/_22font_mdp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:gravity="center|start"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:drawableRight="@drawable/copy"
+                android:drawableEnd="@drawable/copy"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="#000"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/react"
+                android:text="React to Message"
+                android:textSize="@dimen/_22font_mdp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:gravity="center|start"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:drawableRight="@drawable/emoji"
+                android:drawableEnd="@drawable/emoji"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="#000"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

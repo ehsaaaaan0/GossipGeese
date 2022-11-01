@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/black"
+            android:layout_height="match_parent">
+            
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/top_section"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10mdp"
+                    android:layout_marginLeft="@dimen/_20mdp"
+                    android:layout_marginStart="@dimen/_20mdp"
+                    android:fontFamily="sans-serif"
+                    android:text="Welcome 👋"
+                    android:id="@+id/welcom_text"
+                    android:textColor="@color/blurWhite"
+                    android:textSize="@dimen/_11font_mdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:id="@+id/appName"
+                    android:textSize="@dimen/_16font_mdp"
+                    app:layout_constraintStart_toStartOf="@id/welcom_text"
+                    app:layout_constraintTop_toBottomOf="@id/welcom_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Story"
+                    android:layout_marginTop="@dimen/_15mdp"
+                    android:textColor="@color/white"
+                    android:id="@+id/storyText"
+                    android:textSize="@dimen/_11font_mdp"
+                    app:layout_constraintStart_toStartOf="@id/welcom_text"
+                    app:layout_constraintTop_toBottomOf="@id/appName" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/_35mdp"
+                    android:layout_height="@dimen/_35mdp"
+                    android:id="@+id/justForNow"
+                    app:layout_constraintTop_toTopOf="@id/welcom_text"
+                    app:layout_constraintBottom_toBottomOf="@id/appName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/_20mdp"
+                    android:gravity="center"
+                    android:background="@drawable/notification_bg"
+                    android:layout_marginRight="@dimen/_20mdp">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/menu"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/upload_story"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_15mdp"
+                    app:layout_constraintStart_toStartOf="@id/storyText"
+                    app:layout_constraintTop_toBottomOf="@id/storyText">
+                    <LinearLayout
+                        android:layout_width="@dimen/_60mdp"
+                        android:layout_height="@dimen/_60mdp"
+                        android:background="@drawable/notification_bg"
+                        android:gravity="center">
+                    <ImageView
+                        android:layout_width="@dimen/_40mdp"
+                        android:layout_height="@dimen/_35mdp"
+                        android:src="@drawable/add"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add"
+                        android:fontFamily="sans-serif"
+                        android:textSize="@dimen/_11font_mdp"
+                        android:textColor="@color/blurWhite"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Story"
+                        android:paddingBottom="10dp"
+                        android:fontFamily="sans-serif"
+                        android:textSize="@dimen/_13font_mdp"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/stories_rv"
+                    app:layout_constraintStart_toEndOf="@id/upload_story"
+                    app:layout_constraintTop_toTopOf="@id/upload_story"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/upload_story"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="40dp"
+                android:background="@drawable/main_second"
+                app:layout_constraintTop_toBottomOf="@id/top_section"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <View
+                    android:layout_width="@dimen/_150mdp"
+                    android:layout_height="2dp"
+                    android:background="#E0D9D9"
+                    android:id="@+id/simple_line"
+                    android:layout_marginTop="@dimen/_10mdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/simple_line"
+                    android:text="Recent Chat"
+                    android:id="@+id/recentText"
+                    android:layout_marginTop="@dimen/_10mdp"
+                    android:layout_marginStart="@dimen/_15mdp"
+                    android:fontFamily="sans-serif"
+                    android:textSize="@dimen/_15font_mdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/archive"
+                    app:layout_constraintTop_toTopOf="@id/recentText"
+                    app:layout_constraintBottom_toBottomOf="@id/recentText"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/archive"
+                    android:background="@drawable/button_bg"
+                    android:text="Archive Chat"
+                    android:id="@+id/archiveBTN"
+                    android:textSize="@dimen/_12font_mdp"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="@dimen/_15mdp"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/recent"
+                        android:background="@drawable/button_bg"
+                        android:text="Recent Chat"
+                        android:visibility="gone"
+                        android:id="@+id/recentBTN"
+                        android:textSize="@dimen/_12font_mdp"
+                        android:drawablePadding="5dp"
+                        android:padding="5dp"
+                        android:textAllCaps="false"
+                        android:layout_marginEnd="@dimen/_15mdp"/>
+                </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/hide_layout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recentText">
+
+
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="@dimen/_250mdp"
+                    android:layout_height="@dimen/_200mdp"
+                    app:lottie_rawRes="@raw/recent_chat"
+                    android:id="@+id/lottie_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/recentText"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="To make it easy! All The Recent Chat comes here"
+                    android:textColor="@color/black"
+                    android:fontFamily="sans-serif"
+                    android:textAllCaps="false"
+                    android:id="@+id/fazoolText"
+                    android:gravity="center"
+                    android:singleLine="false"
+                    android:layout_marginEnd="@dimen/_7mdp"
+                    android:layout_marginStart="@dimen/_7mdp"
+                    app:layout_constraintTop_toBottomOf="@id/lottie_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="@dimen/_16font_mdp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CHAT NOW"
+                    android:id="@+id/startChat"
+                    android:background="@drawable/button_bg"
+                    android:drawableStart="@drawable/chat"
+                    android:drawableTint="#000"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fazoolText"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recent_rv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recentText"
+                    android:layout_marginTop="@dimen/_20mdp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="30dp"
+        app:itemTextColor="#FFF"
+        app:itemIconTint="#FFF"
+        android:layout_margin="@dimen/_10mdp"
+        android:padding="@dimen/_7mdp"
+        android:background="@drawable/bottom_nav_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+</androidx.constraintlayout.widget.ConstraintLayout>

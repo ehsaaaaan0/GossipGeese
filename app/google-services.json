@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "253041757426",
+    "project_id": "gossipgeese-1",
+    "storage_bucket": "gossipgeese-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253041757426:android:af7033bf86362c0ad4d46b",
+        "android_client_info": {
+          "package_name": "com.android.gossipgeese"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253041757426-ub7htd0s92ab655vtrjssdj2drf3uq3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnKbr8Bx9qTUPueugaipVcr5to60-oHgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253041757426-ub7htd0s92ab655vtrjssdj2drf3uq3e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

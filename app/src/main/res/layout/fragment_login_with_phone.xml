@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".registerfragments.LoginWithPhone">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="0dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="0dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <com.hbb20.CountryCodePicker
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="PK +92"
+        android:background="@drawable/loginedittextbg"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/guideline3"
+        android:textSize="18sp"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_countryPreference="Pakistan"
+        app:ccp_areaCodeDetectedCountry="true"
+        app:ccp_countryAutoDetectionPref="LOCALE_NETWORK"
+        android:padding="1dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/countryCode"/>
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:hint="Phone Number"
+        android:padding="10dp"
+        android:inputType="number"
+        android:background="@drawable/loginedittextbg"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/countryCode"
+        app:layout_constraintTop_toBottomOf="@id/guideline3"
+        android:layout_marginStart="-3dp"
+        android:layout_marginLeft="-1dp"
+        android:id="@+id/getPhoneNumber"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="You may receive SMS notifications from us for security and login purpose"
+        app:layout_constraintTop_toBottomOf="@id/getPhoneNumber"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif"
+        android:id="@+id/sometext"
+        android:textSize="14sp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:text="Next"
+        android:textColor="#FFFFFF"
+        android:id="@+id/phone_next_"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/sometext"
+        android:background="@drawable/buttonbg"
+        android:layout_marginTop="22dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

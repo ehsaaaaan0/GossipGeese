@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".registerfragments.EnterOTP">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:id="@+id/loti_loop"
+        app:lottie_rawRes="@raw/otp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline3"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/edittext_otp"
+        android:layout_width="200dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="@dimen/_15mdp"
+        android:background="@drawable/loginedittextbg"
+        android:gravity="center"
+        android:hint="Enter OTP"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/loti_loop" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/verifyOTP"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:background="@drawable/buttonbg"
+        android:text="Verify OTP"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="@dimen/_10mdp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_otp" />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Please Do not share your OTP with anyone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        android:gravity="center"
+        android:textSize="@dimen/_12font_mdp"
+        android:layout_marginBottom="@dimen/_30mdp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
