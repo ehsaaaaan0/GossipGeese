@@ -23,8 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import omari.hamza.storyview.StoryView;
-import omari.hamza.storyview.callback.StoryClickListeners;
+import xute.storyview.StoryView;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder> {
     ArrayList<StoryModel> list;
@@ -129,11 +128,13 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
     public class myViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imageView;
         TextView name;
+        StoryView storyView;
 //        View storyView, storyView2, storyView3, storyView4, storyView5,storyView6;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.story_show_user);
             name = itemView.findViewById(R.id.user_name_story);
+            storyView = itemView.findViewById(R.id.storyView);
 //            storyView = itemView.findViewById(R.id.storyView);
 //            storyView2 = itemView.findViewById(R.id.storyView2);
 //            storyView3 = itemView.findViewById(R.id.storyView3);
