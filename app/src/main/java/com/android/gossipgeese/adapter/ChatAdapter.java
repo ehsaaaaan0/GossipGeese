@@ -7,6 +7,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,8 +43,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import kotlinx.coroutines.channels.Send;
-
 public class ChatAdapter extends RecyclerView.Adapter {
     ArrayList<MessageModel> list;
     Context context;
@@ -121,6 +120,15 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
 
         if (holder.getClass()==SenderViewHolder.class){
+            String getImge = model.getImage();
+            if (TextUtils.isEmpty(getImge)){
+                ((SenderViewHolder)holder).image_msg.setVisibility(View.GONE);
+                ((SenderViewHolder) holder).senderMsg.setVisibility(View.VISIBLE);
+            }else{
+                ((SenderViewHolder)holder).image_msg.setVisibility(View.VISIBLE);
+                ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
+            }
+            Picasso.get().load(model.getImage()).into(((SenderViewHolder)holder).image_msg);
             ((SenderViewHolder)holder).senderMsg.setText(model.getMessage());
             FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -207,6 +215,14 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 }
             });
         }else{
+            String getImge = model.getImage();
+            if (TextUtils.isEmpty(getImge)){
+                ((ReceiverViewHolder)holder).rec_image.setVisibility(View.GONE);
+                ((ReceiverViewHolder) holder).rec_image.setVisibility(View.VISIBLE);
+            }else{
+                ((ReceiverViewHolder)holder).rec_image.setVisibility(View.VISIBLE);
+                ((ReceiverViewHolder) holder).rec_image.setVisibility(View.GONE);
+            }
             ((ReceiverViewHolder)holder).receiverMsg.setText(model.getMessage());
             FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -242,7 +258,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
     class SenderViewHolder extends RecyclerView.ViewHolder{
         CircleImageView senderImage;
         TextView senderMsg;
-        ImageView reaction;
+        ImageView reaction,image_msg;
         ConstraintLayout showReaction,show_options;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -251,18 +267,20 @@ public class ChatAdapter extends RecyclerView.Adapter {
             reaction = itemView.findViewById(R.id.reactionImage);
             showReaction = itemView.findViewById(R.id.showReaction);
             show_options = itemView.findViewById(R.id.show_options);
+            image_msg = itemView.findViewById(R.id.image_msg);
         }
     }
 
     class ReceiverViewHolder extends RecyclerView.ViewHolder{
         CircleImageView receiverImage;
         TextView receiverMsg;
-        ImageView reactionRec;
+        ImageView reactionRec,rec_image;
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverImage = itemView.findViewById(R.id.receiverImage);
             receiverMsg = itemView.findViewById(R.id.receiverMsg);
             reactionRec = itemView.findViewById(R.id.reactionImage_rec);
+            rec_image = itemView.findViewById(R.id.rec_image);
         }
     }
 }

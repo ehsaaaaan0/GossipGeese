@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class StoryModel {
     String storyBy;
     long storyAt;
+    String storyKey;
     ArrayList<UserStories> stories;
 
     public StoryModel() {
@@ -14,6 +15,21 @@ public class StoryModel {
         this.storyBy = storyBy;
         this.storyAt = storyAt;
         this.stories = stories;
+    }
+
+    public StoryModel(String storyBy, long storyAt, String storyKey, ArrayList<UserStories> stories) {
+        this.storyBy = storyBy;
+        this.storyAt = storyAt;
+        this.storyKey = storyKey;
+        this.stories = stories;
+    }
+
+    public String getStoryKey() {
+        return storyKey;
+    }
+
+    public void setStoryKey(String storyKey) {
+        this.storyKey = storyKey;
     }
 
     public String getStoryBy() {

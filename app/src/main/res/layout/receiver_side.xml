@@ -48,24 +48,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:background="@drawable/receiver_bg"
+            app:layout_constraintStart_toEndOf="@id/receiverImage"
+            app:layout_constraintTop_toTopOf="@id/receiverImage">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:id="@+id/receiverMsg"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/receiver_bg"
             android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
             android:maxLines="4"
             android:lines="4"
             android:text="Msg Receiver This"
             android:textColor="#FFF"
             android:textSize="17dp"
             android:minWidth="40dp"
-            android:maxWidth="@dimen/_220mdp"
-            app:layout_constraintStart_toEndOf="@id/receiverImage"
-            app:layout_constraintTop_toTopOf="@id/receiverImage"/>
+            android:maxWidth="@dimen/_220mdp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/_220mdp"
+                android:visibility="gone"
+                android:id="@+id/rec_image"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

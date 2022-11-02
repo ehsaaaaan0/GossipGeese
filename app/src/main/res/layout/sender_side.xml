@@ -12,7 +12,7 @@
         android:id="@+id/showReaction"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:maxWidth="@dimen/_280mdp"
+        android:maxWidth="@dimen/_250mdp"
         android:maxHeight="@dimen/_220mdp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -48,26 +48,37 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="11dp"
+            android:paddingStart="5dp"
+            android:minWidth="40dp"
+            android:maxWidth="@dimen/_250mdp"
+            android:background="@drawable/sender_bg"
+            android:paddingEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@id/senderImage"
+            app:layout_constraintTop_toTopOf="@id/senderImage">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:id="@+id/senderMsg"
-            android:layout_marginEnd="11dp"
-            android:background="@drawable/sender_bg"
             android:gravity="center"
-            android:paddingStart="5dp"
-            android:minWidth="40dp"
-            android:paddingEnd="5dp"
-            android:maxHeight="@dimen/_220mdp"
             android:singleLine="false"
             android:maxLines="4"
             android:lines="4"
             android:text="."
             android:textColor="#FFF"
-            android:textSize="17dp"
-            android:maxWidth="@dimen/_220mdp"
-            app:layout_constraintEnd_toStartOf="@id/senderImage"
-            app:layout_constraintTop_toTopOf="@id/senderImage"/>
+            android:textSize="17dp"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/image_msg"
+                android:maxWidth="@dimen/_250mdp"
+                android:layout_margin="@dimen/_5mdp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

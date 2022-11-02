@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                         StoryModel story = new StoryModel();
                         story.setStoryBy(dataSnapshot.getKey());
-                        story.setStoryAt(dataSnapshot.child("postedBy").getValue(Long.class));
+                        story.setStoryKey(dataSnapshot.child("postedBy").child("storyKey").getValue(String.class));
+                        story.setStoryAt(dataSnapshot.child("postedBy").child("storyAt").getValue(Long.class));
                         ArrayList<UserStories> stories = new ArrayList<>();
 
                         for (DataSnapshot snapshot1 : dataSnapshot.child("userstories").getChildren()){
@@ -227,12 +228,14 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 StoryModel story = new StoryModel();
+                                String key = FirebaseDatabase.getInstance().getReference().child("key").push().getKey();
                                 story.setStoryAt(new Date().getTime());
+                                story.setStoryKey(key);
                                 FirebaseDatabase.getInstance().getReference().child("stories").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .child("postedBy").setValue(story.getStoryAt());
+                                        .child("postedBy").setValue(story);
                                 UserStories stories = new UserStories(uri.toString(), story.getStoryAt());
                                 FirebaseDatabase.getInstance().getReference().child("stories").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .child("userstories").push().setValue(stories).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        .child("userstories").child(key).setValue(stories).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
 

@@ -1,6 +1,7 @@
 package com.android.gossipgeese.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gossipgeese.MainActivity;
 import com.android.gossipgeese.R;
-import com.android.gossipgeese.model.MyStory;
+import com.android.gossipgeese.ViewStories;
 import com.android.gossipgeese.model.StoryModel;
 import com.android.gossipgeese.model.UserStories;
 import com.devlomi.circularstatusview.CircularStatusView;
@@ -24,6 +26,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import omari.hamza.storyview.StoryView;
+import omari.hamza.storyview.callback.StoryClickListeners;
+import omari.hamza.storyview.model.MyStory;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder> {
     ArrayList<StoryModel> list;
@@ -49,31 +54,43 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
         Picasso.get().load(stories.getImage()).placeholder(R.drawable.ic_gossipgeese).into(holder.imageView);
         holder.storyView.setPortionsCount(model.getStories().size());
 
-//        if (model.getStories().size()==1){
-//            holder.storyView.setVisibility(View.VISIBLE);
-//        }
-//        else if (model.getStories().size()==2){
-//            holder.storyView2.setVisibility(View.VISIBLE);
-//        }
-//        else if (model.getStories().size()==3){
-//            holder.storyView3.setVisibility(View.VISIBLE);
-//        }
-//        else if (model.getStories().size()==4){
-//            holder.storyView4.setVisibility(View.VISIBLE);
-//        }
-//        else if (model.getStories().size()==5){
-//            holder.storyView5.setVisibility(View.VISIBLE);
-//        }
-//        else{
-//            holder.storyView6.setVisibility(View.VISIBLE);
-//        }
 
-//        holder.storyView.setPortionsCount(model.getStories().size());
 
         FirebaseDatabase.getInstance().getReference().child("users").child(model.getStoryBy()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 holder.name.setText(snapshot.child("name").getValue(String.class));
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ArrayList<omari.hamza.storyview.model.MyStory> myStories = new ArrayList<>();
+                        for (UserStories stories1 : model.getStories()){
+                            myStories.add(new MyStory(stories1.getImage()));
+                        }
+                        new StoryView.Builder(((AppCompatActivity)context).getSupportFragmentManager())
+                                .setStoriesList(myStories) // Required
+                                .setStoryDuration(5000) // Default is 2000 Millis (2 Seconds)
+                                .setTitleText(holder.name.getText().toString()) // Default is Hidden
+                                .setSubtitleText("") // Default is Hidden
+                                .setTitleLogoUrl(snapshot.child("image").getValue(String.class)) // Default is Hidden
+                                .setStoryClickListeners(new StoryClickListeners() {
+                                    @Override
+                                    public void onDescriptionClickListener(int position) {
+                                        //your action
+                                    }
+
+                                    @Override
+                                    public void onTitleIconClickListener(int position) {
+                                        //your action
+                                    }
+                                }) // Optional Listeners
+                                .build() // Must be called before calling show method
+                                .show();
+//                context.startActivity(new Intent(context, ViewStories.class)
+//                        .putExtra("id", model.getStoryBy())
+//                        .putExtra("key",model.getStoryKey()));
+                    }
+                });
 
 
 //                holder.imageView.setOnClickListener(new View.OnClickListener() {
