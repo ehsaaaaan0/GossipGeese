@@ -17,253 +17,210 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@color/black"
-            android:layout_height="match_parent">
-            
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryVariant">
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/top_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/top_section"
-                app:layout_constraintStart_toStartOf="parent"
+                android:padding="6dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10mdp"
-                    android:layout_marginLeft="@dimen/_20mdp"
-                    android:layout_marginStart="@dimen/_20mdp"
-                    android:fontFamily="sans-serif"
-                    android:text="Welcome 👋"
-                    android:id="@+id/welcom_text"
-                    android:textColor="@color/blurWhite"
-                    android:textSize="@dimen/_11font_mdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:text="@string/app_name"
-                    android:textColor="@color/white"
-                    android:id="@+id/appName"
-                    android:textSize="@dimen/_16font_mdp"
-                    app:layout_constraintStart_toStartOf="@id/welcom_text"
-                    app:layout_constraintTop_toBottomOf="@id/welcom_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:text="Story"
-                    android:layout_marginTop="@dimen/_15mdp"
-                    android:textColor="@color/white"
-                    android:id="@+id/storyText"
-                    android:textSize="@dimen/_11font_mdp"
-                    app:layout_constraintStart_toStartOf="@id/welcom_text"
-                    app:layout_constraintTop_toBottomOf="@id/appName" />
-
                 <LinearLayout
+                    android:id="@+id/justForNow"
                     android:layout_width="@dimen/_35mdp"
                     android:layout_height="@dimen/_35mdp"
-                    android:id="@+id/justForNow"
-                    app:layout_constraintTop_toTopOf="@id/welcom_text"
-                    app:layout_constraintBottom_toBottomOf="@id/appName"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="@dimen/_20mdp"
+                    android:background="#373737"
                     android:gravity="center"
-                    android:background="@drawable/notification_bg"
-                    android:layout_marginRight="@dimen/_20mdp">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/menu"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:src="@drawable/menu" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/upload_story"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="4dp"
                     android:gravity="center"
-                    android:id="@+id/upload_story"
                     android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_15mdp"
-                    app:layout_constraintStart_toStartOf="@id/storyText"
-                    app:layout_constraintTop_toBottomOf="@id/storyText">
+                    app:layout_constraintEnd_toStartOf="@+id/stories_rv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="115dp">
+
                     <LinearLayout
                         android:layout_width="@dimen/_60mdp"
                         android:layout_height="@dimen/_60mdp"
                         android:background="@drawable/notification_bg"
                         android:gravity="center">
-                    <ImageView
-                        android:layout_width="@dimen/_40mdp"
-                        android:layout_height="@dimen/_35mdp"
-                        android:src="@drawable/add"/>
+
+                        <ImageView
+                            android:layout_width="@dimen/_40mdp"
+                            android:layout_height="@dimen/_35mdp"
+                            android:src="@drawable/add" />
                     </LinearLayout>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Add"
-                        android:fontFamily="sans-serif"
-                        android:textSize="@dimen/_11font_mdp"
-                        android:textColor="@color/blurWhite"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Story"
-                        android:paddingBottom="10dp"
-                        android:fontFamily="sans-serif"
-                        android:textSize="@dimen/_13font_mdp"
-                        android:textColor="@color/white"/>
 
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/stories_rv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/stories_rv"
-                    app:layout_constraintStart_toEndOf="@id/upload_story"
-                    app:layout_constraintTop_toTopOf="@id/upload_story"
+                    android:paddingTop="8dp"
+                    android:paddingRight="6dp"
+                    app:layout_constraintBottom_toBottomOf="@id/upload_story"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/upload_story"/>
+                    app:layout_constraintStart_toEndOf="@id/upload_story"
+                    app:layout_constraintTop_toTopOf="@id/upload_story" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="40dp"
                 android:background="@drawable/main_second"
-                app:layout_constraintTop_toBottomOf="@id/top_section"
+                android:paddingBottom="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/top_section">
 
                 <View
+                    android:id="@+id/simple_line"
                     android:layout_width="@dimen/_150mdp"
                     android:layout_height="2dp"
-                    android:background="#E0D9D9"
-                    android:id="@+id/simple_line"
                     android:layout_marginTop="@dimen/_10mdp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:background="#E0D9D9"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
+                    android:id="@+id/recentText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/simple_line"
-                    android:text="Recent Chat"
-                    android:id="@+id/recentText"
-                    android:layout_marginTop="@dimen/_10mdp"
                     android:layout_marginStart="@dimen/_15mdp"
+                    android:layout_marginTop="@dimen/_10mdp"
                     android:fontFamily="sans-serif"
+                    android:text="Recent Chat"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_15font_mdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:textColor="@color/black"/>
+                    app:layout_constraintTop_toBottomOf="@id/simple_line" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/archive"
-                    app:layout_constraintTop_toTopOf="@id/recentText"
-                    app:layout_constraintBottom_toBottomOf="@id/recentText"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-
-                <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/archive"
-                    android:background="@drawable/button_bg"
-                    android:text="Archive Chat"
-                    android:id="@+id/archiveBTN"
-                    android:textSize="@dimen/_12font_mdp"
-                    android:drawablePadding="5dp"
-                    android:padding="5dp"
-                    android:textAllCaps="false"
-                    android:layout_marginEnd="@dimen/_15mdp"/>
+                    app:layout_constraintBottom_toBottomOf="@id/recentText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/recentText">
+
+
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/archiveBTN"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/recent"
+                        android:layout_marginEnd="@dimen/_15mdp"
                         android:background="@drawable/button_bg"
-                        android:text="Recent Chat"
-                        android:visibility="gone"
-                        android:id="@+id/recentBTN"
-                        android:textSize="@dimen/_12font_mdp"
+                        android:drawableStart="@drawable/archive"
                         android:drawablePadding="5dp"
                         android:padding="5dp"
+                        android:text="Archive Chat"
                         android:textAllCaps="false"
-                        android:layout_marginEnd="@dimen/_15mdp"/>
+                        android:textSize="@dimen/_12font_mdp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/recentBTN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_15mdp"
+                        android:background="@drawable/button_bg"
+                        android:drawableStart="@drawable/recent"
+                        android:drawablePadding="5dp"
+                        android:padding="5dp"
+                        android:text="Recent Chat"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/_12font_mdp"
+                        android:visibility="gone" />
                 </LinearLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/hide_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/hide_layout"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/recentText">
 
 
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/lottie_view"
+                        android:layout_width="@dimen/_250mdp"
+                        android:layout_height="@dimen/_200mdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/recentText"
+                        app:lottie_rawRes="@raw/recent_chat" />
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="@dimen/_250mdp"
-                    android:layout_height="@dimen/_200mdp"
-                    app:lottie_rawRes="@raw/recent_chat"
-                    android:id="@+id/lottie_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/recentText"/>
+                    <TextView
+                        android:id="@+id/fazoolText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_7mdp"
+                        android:layout_marginEnd="@dimen/_7mdp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:singleLine="false"
+                        android:text="To make it easy! All The Recent Chat comes here"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16font_mdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/lottie_view" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="To make it easy! All The Recent Chat comes here"
-                    android:textColor="@color/black"
-                    android:fontFamily="sans-serif"
-                    android:textAllCaps="false"
-                    android:id="@+id/fazoolText"
-                    android:gravity="center"
-                    android:singleLine="false"
-                    android:layout_marginEnd="@dimen/_7mdp"
-                    android:layout_marginStart="@dimen/_7mdp"
-                    app:layout_constraintTop_toBottomOf="@id/lottie_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:textSize="@dimen/_16font_mdp"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CHAT NOW"
-                    android:id="@+id/startChat"
-                    android:background="@drawable/button_bg"
-                    android:drawableStart="@drawable/chat"
-                    android:drawableTint="#000"
-                    android:drawablePadding="10dp"
-                    android:padding="10dp"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginTop="5dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fazoolText"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/startChat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/button_bg"
+                        android:drawableStart="@drawable/chat"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="#000"
+                        android:fontFamily="sans-serif"
+                        android:padding="10dp"
+                        android:text="CHAT NOW"
+                        android:textColor="#000"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fazoolText" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recent_rv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/recent_rv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recentText"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="@dimen/_20mdp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recentText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

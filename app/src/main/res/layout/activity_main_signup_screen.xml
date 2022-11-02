@@ -45,17 +45,17 @@
         app:layout_constraintTop_toBottomOf="@id/guideline4"/>
 
     <TextView
+        android:id="@+id/how_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="How do your want to register"
         android:fontFamily="sans-serif"
-        android:textSize="@dimen/_16font_mdp"
+        android:text="How do you want to register?"
         android:textColor="#6c82bc"
-        android:id="@+id/how_register"
+        android:textSize="@dimen/_16font_mdp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/signuplogo"/>
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/signuplogo" />
 
     <View
         android:id="@+id/view"

@@ -11,8 +11,17 @@
     <color name="colorAccent">@color/white</color>
 
     <color name="white">#FFFFFFFF</color>
+    <color name="lightGrey">#EDEDED</color>
+    <color name="whatsAppColor" >#3D3D3D</color>
+    <color name="red">#9F0B0B</color>
+    <color name="status_background">#b7b7b7</color>
+    <color name="chat_background">#aaa6a6</color>
+    <color name="fb_color">#3c5793</color>
+    <color name="lightgreen" >#e5ffcc</color>
 
-
+    <color name="settingsIconColor" >#a89d9d</color>
+    <color name="grayBackground">#BCBCBC</color>
+    <color name="chatbackground" >#AAAAAA</color>
 
     <color name="black">#000</color>
     <color name="blurWhite">#B2B1B1</color>
