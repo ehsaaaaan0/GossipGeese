@@ -14,6 +14,7 @@ import com.android.gossipgeese.R;
 import com.android.gossipgeese.model.MyStory;
 import com.android.gossipgeese.model.StoryModel;
 import com.android.gossipgeese.model.UserStories;
+import com.devlomi.circularstatusview.CircularStatusView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,7 +24,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import xute.storyview.StoryView;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder> {
     ArrayList<StoryModel> list;
@@ -47,6 +47,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
         UserStories stories = model.getStories().get(model.getStories().size()-1);
 
         Picasso.get().load(stories.getImage()).placeholder(R.drawable.ic_gossipgeese).into(holder.imageView);
+        holder.storyView.setPortionsCount(model.getStories().size());
 
 //        if (model.getStories().size()==1){
 //            holder.storyView.setVisibility(View.VISIBLE);
@@ -128,13 +129,13 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
     public class myViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imageView;
         TextView name;
-        StoryView storyView;
+         CircularStatusView storyView;
 //        View storyView, storyView2, storyView3, storyView4, storyView5,storyView6;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.story_show_user);
             name = itemView.findViewById(R.id.user_name_story);
-            storyView = itemView.findViewById(R.id.storyView);
+            storyView = itemView.findViewById(R.id.circular_status_view);
 //            storyView = itemView.findViewById(R.id.storyView);
 //            storyView2 = itemView.findViewById(R.id.storyView2);
 //            storyView3 = itemView.findViewById(R.id.storyView3);
