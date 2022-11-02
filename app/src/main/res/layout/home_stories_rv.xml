@@ -89,22 +89,22 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"
-        app:portion_color="#F61100"
-        app:portion_spacing="4dp"
-        app:portion_width="4dp"
-        app:portions_count="8"
-        app:layout_constraintTop_toTopOf="@id/story_show_user"
         app:layout_constraintBottom_toBottomOf="@id/story_show_user"
+        app:layout_constraintEnd_toEndOf="@id/story_show_user"
         app:layout_constraintStart_toStartOf="@id/story_show_user"
-        app:layout_constraintEnd_toEndOf="@id/story_show_user"/>
+        app:layout_constraintTop_toTopOf="@id/story_show_user"
+        app:portion_color="#ED7D06"
+        app:portion_spacing="4dp"
+        app:portion_width="2dp"
+        app:portions_count="8" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/story_show_user"
         android:layout_width="@dimen/_48mdp"
         android:layout_height="@dimen/_48mdp"
-        android:layout_marginStart="12dp"
-        android:padding="4dp"
-        android:src="@drawable/ic_gossipgeese"
+        android:layout_marginStart="8dp"
+        android:padding="2dp"
+        android:src="@mipmap/ic_launcher_round"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="6dp" />

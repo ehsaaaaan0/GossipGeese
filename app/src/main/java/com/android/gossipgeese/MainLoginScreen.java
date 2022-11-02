@@ -88,7 +88,7 @@ public class MainLoginScreen extends AppCompatActivity {
         btnGoogle = findViewById(R.id.btngoogle);
         firebaseAuth = FirebaseAuth.getInstance();
         dialog = new ProgressDialog(this);
-        dialog.setMessage("Login You...!");
+        dialog.setMessage("Logging in...!");
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         FacebookSdk.sdkInitialize(getApplicationContext());

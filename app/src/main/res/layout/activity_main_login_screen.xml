@@ -32,18 +32,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/how"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="How did you Register?"
-                android:id="@+id/how"
+                android:layout_marginTop="@dimen/_15mdp"
                 android:fontFamily="sans-serif"
-                android:textSize="@dimen/_16font_mdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageView"
+                android:text="How did you Register?"
                 android:textColor="@color/blurBlack"
+                android:textSize="@dimen/_16font_mdp"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/_15mdp"/>
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageView" />
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
