@@ -263,7 +263,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
             senderImage = itemView.findViewById(R.id.senderImage);
-            senderMsg = itemView.findViewById(R.id.senderMsg);
+            senderMsg = itemView.findViewById(R.id.senderMsg_text);
             reaction = itemView.findViewById(R.id.reactionImage);
             showReaction = itemView.findViewById(R.id.showReaction);
             show_options = itemView.findViewById(R.id.show_options);

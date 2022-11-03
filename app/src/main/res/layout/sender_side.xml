@@ -81,7 +81,7 @@
                 android:minWidth="65dp">
 
                 <TextView
-                    android:id="@+id/senderMsg"
+                    android:id="@+id/senderMsg_text"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center|right"

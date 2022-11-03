@@ -148,7 +148,7 @@ public class StartChat extends AppCompatActivity {
                         String image = snapshot1.child("image").getValue(String.class);
                         String time = snapshot1.child("time").getValue(String.class);
                         if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
-                            db.insert(id,name,image,"",time,"false","false");
+//                            db.insert(id,name,image,"",time,"false","false");
 
 //                            NewMessageModel model = new NewMessageModel(id, name, image, " ", time, "false", "false");
 //                            list.add(model);
@@ -197,10 +197,10 @@ public class StartChat extends AppCompatActivity {
                             while (cursor.moveToNext()){
                                 if (cursor.getCount()>0){
                                     if (!Objects.equals(cursor.getString(0), id)){
-                                        db.insert(id,name,image,"",time,"false","false");
+                                        db.insert(id,name,image,"last",time,"false","false");
                                     }
                                 }else{
-                                    db.insert(id,name,image,"",time,"false","false");
+                                    db.insert(id,name,image,"last",time,"false","false");
                                 }
                             }
                         }
