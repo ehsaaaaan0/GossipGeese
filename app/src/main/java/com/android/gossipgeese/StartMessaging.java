@@ -57,6 +57,7 @@ public class StartMessaging extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_start_messaging);
         send = findViewById(R.id.sendMessage);
         rv = findViewById(R.id.showMessaged);

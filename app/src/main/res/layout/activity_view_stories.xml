@@ -4,51 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="@color/colorPrimaryVariant"
     tools:context=".ViewStories">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/back"
         android:id="@+id/back_"
-        android:layout_margin="@dimen/_20mdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send Image"
+        android:layout_margin="@dimen/_20mdp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/status_text"
-        app:layout_constraintTop_toTopOf="@id/back_"
-        app:layout_constraintStart_toEndOf="@id/back_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="Send Image"
+        android:textColor="#FFF"
+        android:textSize="@dimen/_18font_mdp"
         app:layout_constraintBottom_toBottomOf="@id/back_"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="#FFF"
-        android:fontFamily="sans-serif"
-        android:textSize="@dimen/_18font_mdp"/>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/back_"
+        app:layout_constraintTop_toTopOf="@id/back_" />
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/_10mdp"
-        android:layout_marginTop="@dimen/_20mdp"
         android:layout_marginStart="@dimen/_10mdp"
+        android:layout_marginTop="@dimen/_20mdp"
+        android:layout_marginEnd="@dimen/_10mdp"
         android:layout_marginBottom="@dimen/_30mdp"
-        app:cardCornerRadius="30dp"
         android:elevation="0dp"
+        app:cardCornerRadius="30dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/status_text">
 
         <ImageView
+            android:id="@+id/story_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/story_image"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,7 +86,8 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/emoji" />
+                android:src="@drawable/emoji"
+                android:tint="@color/colorPrimaryDark" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -92,7 +95,8 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/sendimage" />
+                android:src="@drawable/sendimage"
+                android:tint="@color/colorPrimaryDark" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -100,15 +104,18 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/voicmic" />
+                android:src="@drawable/voicmic"
+                android:tint="@color/colorPrimaryDark" />
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/sendMessage"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:src="@drawable/send"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_send"
+            android:src="@drawable/send_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

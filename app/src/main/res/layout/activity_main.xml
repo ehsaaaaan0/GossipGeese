@@ -59,7 +59,7 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toStartOf="@+id/stories_rv"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="115dp">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:layout_width="@dimen/_60mdp"
@@ -71,6 +71,7 @@
                             android:layout_width="@dimen/_40mdp"
                             android:layout_height="@dimen/_35mdp"
                             android:src="@drawable/add" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -79,12 +80,28 @@
                     android:id="@+id/stories_rv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:paddingTop="8dp"
                     android:paddingRight="6dp"
                     app:layout_constraintBottom_toBottomOf="@id/upload_story"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/upload_story"
-                    app:layout_constraintTop_toTopOf="@id/upload_story" />
+                    app:layout_constraintTop_toTopOf="@id/upload_story">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Your story"
+                    android:textColor="#FFF"
+                    android:textSize="11.5sp"
+                    app:layout_constraintEnd_toEndOf="@+id/upload_story"
+                    app:layout_constraintStart_toStartOf="@+id/upload_story"
+                    app:layout_constraintTop_toBottomOf="@+id/upload_story" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,7 +118,7 @@
                     android:id="@+id/simple_line"
                     android:layout_width="@dimen/_150mdp"
                     android:layout_height="2dp"
-                    android:layout_marginTop="@dimen/_10mdp"
+                    android:layout_marginTop="11dp"
                     android:background="#E0D9D9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -114,9 +131,10 @@
                     android:layout_marginStart="@dimen/_15mdp"
                     android:layout_marginTop="@dimen/_10mdp"
                     android:fontFamily="sans-serif"
+                    android:gravity="center"
                     android:text="Recent Chat"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15font_mdp"
+                    android:textSize="@dimen/_13font_mdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/simple_line" />
 
@@ -137,10 +155,11 @@
                         android:background="@drawable/button_bg"
                         android:drawableStart="@drawable/archive"
                         android:drawablePadding="5dp"
-                        android:padding="5dp"
+                        android:padding="2dp"
+                        android:layout_marginTop="6dp"
                         android:text="Archive Chat"
                         android:textAllCaps="false"
-                        android:textSize="@dimen/_12font_mdp" />
+                        android:textSize="@dimen/_10font_mdp" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/recentBTN"
@@ -168,8 +187,8 @@
 
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/lottie_view"
-                        android:layout_width="@dimen/_250mdp"
-                        android:layout_height="@dimen/_200mdp"
+                        android:layout_width="@dimen/_245mdp"
+                        android:layout_height="@dimen/_150mdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/recentText"
@@ -186,8 +205,8 @@
                         android:singleLine="false"
                         android:text="To make it easy! All The Recent Chat comes here"
                         android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_16font_mdp"
+                        android:textColor="@color/blurBlack"
+                        android:textSize="@dimen/_12font_mdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/lottie_view" />
@@ -203,6 +222,7 @@
                         android:drawableTint="#000"
                         android:fontFamily="sans-serif"
                         android:padding="10dp"
+                        android:textSize="@dimen/_10font_mdp"
                         android:text="CHAT NOW"
                         android:textColor="#000"
                         android:textStyle="bold"
@@ -226,16 +246,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="30dp"
-        app:itemTextColor="#FFF"
-        app:itemIconTint="#FFF"
         android:layout_margin="@dimen/_10mdp"
-        android:padding="@dimen/_7mdp"
         android:background="@drawable/bottom_nav_bg"
+        android:padding="@dimen/_7mdp"
+        app:elevation="30dp"
+        app:itemIconTint="#FFF"
+        app:itemTextColor="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

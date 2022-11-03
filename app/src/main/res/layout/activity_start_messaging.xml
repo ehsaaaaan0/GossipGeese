@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="@color/colorPrimaryVariant"
     tools:context=".StartMessaging">
 
     <ImageView
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:src="@drawable/back"
-        android:id="@+id/back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="10dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="0dp"
@@ -27,6 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/back"
         app:layout_constraintTop_toTopOf="@id/back" />
+
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -46,146 +47,164 @@
         android:src="@drawable/ic_gossipgeese"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/back" />
+
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10mdp"
         android:layout_marginLeft="@dimen/_10mdp"
-        android:fontFamily="sans-serif"
         android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
         android:text="Ehsan Abid"
         android:textColor="#FFF"
         android:textSize="@dimen/_15font_mdp"
         app:layout_constraintBottom_toTopOf="@+id/userLast"
         app:layout_constraintStart_toEndOf="@id/userImage"
         app:layout_constraintTop_toTopOf="@id/userImage" />
+
     <TextView
         android:id="@+id/userStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Offline"
         android:textAllCaps="true"
-        android:textSize="@dimen/_11font_mdp"
         android:textColor="#03FF0D"
+        android:textSize="@dimen/_11font_mdp"
         app:layout_constraintBottom_toBottomOf="@id/userImage"
         app:layout_constraintStart_toStartOf="@id/userName"
         app:layout_constraintTop_toBottomOf="@id/userName" />
 
     <LinearLayout
+        android:id="@+id/videoLiner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/videoLiner"
         android:layout_marginEnd="@dimen/_10mdp"
         android:background="@drawable/chat_icons"
-        app:layout_constraintTop_toTopOf="@id/userImage"
         app:layout_constraintBottom_toBottomOf="@id/userImage"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/userImage">
+
         <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/videocall"
-        android:padding="5dp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:src="@drawable/videocall" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10mdp"
         android:background="@drawable/chat_icons"
-        app:layout_constraintTop_toTopOf="@id/videoLiner"
         app:layout_constraintBottom_toBottomOf="@id/videoLiner"
-        app:layout_constraintEnd_toStartOf="@id/videoLiner">
+        app:layout_constraintEnd_toStartOf="@id/videoLiner"
+        app:layout_constraintTop_toTopOf="@id/videoLiner">
+
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/call"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:src="@drawable/call" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/userImage"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/main_second"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/main_second">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userImage">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/showMessaged"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/showMessaged"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@id/rec_msg"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/rec_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rec_msg"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:padding="15dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="15dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/msgbg_"
-                    app:layout_constraintEnd_toStartOf="@id/sendMessage"
+                    android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginEnd="5dp">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/sendMessage"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <EditText
+                        android:id="@+id/enterMessage"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@null"
-                        android:id="@+id/enterMessage"
-                        android:paddingStart="10dp"
                         android:layout_weight="1"
-                        android:hint="Send Message"/>
+                        android:background="@null"
+                        android:hint="Send Message"
+                        android:paddingStart="10dp" />
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="5dp"
                         android:layout_marginStart="5dp"
-                        android:src="@drawable/emoji"/>
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/emoji"
+                        android:tint="@color/colorPrimaryDark" />
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:id="@+id/sendImage"
-                        android:layout_marginEnd="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="5dp"
-                        android:src="@drawable/sendimage"/>
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/sendimage"
+                        android:tint="@color/colorPrimaryDark" />
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="5dp"
                         android:layout_marginStart="5dp"
-                        android:src="@drawable/voicmic"/>
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/voicmic"
+                        android:tint="@color/colorPrimaryDark" />
 
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
                     android:id="@+id/sendMessage"
-                    android:src="@drawable/send"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_send"
+                    android:src="@drawable/send_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
