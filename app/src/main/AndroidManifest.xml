@@ -11,6 +11,7 @@
         tools:node="remove" />
 
     <application
+        android:name=".notification.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -126,6 +127,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".notification.NotificationReceiver"/>
+
     </application>
 
 </manifest>
