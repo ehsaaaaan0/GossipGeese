@@ -1,12 +1,12 @@
 package com.android.gossipgeese.model;
 
 public class NewMessageModel {
-    String id, name, image, lastMsg, time, recent, archive;
+    String id, name, image, lastMsg, time, recent, archive,token;
 
 
     public NewMessageModel(){}
 
-    public NewMessageModel(String id, String name, String image, String lastMsg, String time, String recent, String archive) {
+    public NewMessageModel(String id, String name, String image, String lastMsg, String time, String recent, String archive,String token) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -14,6 +14,15 @@ public class NewMessageModel {
         this.time = time;
         this.recent = recent;
         this.archive = archive;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getId() {

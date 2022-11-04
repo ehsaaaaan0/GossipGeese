@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,6 +50,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -296,7 +298,11 @@ public class UsernameandDateofbirth extends AppCompatActivity implements DatePic
                                         public void onSuccess(Uri uri) {
                                             String id = FirebaseAuth.getInstance().getUid();
                                             String image = uri.toString();
-                                            RegisterModel model = new RegisterModel(id,full_name,email_phone,password,image,d,"12:00");
+                                            FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+                                                @Override
+                                                public void onSuccess(String s) {
+
+                                            RegisterModel model = new RegisterModel(id,full_name,email_phone,password,image,d,"12:00",s);
                                             FirebaseDatabase.getInstance().getReference().child("users").child(id).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
@@ -317,6 +323,8 @@ public class UsernameandDateofbirth extends AppCompatActivity implements DatePic
                                                 public void onFailure(@NonNull Exception e) {
                                                     progressDialog.dismiss();
                                                     Toast.makeText(UsernameandDateofbirth.this, "Unable to Register Your Account...!", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                                 }
                                             });
                                         }

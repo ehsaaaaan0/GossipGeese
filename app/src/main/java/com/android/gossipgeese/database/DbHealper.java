@@ -18,7 +18,7 @@ public class DbHealper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String q = "create table "+tbl +" (id text primary key, name text, image text, lastMsg text, time text, recent text, archive text)";
+        String q = "create table "+tbl +" (id text primary key, name text, image text, lastMsg text, time text, recent text, archive text, token text)";
         sqLiteDatabase.execSQL(q);
     }
 
@@ -27,7 +27,7 @@ public class DbHealper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("drop table if exists "+tbl);
         onCreate(sqLiteDatabase);
     }
-    public boolean insert(String id, String name, String image, String lastMsg,String time,String recent,String archive){
+    public boolean insert(String id, String name, String image, String lastMsg,String time,String recent,String archive,String token){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues c = new ContentValues();
         c.put("id", id);
@@ -37,6 +37,7 @@ public class DbHealper extends SQLiteOpenHelper {
         c.put("time",time);
         c.put("recent",recent);
         c.put("archive",archive);
+        c.put("token",token);
         long r = db.insert(tbl, null,c);
         if (r==-1){
             return false;

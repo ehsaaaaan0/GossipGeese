@@ -1,12 +1,12 @@
 package com.android.gossipgeese.model;
 
 public class RegisterModel {
-    String id, name ,email, pass, image,dob,time;
+    String id, name ,email, pass, image,dob,time,token;
 
     public RegisterModel() {
     }
 
-    public RegisterModel(String id, String name, String email, String pass, String image, String dob,String time) {
+    public RegisterModel(String id, String name, String email, String pass, String image, String dob,String time,String token) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -14,14 +14,24 @@ public class RegisterModel {
         this.image = image;
         this.dob = dob;
         this.time = time;
+        this.token = token;
     }
 
-    public RegisterModel(String id, String name, String email, String image,String time) {
+    public RegisterModel(String id, String name, String email, String image,String time,String token) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.image = image;
         this.time = time;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getTime() {

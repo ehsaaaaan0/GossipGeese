@@ -1,5 +1,8 @@
 package com.android.gossipgeese.notification;
 
+import static com.android.gossipgeese.notification.MyFirebaseService.MESSAGES;
+import static com.android.gossipgeese.notification.MyFirebaseService.sendChannel1Notification;
+
 import android.app.RemoteInput;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,8 +22,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         if (remopteInput!=null){
             CharSequence replyText = remopteInput.getCharSequence("key_text_reply");
             MessageModel answer = new MessageModel(replyText,null);
-            StartMessaging.MESSAGES.add(answer);
-            StartMessaging.sendChannel1Notification(context);
+            MESSAGES.add(answer);
+            sendChannel1Notification(context);
         }
     }
 }

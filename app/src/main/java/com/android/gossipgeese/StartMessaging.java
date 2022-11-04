@@ -31,6 +31,12 @@ import com.android.gossipgeese.adapter.ChatAdapter;
 import com.android.gossipgeese.model.MessageModel;
 import com.android.gossipgeese.notification.NotificationReceiver;
 import com.android.gossipgeese.registerfragments.UsernameandDateofbirth;
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,11 +52,15 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,16 +68,17 @@ public class StartMessaging extends AppCompatActivity {
 
 
     String receiverId;
+    String token;
     String senderId;
     RecyclerView rv;
     CircleImageView userImage;
-    String senderRoom, receiverRoom;
+    String senderRoom, receiverRoom,name;
     ImageView send,sendImage;
     EditText msg;
     ChatAdapter adapter;
     ArrayList<MessageModel>list;
     Uri uri;
-    public static List<com.android.gossipgeese.notification.MessageModel> MESSAGES = new ArrayList<>();
+//    public static List<com.android.gossipgeese.notification.MessageModel> MESSAGES = new ArrayList<>();
     TextView userStatus;
     private NotificationManagerCompat notificationManager;
     @Override
@@ -82,12 +93,14 @@ public class StartMessaging extends AppCompatActivity {
         sendImage = findViewById(R.id.sendImage);
         userStatus = findViewById(R.id.userStatus);
         notificationManager = NotificationManagerCompat.from(StartMessaging.this);
-        MESSAGES.add(new com.android.gossipgeese.notification.MessageModel("Good Morning","JIM"));
-        senToChaanel1();
+//        MESSAGES.add(new com.android.gossipgeese.notification.MessageModel("Good Morning","JIM"));
+//        senToChaanel1();
         Intent i = getIntent();
         receiverId = i.getStringExtra("receiver");
         String image = i.getStringExtra("image");
         String msgT = i.getStringExtra("msg");
+        token = i.getStringExtra("token");
+        name = i.getStringExtra("name");
 
         if (!TextUtils.isEmpty(msgT)){
             String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
@@ -183,7 +196,7 @@ public class StartMessaging extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-
+                                sendNotification(name,message,token);
                                 adapter.notifyDataSetChanged();
                             }
                         });
@@ -199,50 +212,50 @@ public class StartMessaging extends AppCompatActivity {
 
     }
 
-    private void senToChaanel1() {
-        sendChannel1Notification(StartMessaging.this);
-    }
-
-    public static void sendChannel1Notification(Context context) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
-            Intent activityIntent = new Intent(context, MainActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, activityIntent, 0);
-
-
-
-            RemoteInput remoteInput = new RemoteInput.Builder("key_text_reply")
-                    .setLabel("your Answer...").build();
-            Intent replyIntent = new Intent(context, NotificationReceiver.class);
-            PendingIntent replyPendingIntent = PendingIntent.getBroadcast(context, 0, replyIntent, 0);
-            NotificationCompat.Action replayAction = new NotificationCompat.Action.Builder(
-                    R.drawable.ic_gossipgeese, "Replay", replyPendingIntent
-            ).addRemoteInput(remoteInput).build();
-            NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(
-                    "me"
-            );
-            messagingStyle.setConversationTitle("Group Chat");
-
-            for(com.android.gossipgeese.notification.MessageModel chatMessage : MESSAGES){
-                NotificationCompat.MessagingStyle.Message notificationMesage = new NotificationCompat.MessagingStyle.Message(
-                        chatMessage.getText(), chatMessage.getTimeSpam(),chatMessage.getSender()
-                );
-                messagingStyle.addMessage(notificationMesage);
-            }
-
-            Notification notification = new NotificationCompat.Builder(context, CHANNEL_1_ID)
-                    .setSmallIcon(R.drawable.ic_gossipgeese)
-
-                    .setStyle(messagingStyle)
-                    .addAction(replayAction)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                    .setContentIntent(contentIntent)
-                    .setAutoCancel(true)
-                    .build();
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify(1, notification);
-        }
-    }
+//    private void senToChaanel1() {
+//        sendChannel1Notification(StartMessaging.this);
+//    }
+//
+//    public static void sendChannel1Notification(Context context) {
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
+//            Intent activityIntent = new Intent(context, MainActivity.class);
+//            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, activityIntent, 0);
+//
+//
+//
+//            RemoteInput remoteInput = new RemoteInput.Builder("key_text_reply")
+//                    .setLabel("your Answer...").build();
+//            Intent replyIntent = new Intent(context, NotificationReceiver.class);
+//            PendingIntent replyPendingIntent = PendingIntent.getBroadcast(context, 0, replyIntent, 0);
+//            NotificationCompat.Action replayAction = new NotificationCompat.Action.Builder(
+//                    R.drawable.ic_gossipgeese, "Replay", replyPendingIntent
+//            ).addRemoteInput(remoteInput).build();
+//            NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(
+//                    "me"
+//            );
+//            messagingStyle.setConversationTitle("Group Chat");
+//
+//            for(com.android.gossipgeese.notification.MessageModel chatMessage : MESSAGES){
+//                NotificationCompat.MessagingStyle.Message notificationMesage = new NotificationCompat.MessagingStyle.Message(
+//                        chatMessage.getText(), chatMessage.getTimeSpam(),chatMessage.getSender()
+//                );
+//                messagingStyle.addMessage(notificationMesage);
+//            }
+//
+//            Notification notification = new NotificationCompat.Builder(context, CHANNEL_1_ID)
+//                    .setSmallIcon(R.drawable.ic_gossipgeese)
+//
+//                    .setStyle(messagingStyle)
+//                    .addAction(replayAction)
+//                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+//                    .setContentIntent(contentIntent)
+//                    .setAutoCancel(true)
+//                    .build();
+//            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+//            notificationManager.notify(1, notification);
+//        }
+//    }
 
     private void getUserStatus() {
         FirebaseDatabase.getInstance().getReference().child("users").child(receiverId).child("status").addValueEventListener(new ValueEventListener() {
@@ -274,5 +287,40 @@ public class StartMessaging extends AppCompatActivity {
             }
         }
 
+    }
+
+    void sendNotification(String name, String message, String token){
+        try {
+            RequestQueue queue = Volley.newRequestQueue(this);
+            String url = "https://fcm.googleapis.com/fcm/send";
+            JSONObject data = new JSONObject();
+            data.put("title", name);
+            data.put("body", message);
+            JSONObject notificationData = new JSONObject();
+            notificationData.put("notification",data);
+            notificationData.put("to",token);
+            JsonObjectRequest request = new JsonObjectRequest(url, notificationData, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String,String> map = new HashMap<>();
+                    map.put("Key=Authorization","AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E");
+                    map.put("Content-Type","application/json");
+                    return map;
+                }
+            };
+            queue.add(request);
+        }catch (Exception ex){
+
+        }
     }
 }

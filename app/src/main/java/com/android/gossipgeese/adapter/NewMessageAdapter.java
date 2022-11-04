@@ -153,11 +153,13 @@ public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.my
                             db.updateData(model.getId(), "true", "false");
                         }
                     }else{
-                        db.insert(model.getId(),model.getName(),model.getImage(),model.getLastMsg(),model.getTime(),"true","false");
+                        db.insert(model.getId(),model.getName(),model.getImage(),model.getLastMsg(),model.getTime(),"true","false",model.getToken());
                     }
                 }context.startActivity(new Intent(context, StartMessaging.class)
                         .putExtra("receiver",model.getId())
-                        .putExtra("image",model.getImage()));
+                        .putExtra("image",model.getImage())
+                        .putExtra("token",model.getToken())
+                        .putExtra("name",model.getName()));
             }
         });
     }

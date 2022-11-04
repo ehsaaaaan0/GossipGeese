@@ -43,6 +43,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -53,9 +54,12 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import org.bouncycastle.jcajce.provider.digest.MD2;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -86,7 +90,16 @@ public class MainActivity extends AppCompatActivity {
         rv = findViewById(R.id.recent_rv);
         hide = findViewById(R.id.hide_layout);
         storyRv = findViewById(R.id.stories_rv);
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                HashMap<String,Object> map = new HashMap<>();
+                map.put("token",s);
+                FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid())
+                                .updateChildren(map);
 
+            }
+        });
 
         storyList = new ArrayList<>();
         StoryAdapter adapter1 = new StoryAdapter(storyList, this);
@@ -134,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.realAllData();
         while (cursor.moveToNext()){
             if (cursor.getCount()>0){
-                NewMessageModel model = new NewMessageModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+                NewMessageModel model = new NewMessageModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
                 if (Objects.equals(model.getRecent(), "true") && Objects.equals(model.getArchive(), "false")) {
                     list.add(model);
                     hide.setVisibility(View.GONE);
@@ -165,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 Cursor cursor = db.realAllData();
                 while (cursor.moveToNext()){
                     if (cursor.getCount()>0){
-                        NewMessageModel model = new NewMessageModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+                        NewMessageModel model = new NewMessageModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
                         if (Objects.equals(model.getRecent(), "false") && Objects.equals(model.getArchive(), "true")) {
                             list.add(model);
                             hide.setVisibility(View.GONE);
@@ -187,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 Cursor cursor = db.realAllData();
                 while (cursor.moveToNext()){
                     if (cursor.getCount()>0){
-                        NewMessageModel model = new NewMessageModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+                        NewMessageModel model = new NewMessageModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
                         if (Objects.equals(model.getRecent(), "true") && Objects.equals(model.getArchive(), "false")) {
                             list.add(model);
                             hide.setVisibility(View.GONE);

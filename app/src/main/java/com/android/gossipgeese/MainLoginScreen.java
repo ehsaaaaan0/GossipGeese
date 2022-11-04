@@ -50,12 +50,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class MainLoginScreen extends AppCompatActivity {
     TextView register;
@@ -272,12 +274,16 @@ public class MainLoginScreen extends AppCompatActivity {
                                         // Check condition
                                         if(task.isSuccessful())
                                         {
+                                            FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+                                                @Override
+                                                public void onSuccess(String s) {
+
                                             FirebaseUser user = firebaseAuth.getCurrentUser();
                                             String image = user.getPhotoUrl().toString();
                                             String id = FirebaseAuth.getInstance().getUid();
                                             String name = user.getDisplayName();
                                             String email = user.getEmail();
-                                            RegisterModel model = new RegisterModel(id,name,email,image,"12:00");
+                                            RegisterModel model = new RegisterModel(id,name,email,image,"12:00",s);
                                             FirebaseDatabase.getInstance().getReference().child("users").child(id).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
@@ -285,7 +291,11 @@ public class MainLoginScreen extends AppCompatActivity {
                                                startActivity(new Intent(MainLoginScreen.this, MainActivity.class));
                                                 }
                                             });
+                                                }
+                                            });
+
                                         }
+
                                         else
                                         {
                                             dialog.dismiss();
