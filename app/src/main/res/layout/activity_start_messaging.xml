@@ -56,7 +56,7 @@
         android:layout_marginLeft="@dimen/_10mdp"
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif"
-        android:text="Ehsan Abid"
+        android:text=""
         android:textColor="#FFF"
         android:textSize="@dimen/_15font_mdp"
         app:layout_constraintBottom_toTopOf="@+id/userLast"

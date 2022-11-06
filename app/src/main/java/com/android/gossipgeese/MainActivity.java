@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getUid());
         startChat = findViewById(R.id.startChat);
         fazoolText = findViewById(R.id.fazoolText);
         justForNow = findViewById(R.id.justForNow);

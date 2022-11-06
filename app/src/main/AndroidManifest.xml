@@ -129,10 +129,13 @@
         </activity>
 
         <receiver android:name=".notification.NotificationReceiver"/>
-        <service android:name=".notification.MyFirebaseService"
-            android:exported="false">
+
+        <service
+            android:name=".notification.MyFirebaseMessagingService"
+            android:exported="false"
+            android:directBootAware="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
