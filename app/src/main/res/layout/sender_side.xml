@@ -12,7 +12,7 @@
         android:id="@+id/showReaction"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:maxWidth="@dimen/_250mdp"
+        android:maxWidth="@dimen/_270mdp"
         android:maxHeight="@dimen/_220mdp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -37,10 +37,35 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <me.jagar.chatvoiceplayerlibrary.VoicePlayerView
+            android:id="@+id/voicePlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:enableVisualizer="true"
+            app:visualizationPlayedColor="#ff7700"
+            app:visualizationNotPlayedColor="#727171"
+            app:playPauseBackgroundColor="#ff7700"
+            app:timingBackgroundColor="#6AFF7700"
+            app:seekBarProgressColor="#000"
+            app:showShareButton="false"
+            app:shareCornerRadius="100"
+            app:playPauseCornerRadius="100"
+            app:showTiming="true"
+            app:viewCornerRadius="100"
+            app:viewBackground="#C6C4CF"
+            app:progressTimeColor="#000"
+            app:seekBarThumbColor="#FFC107"
+            app:shareBackgroundColor="#ff7700"
+            app:playProgressbarColor="#ff7700"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/senderImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/senderImage"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="false"
+            android:id="@+id/showOther"
             android:layout_gravity="right"
             android:layout_marginEnd="11dp"
             android:layout_marginBottom="3dp"
@@ -48,6 +73,7 @@
             android:maxWidth="310dp"
             android:maxHeight="1000dp"
             android:minWidth="65dp"
+            android:visibility="visible"
             android:orientation="vertical"
             android:paddingStart="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
