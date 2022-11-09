@@ -134,9 +134,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 ((SenderViewHolder)holder).showOther.setVisibility(View.GONE);
                 ((SenderViewHolder)holder).voicePlayerView.setVisibility(View.VISIBLE);
                 Uri uri = Uri.parse(model.getVoice());
-                Toast.makeText(context, uri.toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(context, model.getVoice()+"", Toast.LENGTH_SHORT).show();
-//                ((SenderViewHolder)holder).voicePlayerView.setAudio(uri.toString());
+                ((SenderViewHolder)holder).voicePlayerView.setAudio(model.getVoice());
             }else{
                 ((SenderViewHolder)holder).showOther.setVisibility(View.VISIBLE);
                 ((SenderViewHolder)holder).voicePlayerView.setVisibility(View.GONE);
@@ -239,7 +237,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             String getImge = model.getImage();
             if (TextUtils.isEmpty(getImge)){
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.GONE);
-                ((ReceiverViewHolder) holder).rec_image.setVisibility(View.VISIBLE);
+                ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.VISIBLE);
             }else{
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.VISIBLE);
                 ((ReceiverViewHolder) holder).rec_image.setVisibility(View.GONE);

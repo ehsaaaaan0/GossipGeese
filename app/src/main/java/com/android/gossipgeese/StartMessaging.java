@@ -301,9 +301,7 @@ public class StartMessaging extends AppCompatActivity {
         recordView.setOnRecordListener(new OnRecordListener() {
             @Override
             public void onStart() {
-
                 audioPath = getExternalCacheDir().getAbsolutePath()+"/"+"recordingaudio" + System.currentTimeMillis() +".mp3";
-                Toast.makeText(StartMessaging.this, audioPath+"", Toast.LENGTH_SHORT).show();
                 mediaRecorder = new MediaRecorder();
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
@@ -317,7 +315,7 @@ public class StartMessaging extends AppCompatActivity {
                     Toast.makeText(StartMessaging.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
-                Toast.makeText(StartMessaging.this, "Recording Start", Toast.LENGTH_SHORT).show();
+
 
                 sendM.setVisibility(View.GONE);
                 recordView.setVisibility(View.VISIBLE);
