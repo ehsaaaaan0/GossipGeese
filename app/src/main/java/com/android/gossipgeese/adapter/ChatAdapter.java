@@ -235,6 +235,17 @@ public class ChatAdapter extends RecyclerView.Adapter {
             });
         }else{
             String getImge = model.getImage();
+
+            if (model.getType()=="voice"){
+                ((ReceiverViewHolder)holder).hide_rec.setVisibility(View.GONE);
+                ((ReceiverViewHolder)holder).voicePlayer_rec.setVisibility(View.VISIBLE);
+                ((ReceiverViewHolder)holder).voicePlayer_rec.setAudio(model.getVoice());
+            }else{
+                ((ReceiverViewHolder)holder).hide_rec.setVisibility(View.VISIBLE);
+                ((ReceiverViewHolder)holder).voicePlayer_rec.setVisibility(View.GONE);
+            }
+
+
             if (TextUtils.isEmpty(getImge)){
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.GONE);
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.VISIBLE);
@@ -298,12 +309,16 @@ public class ChatAdapter extends RecyclerView.Adapter {
         CircleImageView receiverImage;
         TextView receiverMsg;
         ImageView reactionRec,rec_image;
+        ConstraintLayout hide_rec;
+        VoicePlayerView voicePlayer_rec;
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverImage = itemView.findViewById(R.id.receiverImage);
             receiverMsg = itemView.findViewById(R.id.receiverMsg);
             reactionRec = itemView.findViewById(R.id.reactionImage_rec);
             rec_image = itemView.findViewById(R.id.rec_image);
+            hide_rec = itemView.findViewById(R.id.hide_rec);
+            voicePlayer_rec = itemView.findViewById(R.id.voicePlayer_rec);
         }
     }
 }
