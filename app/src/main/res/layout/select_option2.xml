@@ -1,112 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
         app:cardElevation="20dp"
-        app:cardCornerRadius="20dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Forward Message"
                 android:id="@+id/forwardMsg"
-                android:textSize="@dimen/_22font_mdp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:gravity="center|start"
-                android:paddingEnd="20dp"
-                android:paddingRight="20dp"
-                android:drawableRight="@drawable/forward"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:drawableEnd="@drawable/forward"
+                android:drawableRight="@drawable/forward"
                 android:fontFamily="sans-serif"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"/>
+                android:gravity="center|start"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:text="Forward Message"
+                android:textColor="@color/blurBlack"
+                android:textSize="@dimen/_15font_mdp"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="#000"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:textColor="@color/blurBlack" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:id="@+id/delete"
-                android:text="Add To Recent"
-                android:textSize="@dimen/_22font_mdp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                android:gravity="center|start"
-                android:paddingEnd="20dp"
-                android:paddingRight="20dp"
-                android:drawableRight="@drawable/delete"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:drawableEnd="@drawable/delete"
+                android:drawableRight="@drawable/delete"
                 android:fontFamily="sans-serif"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"/>
+                android:gravity="center|start"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:text="Delete Message"
+                android:textColor="@color/blurBlack"
+                android:textSize="@dimen/_15font_mdp"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="10dp"
-                android:background="#000"/>
+                android:textColor="@color/blurBlack" />
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:id="@+id/copy"
-                android:text="Copy Message"
-                android:textSize="@dimen/_22font_mdp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                android:gravity="center|start"
-                android:paddingEnd="20dp"
-                android:paddingRight="20dp"
-                android:drawableRight="@drawable/copy"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:drawableEnd="@drawable/copy"
+                android:drawableRight="@drawable/copy"
                 android:fontFamily="sans-serif"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="10dp"
-                android:background="#000"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/react"
-                android:text="React to Message"
-                android:textSize="@dimen/_22font_mdp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
                 android:gravity="center|start"
                 android:paddingEnd="20dp"
                 android:paddingRight="20dp"
-                android:drawableRight="@drawable/emoji"
-                android:drawableEnd="@drawable/emoji"
-                android:fontFamily="sans-serif"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"/>
+                android:text="Copy Message"
+                android:textColor="@color/blurBlack"
+                android:textSize="@dimen/_15font_mdp"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="10dp"
-                android:background="#000"/>
+                android:textColor="@color/blurBlack" />
+
+            <TextView
+                android:id="@+id/react"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:drawableEnd="@drawable/emoji"
+                android:drawableRight="@drawable/emoji"
+                android:fontFamily="sans-serif"
+                android:gravity="center|start"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:text="React to Message"
+                android:textColor="@color/blurBlack"
+                android:textSize="@dimen/_15font_mdp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/blurBlack" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

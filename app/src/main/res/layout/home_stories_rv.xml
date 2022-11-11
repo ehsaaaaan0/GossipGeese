@@ -93,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="@id/story_show_user"
         app:layout_constraintStart_toStartOf="@id/story_show_user"
         app:layout_constraintTop_toTopOf="@id/story_show_user"
-        app:portion_color="@color/blurWhite"
+        app:portion_color="#FF8C68"
         app:portion_spacing="4dp"
         app:portion_width="2dp"
         app:portions_count="8" />

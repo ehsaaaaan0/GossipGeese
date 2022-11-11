@@ -3,28 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="@dimen/_280mdp"
         android:maxHeight="@dimen/_220mdp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/reactionImage_rec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="20dp"
-            android:src="@drawable/ic_laugh"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/receiverMsg"
-            app:layout_constraintStart_toEndOf="@id/receiverMsg"
-            app:layout_constraintTop_toTopOf="@id/receiverMsg" />
 
 
         <View
@@ -41,9 +30,8 @@
             android:id="@+id/receiverImage"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginStart="13dp"
             android:layout_marginTop="@dimen/_10mdp"
-            android:layout_marginEnd="@dimen/_10mdp"
-            android:layout_marginRight="@dimen/_10mdp"
             android:padding="2dp"
             android:src="@drawable/ic_gossipgeese"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,55 +41,72 @@
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_alignParentEnd="false"
+            android:layout_gravity="right"
+            android:layout_marginStart="11dp"
             android:background="@drawable/receiver_bg"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
+            android:maxWidth="310dp"
+            android:maxHeight="1000dp"
+            android:minWidth="65dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/receiverImage"
             app:layout_constraintTop_toTopOf="@id/receiverImage">
 
             <ImageView
                 android:id="@+id/rec_image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="3dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_margin="6dp"
                 android:maxWidth="310dp"
                 android:maxHeight="310dp"
                 android:scaleType="centerCrop"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_profile" />
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linear2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@id/linearLayout"
-            app:layout_constraintStart_toEndOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-            <TextView
-                android:id="@+id/receiverMsg"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linear2"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="3dp"
                 android:background="@drawable/receiver_bg"
-                android:gravity="center|left"
-                android:lines="4"
-                android:maxWidth="@dimen/_220mdp"
-                android:maxLines="4"
-                android:minWidth="40dp"
-                android:padding="4dp"
-                android:text="Msg Receiver This"
-                android:textColor="@color/blurBlack"
-                android:textSize="15dp" />
+                android:maxWidth="310dp"
+                android:maxHeight="1000dp"
+                android:minWidth="40dp">
+
+                <TextView
+                    android:id="@+id/receiverMsg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="43dp"
+                    android:gravity="center|left"
+                    android:lines="4"
+                    android:maxWidth="@dimen/_220mdp"
+                    android:maxLines="4"
+                    android:minWidth="40dp"
+                    android:padding="3dp"
+                    android:text="Msg Receiver This"
+                    android:textColor="@color/blurBlack"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/reactionImage_rec"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_laugh"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
