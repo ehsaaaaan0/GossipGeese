@@ -111,7 +111,7 @@
             android:layout_marginStart="15dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/linearLayout"
-            app:layout_constraintStart_toStratOf="@+id/view2">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/receiverMsg"
