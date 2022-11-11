@@ -1,42 +1,44 @@
 package com.android.gossipgeese;
 
-import static com.android.gossipgeese.notification.App.CHANNEL_1_ID;
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.MediaRecorder;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.app.RemoteInput;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.gossipgeese.adapter.ChatAdapter;
 import com.android.gossipgeese.model.MessageModel;
-import com.android.gossipgeese.notification.NotificationReceiver;
-import com.android.gossipgeese.registerfragments.UsernameandDateofbirth;
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.devlomi.record_view.OnRecordListener;
+import com.devlomi.record_view.RecordButton;
+import com.devlomi.record_view.RecordView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +46,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -52,13 +57,15 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -72,26 +79,43 @@ public class StartMessaging extends AppCompatActivity {
     String senderId;
     RecyclerView rv;
     CircleImageView userImage;
+    ImageView vc;
     String senderRoom, receiverRoom,name;
     ImageView send,sendImage;
     EditText msg;
+    LinearLayout sendM;
+    RecordView recordView;
+    RecordButton voice;
     ChatAdapter adapter;
     ArrayList<MessageModel>list;
     Uri uri;
-//    public static List<com.android.gossipgeese.notification.MessageModel> MESSAGES = new ArrayList<>();
-    TextView userStatus;
+    String senderName;
+    MediaRecorder mediaRecorder;
+    String audioPath;
+    //    public static List<com.android.gossipgeese.notification.MessageModel> MESSAGES = new ArrayList<>();
+    TextView userStatus,userName;
+
+    String URL = "https://fcm.googleapis.com/fcm/send";
+    RequestQueue requestQueue;
+    ProgressDialog audioDialog;
+
     private NotificationManagerCompat notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_start_messaging);
-        send = findViewById(R.id.sendMessage);
+        send = findViewById(R.id.sendMessageBTN);
         rv = findViewById(R.id.showMessaged);
         msg = findViewById(R.id.enterMessage);
+        recordView = findViewById(R.id.record_view);
+        voice = findViewById(R.id.sendVoiceBTN);
         userImage = findViewById(R.id.userImage);
         sendImage = findViewById(R.id.sendImage);
         userStatus = findViewById(R.id.userStatus);
+        userName = findViewById(R.id.userName);
+        sendM = findViewById(R.id.sendMessageLayout);
+        vc = findViewById(R.id.vc);
         notificationManager = NotificationManagerCompat.from(StartMessaging.this);
 //        MESSAGES.add(new com.android.gossipgeese.notification.MessageModel("Good Morning","JIM"));
 //        senToChaanel1();
@@ -101,7 +125,18 @@ public class StartMessaging extends AppCompatActivity {
         String msgT = i.getStringExtra("msg");
         token = i.getStringExtra("token");
         name = i.getStringExtra("name");
+        userName.setText(name);
 
+
+
+
+        vc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(StartMessaging.this, "Video Call Going", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue = Volley.newRequestQueue(this);
         if (!TextUtils.isEmpty(msgT)){
             String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
             String key = FirebaseDatabase.getInstance().getReference().child("Key").push().getKey();
@@ -139,7 +174,7 @@ public class StartMessaging extends AppCompatActivity {
                     rv.smoothScrollToPosition(adapter.getItemCount());
                     for (DataSnapshot snapshot1: snapshot.getChildren()){
                         MessageModel model = snapshot1.getValue(MessageModel.class);
-                       list.add(model);
+                        list.add(model);
                     }
                     rv.smoothScrollToPosition(adapter.getItemCount());
                     rv.setAdapter(adapter);
@@ -157,7 +192,6 @@ public class StartMessaging extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Dexter.withContext(StartMessaging.this)
-                        //Dexter.withActivity(MainActivity.this)
                         .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                         .withListener(new PermissionListener() {
                             @Override
@@ -196,7 +230,7 @@ public class StartMessaging extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                sendNotification(name,message,token);
+                                sendMessagenotification(message);
                                 adapter.notifyDataSetChanged();
                             }
                         });
@@ -208,52 +242,204 @@ public class StartMessaging extends AppCompatActivity {
                     }
                 });
             }
+
+        });
+        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                senderName = snapshot.child("name").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        msg.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().equals("")){
+                    send.setVisibility(View.GONE);
+                    voice.setVisibility(View.VISIBLE);
+                }else{
+                    send.setVisibility(View.VISIBLE);
+                    voice.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        audioDialog = new ProgressDialog(StartMessaging.this);
+        audioDialog.setMessage("Sendering Voice Message");
+        voice.setRecordView(recordView);
+        voice.setListenForRecord(false);
+        voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(StartMessaging.this, "Clicked", Toast.LENGTH_SHORT).show();
+                if (checkPermission()==true){
+                    voice.setListenForRecord(true);
+                }else{
+                    ActivityCompat.requestPermissions(StartMessaging.this, new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+
+                }
+
+
+            }
+        });
+        recordView.setOnRecordListener(new OnRecordListener() {
+            @Override
+            public void onStart() {
+                audioPath = getExternalCacheDir().getAbsolutePath()+"/"+"recordingaudio" + System.currentTimeMillis() +".mp3";
+                mediaRecorder = new MediaRecorder();
+                mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                mediaRecorder.setOutputFile(audioPath);
+                try {
+                    mediaRecorder.prepare();
+                    mediaRecorder.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(StartMessaging.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+                sendM.setVisibility(View.GONE);
+                recordView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onCancel() {
+                //On Swipe To Cancel
+                Log.d("RecordView", "onCancel");
+                mediaRecorder.stop();
+                mediaRecorder.reset();
+                mediaRecorder.release();
+                File file = new File(audioPath);
+                if (file.exists()){
+                    file.delete();
+                }
+                sendM.setVisibility(View.VISIBLE);
+                recordView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFinish(long recordTime, boolean limitReached) {
+                //Stop Recording..
+                //limitReached to determine if the Record was finished when time limit reached.
+
+                Log.d("RecordView", "onFinish");
+
+                    try {
+                        mediaRecorder.stop();
+                        mediaRecorder.release();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                sendM.setVisibility(View.VISIBLE);
+                recordView.setVisibility(View.GONE);
+                sendRecordingMessage(audioPath);
+            }
+
+            @Override
+            public void onLessThanSecond() {
+                //When the record time is less than One Second
+                Log.d("RecordView", "onLessThanSecond");
+                mediaRecorder.stop();
+                mediaRecorder.reset();
+                mediaRecorder.release();
+                File file = new File(audioPath);
+                if (file.exists()){
+                    file.delete();
+                }
+                sendM.setVisibility(View.VISIBLE);
+                recordView.setVisibility(View.GONE);
+            }
+        });
+
+
+
+
+
+    }
+
+
+    private boolean checkPermission(){
+        int first = ActivityCompat.checkSelfPermission(StartMessaging.this, Manifest.permission.RECORD_AUDIO);
+        int scond  = ActivityCompat.checkSelfPermission(StartMessaging.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return first == PackageManager.PERMISSION_GRANTED && scond ==PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void sendRecordingMessage(String audioPath){
+        audioDialog.show();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("voices").child(senderRoom+System.currentTimeMillis()+"");
+        Uri audioFile = Uri.fromFile(new File(audioPath));
+        storageReference.putFile(audioFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        String key = FirebaseDatabase.getInstance().getReference().child("push").push().getKey();
+                        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                        MessageModel model = new MessageModel(senderId,key,url,currentTime,msg.getText().toString(),"null","voice");
+                        FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        audioDialog.dismiss();
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                audioDialog.dismiss();
+                                Toast.makeText(StartMessaging.this, "Unable to Send Message", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                audioDialog.dismiss();
+                Toast.makeText(StartMessaging.this, "Error While Sending Audio", Toast.LENGTH_SHORT).show();
+            }
         });
 
     }
 
-//    private void senToChaanel1() {
-//        sendChannel1Notification(StartMessaging.this);
-//    }
+//    private void setUpRecording() {
+//        mediaRecorder = new MediaRecorder();
+//        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+//        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+//        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 //
-//    public static void sendChannel1Notification(Context context) {
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
-//            Intent activityIntent = new Intent(context, MainActivity.class);
-//            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, activityIntent, 0);
-//
-//
-//
-//            RemoteInput remoteInput = new RemoteInput.Builder("key_text_reply")
-//                    .setLabel("your Answer...").build();
-//            Intent replyIntent = new Intent(context, NotificationReceiver.class);
-//            PendingIntent replyPendingIntent = PendingIntent.getBroadcast(context, 0, replyIntent, 0);
-//            NotificationCompat.Action replayAction = new NotificationCompat.Action.Builder(
-//                    R.drawable.ic_gossipgeese, "Replay", replyPendingIntent
-//            ).addRemoteInput(remoteInput).build();
-//            NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(
-//                    "me"
-//            );
-//            messagingStyle.setConversationTitle("Group Chat");
-//
-//            for(com.android.gossipgeese.notification.MessageModel chatMessage : MESSAGES){
-//                NotificationCompat.MessagingStyle.Message notificationMesage = new NotificationCompat.MessagingStyle.Message(
-//                        chatMessage.getText(), chatMessage.getTimeSpam(),chatMessage.getSender()
-//                );
-//                messagingStyle.addMessage(notificationMesage);
-//            }
-//
-//            Notification notification = new NotificationCompat.Builder(context, CHANNEL_1_ID)
-//                    .setSmallIcon(R.drawable.ic_gossipgeese)
-//
-//                    .setStyle(messagingStyle)
-//                    .addAction(replayAction)
-//                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-//                    .setContentIntent(contentIntent)
-//                    .setAutoCancel(true)
-//                    .build();
-//            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-//            notificationManager.notify(1, notification);
+//        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "GoosipGesse/Media/Recording");
+//        if (!file.exists()) {
+//            file.mkdir();
+//            audioPath = file.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".3gp";
+//            mediaRecorder.setOutputFile(audioPath);
 //        }
 //    }
 
@@ -289,38 +475,41 @@ public class StartMessaging extends AppCompatActivity {
 
     }
 
-    void sendNotification(String name, String message, String token){
+
+    private void sendMessagenotification(String message) {
+        JSONObject jsonObject = new JSONObject();
         try {
-            RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://fcm.googleapis.com/fcm/send";
-            JSONObject data = new JSONObject();
-            data.put("title", name);
-            data.put("body", message);
-            JSONObject notificationData = new JSONObject();
-            notificationData.put("notification",data);
-            notificationData.put("to",token);
-            JsonObjectRequest request = new JsonObjectRequest(url, notificationData, new Response.Listener<JSONObject>() {
+            jsonObject.put("to","/topics/"+receiverId);
+            JSONObject jsonObject1 = new JSONObject();
+            jsonObject1.put("title", "Message from "+senderName);
+            jsonObject1.put("body",message);
+            JSONObject jsonObject2 = new JSONObject();
+            jsonObject2.put("userId",FirebaseAuth.getInstance().getUid());
+            jsonObject2.put("recId",receiverId);
+            jsonObject2.put("type","sms");
+            jsonObject.put("notification",jsonObject1);
+            jsonObject.put("data",jsonObject2);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,URL, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
                 }
             }){
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String,String> map = new HashMap<>();
-                    map.put("Key=Authorization","AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E");
-                    map.put("Content-Type","application/json");
+                    Map<String,String>map = new HashMap<>();
+                    map.put("content-type","application/json");
+                    map.put("authorization","key=AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E");
                     return map;
                 }
             };
-            queue.add(request);
-        }catch (Exception ex){
-
+            requestQueue.add(request);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

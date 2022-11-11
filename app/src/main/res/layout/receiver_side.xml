@@ -6,14 +6,25 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="@dimen/_280mdp"
         android:maxHeight="@dimen/_220mdp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/reactionImage_rec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:src="@drawable/ic_laugh"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/receiverMsg"
+            app:layout_constraintStart_toEndOf="@id/receiverMsg"
+            app:layout_constraintTop_toTopOf="@id/receiverMsg" />
 
 
         <View
@@ -30,83 +41,95 @@
             android:id="@+id/receiverImage"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="13dp"
             android:layout_marginTop="@dimen/_10mdp"
+            android:layout_marginEnd="@dimen/_10mdp"
+            android:layout_marginRight="@dimen/_10mdp"
             android:padding="2dp"
             android:src="@drawable/ic_gossipgeese"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
+        <me.jagar.chatvoiceplayerlibrary.VoicePlayerView
+            android:id="@+id/voicePlayer_rec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:enableVisualizer="true"
+            app:visualizationPlayedColor="#ff7700"
+            app:visualizationNotPlayedColor="#727171"
+            app:playPauseBackgroundColor="#ff7700"
+            app:timingBackgroundColor="#6AFF7700"
+            app:seekBarProgressColor="#000"
+            app:showShareButton="false"
+            app:shareCornerRadius="100"
+            app:playPauseCornerRadius="100"
+            app:showTiming="true"
+            app:viewCornerRadius="100"
+            app:viewBackground="#C6C4CF"
+            app:progressTimeColor="#000"
+            app:seekBarThumbColor="#FFC107"
+            app:shareBackgroundColor="#ff7700"
+            app:playProgressbarColor="#ff7700"
+            app:layout_constraintStart_toEndOf="@id/receiverImage"
+            app:layout_constraintTop_toTopOf="@id/receiverImage"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hide_rec"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/receiverImage"
+            app:layout_constraintTop_toTopOf="@id/receiverImage">
+            <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="false"
-            android:layout_gravity="right"
-            android:layout_marginStart="11dp"
+            android:layout_marginStart="15dp"
             android:background="@drawable/receiver_bg"
-            android:maxWidth="310dp"
-            android:maxHeight="1000dp"
-            android:minWidth="65dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/receiverImage"
-            app:layout_constraintTop_toTopOf="@id/receiverImage">
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/rec_image"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_margin="6dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp"
                 android:maxWidth="310dp"
                 android:maxHeight="310dp"
                 android:scaleType="centerCrop"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:srcCompat="@drawable/ic_profile" />
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linear2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="3dp"
-                android:background="@drawable/receiver_bg"
-                android:maxWidth="310dp"
-                android:maxHeight="1000dp"
-                android:minWidth="40dp">
-
-                <TextView
-                    android:id="@+id/receiverMsg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="43dp"
-                    android:gravity="center|left"
-                    android:lines="4"
-                    android:maxWidth="@dimen/_220mdp"
-                    android:maxLines="4"
-                    android:minWidth="40dp"
-                    android:padding="3dp"
-                    android:text="Msg Receiver This"
-                    android:textColor="@color/blurBlack"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:layout_constraintStart_toStratOf="@+id/view2">
 
-    <ImageView
-        android:id="@+id/reactionImage_rec"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:elevation="20dp"
-        android:src="@drawable/ic_laugh"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />
+            <TextView
+                android:id="@+id/receiverMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/receiver_bg"
+                android:gravity="center|left"
+                android:lines="4"
+                android:maxWidth="@dimen/_220mdp"
+                android:maxLines="4"
+                android:minWidth="40dp"
+                android:padding="4dp"
+                android:text="Msg Receiver This"
+                android:textColor="@color/blurBlack"
+                android:textSize="15dp" />
+        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

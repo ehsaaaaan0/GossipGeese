@@ -56,7 +56,7 @@
         android:layout_marginLeft="@dimen/_10mdp"
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif"
-        android:text="Ehsan Abid"
+        android:text=""
         android:textColor="#FFF"
         android:textSize="@dimen/_15font_mdp"
         app:layout_constraintBottom_toTopOf="@+id/userLast"
@@ -89,6 +89,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="5dp"
+            android:id="@+id/vc"
             android:src="@drawable/videocall" />
     </LinearLayout>
 
@@ -144,12 +145,15 @@
                 android:layout_height="wrap_content"
                 android:padding="15dp">
 
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
+                    android:id="@+id/sendMessageLayout"
                     android:background="@drawable/msgbg_"
                     android:gravity="center"
+                    android:visibility="visible"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sendMessage"
@@ -180,31 +184,58 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="15dp"
                         android:src="@drawable/sendimage"
                         android:tint="@color/colorPrimaryDark" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:src="@drawable/voicmic"
-                        android:tint="@color/colorPrimaryDark" />
+
 
                 </LinearLayout>
 
-                <ImageView
+                <com.devlomi.record_view.RecordView
+                    android:id="@+id/record_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@id/sendMessage"
+                    app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
+                    app:slide_to_cancel_arrow_color="#000000"
+                    app:slide_to_cancel_bounds="8dp"
+                    android:visibility="gone"
+                    app:slide_to_cancel_margin_right="10dp"
+                    app:slide_to_cancel_text="Slide To Cancel"
+                    app:counter_time_color="#ff0000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/sendMessage"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/sendMessage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/bg_send"
-                    android:src="@drawable/send_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
+                    app:layout_constraintVertical_bias="0.5">
+                <ImageView
+                    android:id="@+id/sendMessageBTN"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="gone"
+                    android:background="@drawable/bg_send"
+                    android:src="@drawable/send_btn"
+                    />
+                    <com.devlomi.record_view.RecordButton
+                        android:id="@+id/sendVoiceBTN"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/bg_send"
+                        android:src="@drawable/voicmic"
+                        />
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

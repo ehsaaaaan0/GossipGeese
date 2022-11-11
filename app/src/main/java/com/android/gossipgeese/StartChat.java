@@ -36,7 +36,7 @@ public class StartChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_start_chat);
-        uploadToLocalDatabase();
+//        uploadToLocalDatabase();
         rv = findViewById(R.id.users_rv);
         search = findViewById(R.id.search_main);
         db = new DbHealper(StartChat.this);
@@ -50,7 +50,6 @@ public class StartChat extends AppCompatActivity {
             if (cursor.getCount()>0){
                 NewMessageModel model = new NewMessageModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
                     list.add(model);
-
                 }
             adapter.notifyDataSetChanged();
             rv.setAdapter(adapter);
@@ -138,88 +137,84 @@ public class StartChat extends AppCompatActivity {
 
     }
 
-    private void uploadToLocalDatabase() {
-        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                        String id = snapshot1.child("id").getValue(String.class);
-                        String name = snapshot1.child("name").getValue(String.class);
-                        String image = snapshot1.child("image").getValue(String.class);
-                        String time = snapshot1.child("time").getValue(String.class);
-                        String token = snapshot1.child("token").getValue(String.class);
-                        if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
-//                            db.insert(id,name,image,"",time,"false","false");
-
-//                            NewMessageModel model = new NewMessageModel(id, name, image, " ", time, "false", "false");
-//                            list.add(model);
-                            Cursor cursor = db.realAllData();
-                            while (cursor.moveToNext()){
-                                if (cursor.getCount()>0){
-                                    if (!Objects.equals(cursor.getString(0), id)){
-                                        db.insert(id,name,image,"",time,"false","false",token);
-                                    }
-                                }else{
-                                    db.insert(id,name,image,"",time,"false","false",token);
-                                }
-                            }
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                    rv.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
-    @Override
-    protected void onStart() {
-        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                        String id = snapshot1.child("id").getValue(String.class);
-                        String name = snapshot1.child("name").getValue(String.class);
-                        String image = snapshot1.child("image").getValue(String.class);
-                        String time = snapshot1.child("time").getValue(String.class);
-                        String token = snapshot1.child("token").getValue(String.class);
-                        if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
-//                            NewMessageModel model = new NewMessageModel(id, name, image, " ", time, "false", "false");
-//                            list.add(model);
-                            db.insert(id,name,image,"",time,"false","false",token);
-
-                            Cursor cursor = db.realAllData();
-                            while (cursor.moveToNext()){
-                                if (cursor.getCount()>0){
-                                    if (!Objects.equals(cursor.getString(0), id)){
-                                        db.insert(id,name,image,"last",time,"false","false",token);
-                                    }
-                                }else{
-                                    db.insert(id,name,image,"last",time,"false","false",token);
-                                }
-                            }
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                    rv.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        super.onStart();
-    }
+//    private void uploadToLocalDatabase() {
+//        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()){
+//                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//                        String id = snapshot1.child("id").getValue(String.class);
+//                        String name = snapshot1.child("name").getValue(String.class);
+//                        String image = snapshot1.child("image").getValue(String.class);
+//                        String time = snapshot1.child("time").getValue(String.class);
+//                        String token = snapshot1.child("token").getValue(String.class);
+//                        if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
+//                            Cursor cursor = db.realAllData();
+//                            while (cursor.moveToNext()){
+//                                if (cursor.getCount()>0){
+//                                    if (!Objects.equals(cursor.getString(0), id)){
+//                                        db.insert(id,name,image,"",time,"false","false",token);
+//                                    }
+//                                }else{
+//                                    db.insert(id,name,image,"",time,"false","false",token);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    adapter.notifyDataSetChanged();
+//                    rv.setAdapter(adapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//    }
+//
+//    @Override
+//    protected void onStart() {
+//        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()){
+//                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//                        String id = snapshot1.child("id").getValue(String.class);
+//                        String name = snapshot1.child("name").getValue(String.class);
+//                        String image = snapshot1.child("image").getValue(String.class);
+//                        String time = snapshot1.child("time").getValue(String.class);
+//                        String token = snapshot1.child("token").getValue(String.class);
+//                        if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
+////                            NewMessageModel model = new NewMessageModel(id, name, image, " ", time, "false", "false");
+////                            list.add(model);
+//                            db.insert(id,name,image,"",time,"false","false",token);
+//
+//                            Cursor cursor = db.realAllData();
+//                            while (cursor.moveToNext()){
+//                                if (cursor.getCount()>0){
+//                                    if (!Objects.equals(cursor.getString(0), id)){
+//                                        db.insert(id,name,image,"last",time,"false","false",token);
+//                                    }
+//                                }else{
+//                                    db.insert(id,name,image,"last",time,"false","false",token);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    adapter.notifyDataSetChanged();
+//                    rv.setAdapter(adapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        super.onStart();
+//    }
 
 
 

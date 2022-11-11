@@ -7,6 +7,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.content.ClipboardManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.jagar.chatvoiceplayerlibrary.VoicePlayerView;
+
 public class ChatAdapter extends RecyclerView.Adapter {
     ArrayList<MessageModel> list;
     Context context;
@@ -61,10 +65,12 @@ public class ChatAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+
+
         if (viewType == SENDER_VIEW_TYPE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sender_side, parent, false);
             return new SenderViewHolder(view);
-        } else {
+        }else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receiver_side, parent, false);
             return new ReceiverViewHolder(view);
         }
@@ -72,10 +78,12 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+
         if (list.get(position).getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-            return SENDER_VIEW_TYPE;
-        }else{
-            return RECEIVER_VIEW_TYPE;
+                return SENDER_VIEW_TYPE;
+        }else {
+                return RECEIVER_VIEW_TYPE;
+
         }
     }
 
@@ -121,6 +129,17 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
         if (holder.getClass()==SenderViewHolder.class){
             String getImge = model.getImage();
+
+            if (Objects.equals(model.getType(), "voice")){
+                ((SenderViewHolder)holder).showOther.setVisibility(View.GONE);
+                ((SenderViewHolder)holder).voicePlayerView.setVisibility(View.VISIBLE);
+                Uri uri = Uri.parse(model.getVoice());
+                ((SenderViewHolder)holder).voicePlayerView.setAudio(model.getVoice());
+            }else{
+                ((SenderViewHolder)holder).showOther.setVisibility(View.VISIBLE);
+                ((SenderViewHolder)holder).voicePlayerView.setVisibility(View.GONE);
+            }
+
             if (TextUtils.isEmpty(getImge)){
                 ((SenderViewHolder)holder).image_msg.setVisibility(View.GONE);
                 ((SenderViewHolder) holder).senderMsg.setVisibility(View.VISIBLE);
@@ -216,9 +235,20 @@ public class ChatAdapter extends RecyclerView.Adapter {
             });
         }else{
             String getImge = model.getImage();
+
+            if (model.getType()=="voice"){
+                ((ReceiverViewHolder)holder).hide_rec.setVisibility(View.GONE);
+                ((ReceiverViewHolder)holder).voicePlayer_rec.setVisibility(View.VISIBLE);
+                ((ReceiverViewHolder)holder).voicePlayer_rec.setAudio(model.getVoice());
+            }else{
+                ((ReceiverViewHolder)holder).hide_rec.setVisibility(View.VISIBLE);
+                ((ReceiverViewHolder)holder).voicePlayer_rec.setVisibility(View.GONE);
+            }
+
+
             if (TextUtils.isEmpty(getImge)){
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.GONE);
-                ((ReceiverViewHolder) holder).rec_image.setVisibility(View.VISIBLE);
+                ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.VISIBLE);
             }else{
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.VISIBLE);
                 ((ReceiverViewHolder) holder).rec_image.setVisibility(View.GONE);
@@ -259,7 +289,9 @@ public class ChatAdapter extends RecyclerView.Adapter {
         CircleImageView senderImage;
         TextView senderMsg;
         ImageView reaction,image_msg;
+        LinearLayout showOther;
         ConstraintLayout showReaction,show_options;
+        VoicePlayerView voicePlayerView;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
             senderImage = itemView.findViewById(R.id.senderImage);
@@ -268,6 +300,8 @@ public class ChatAdapter extends RecyclerView.Adapter {
             showReaction = itemView.findViewById(R.id.showReaction);
             show_options = itemView.findViewById(R.id.show_options);
             image_msg = itemView.findViewById(R.id.image_msg);
+            showOther = itemView.findViewById(R.id.showOther);
+            voicePlayerView = itemView.findViewById(R.id.voicePlayer);
         }
     }
 
@@ -275,12 +309,16 @@ public class ChatAdapter extends RecyclerView.Adapter {
         CircleImageView receiverImage;
         TextView receiverMsg;
         ImageView reactionRec,rec_image;
+        ConstraintLayout hide_rec;
+        VoicePlayerView voicePlayer_rec;
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverImage = itemView.findViewById(R.id.receiverImage);
             receiverMsg = itemView.findViewById(R.id.receiverMsg);
             reactionRec = itemView.findViewById(R.id.reactionImage_rec);
             rec_image = itemView.findViewById(R.id.rec_image);
+            hide_rec = itemView.findViewById(R.id.hide_rec);
+            voicePlayer_rec = itemView.findViewById(R.id.voicePlayer_rec);
         }
     }
 }
