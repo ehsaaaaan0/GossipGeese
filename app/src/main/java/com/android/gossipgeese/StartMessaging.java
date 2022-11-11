@@ -281,7 +281,7 @@ public class StartMessaging extends AppCompatActivity {
         });
 
         audioDialog = new ProgressDialog(StartMessaging.this);
-        audioDialog.setMessage("Sendering Voice Message");
+        audioDialog.setMessage("Sending Voice Message");
         voice.setRecordView(recordView);
         voice.setListenForRecord(false);
         voice.setOnClickListener(new View.OnClickListener() {
