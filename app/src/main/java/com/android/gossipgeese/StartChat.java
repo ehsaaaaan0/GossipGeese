@@ -48,8 +48,10 @@ public class StartChat extends AppCompatActivity {
         Cursor cursor = db.realAllData();
         while (cursor.moveToNext()){
             if (cursor.getCount()>0){
-                NewMessageModel model = new NewMessageModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
+                if (cursor.getString(1)!=null) {
+                    NewMessageModel model = new NewMessageModel(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
                     list.add(model);
+                }
                 }
             adapter.notifyDataSetChanged();
             rv.setAdapter(adapter);

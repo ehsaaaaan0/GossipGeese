@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gossipgeese.ForwardMsg;
 import com.android.gossipgeese.R;
+import com.android.gossipgeese.ViewImage;
 import com.android.gossipgeese.model.MessageModel;
 import com.github.pgreze.reactions.PopupGravity;
 import com.github.pgreze.reactions.ReactionPopup;
@@ -146,6 +147,13 @@ public class ChatAdapter extends RecyclerView.Adapter {
             }else{
                 ((SenderViewHolder)holder).image_msg.setVisibility(View.VISIBLE);
                 ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
+                ((SenderViewHolder)holder).image_msg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        context.startActivity(new Intent(context, ViewImage.class)
+                                .putExtra("image",model.getImage()));
+                    }
+                });
             }
             Picasso.get().load(model.getImage()).into(((SenderViewHolder)holder).image_msg);
             ((SenderViewHolder)holder).senderMsg.setText(model.getMessage());
@@ -236,7 +244,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         }else{
             String getImge = model.getImage();
 
-            if (model.getType()=="voice"){
+            if (Objects.equals(model.getType(), "voice")){
                 ((ReceiverViewHolder)holder).hide_rec.setVisibility(View.GONE);
                 ((ReceiverViewHolder)holder).voicePlayer_rec.setVisibility(View.VISIBLE);
                 ((ReceiverViewHolder)holder).voicePlayer_rec.setAudio(model.getVoice());
@@ -251,7 +259,14 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.VISIBLE);
             }else{
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.VISIBLE);
-                ((ReceiverViewHolder) holder).rec_image.setVisibility(View.GONE);
+                ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
+                ((ReceiverViewHolder)holder).rec_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        context.startActivity(new Intent(context, ViewImage.class)
+                                .putExtra("image",model.getImage()));
+                    }
+                });
             }
             ((ReceiverViewHolder)holder).receiverMsg.setText(model.getMessage());
             FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {

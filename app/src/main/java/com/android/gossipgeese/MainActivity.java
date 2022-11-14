@@ -278,37 +278,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                        String id = snapshot1.child("id").getValue(String.class);
-                        String name = snapshot1.child("name").getValue(String.class);
-                        String image = snapshot1.child("image").getValue(String.class);
-                        String time = snapshot1.child("time").getValue(String.class);
-                        String token = snapshot1.child("token").getValue(String.class);
-                        if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
-                            Cursor cursor = db.realAllData();
-                            while (cursor.moveToNext()){
-                                if (cursor.getCount()>0){
-                                    if (!Objects.equals(cursor.getString(0), id)){
-                                        db.insert(id,name,image,"",time,"false","false",token);
-                                    }
-                                }else{
-                                    db.insert(id,name,image,"",time,"false","false",token);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
@@ -330,6 +299,38 @@ public class MainActivity extends AppCompatActivity {
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).child("status").setValue("Online");
             FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).child("online").setValue(currentTime);
+            FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                            String id = snapshot1.child("id").getValue(String.class);
+                            String name = snapshot1.child("name").getValue(String.class);
+                            String image = snapshot1.child("image").getValue(String.class);
+                            String time = snapshot1.child("time").getValue(String.class);
+                            String token = snapshot1.child("token").getValue(String.class);
+                            if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
+                                Cursor cursor = db.realAllData();
+                                while (cursor.moveToNext()){
+                                    if (cursor.getCount()>0){
+                                        if (!Objects.equals(cursor.getString(0), id)){
+                                            db.insert(id,name,image,"",time,"false","false",token);
+                                        }
+                                    }else{
+                                        db.insert(id,name,image,"",time,"false","false",token);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
 
     }
