@@ -31,23 +31,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                    android:id="@+id/justForNow"
-                    android:layout_width="@dimen/_35mdp"
-                    android:layout_height="@dimen/_35mdp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="@dimen/_20mdp"
-                    android:background="#373737"
-                    android:gravity="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/menu" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/upload_story"

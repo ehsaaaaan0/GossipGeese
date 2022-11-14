@@ -57,6 +57,7 @@
             app:progressTimeColor="#000"
             app:seekBarThumbColor="#FFC107"
             app:shareBackgroundColor="#ff7700"
+            android:visibility="gone"
             app:playProgressbarColor="#ff7700"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/senderImage"
@@ -70,9 +71,6 @@
             android:layout_gravity="right"
             android:layout_marginEnd="11dp"
             android:background="@drawable/sender_bg"
-            android:maxWidth="310dp"
-            android:maxHeight="1000dp"
-            android:minWidth="65dp"
             android:visibility="visible"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -82,11 +80,12 @@
 
             <ImageView
                 android:id="@+id/image_msg"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_margin="6dp"
-                android:maxWidth="310dp"
-                android:maxHeight="310dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp"
                 android:scaleType="centerCrop"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_profile" />
@@ -99,20 +98,18 @@
                 android:layout_gravity="left"
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/sender_bg"
-                android:maxWidth="310dp"
-                android:maxHeight="1000dp"
-                android:minWidth="65dp">
+                >
 
                 <TextView
                     android:id="@+id/senderMsg_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center|left"
-                    android:lines="4"
                     android:maxWidth="@dimen/_220mdp"
                     android:maxLines="4"
-                    android:minWidth="40dp"
+                    android:minHeight="40dp"
                     android:padding="3dp"
+                    android:minWidth="30dp"
                     android:singleLine="false"
                     android:text="hi"
                     android:textColor="@color/blurBlack"
@@ -137,6 +134,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/showReaction"
         app:layout_constraintStart_toStartOf="@+id/showReaction"
-        app:layout_constraintTop_toTopOf="@+id/showReaction" />
+        app:layout_constraintTop_toTopOf="@+id/showReaction"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

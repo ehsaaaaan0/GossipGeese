@@ -21,6 +21,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -65,7 +67,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     AppCompatButton startChat,archive,recent;
-    LinearLayout justForNow,upload_story;
+    LinearLayout upload_story;
     RecyclerView rv,storyRv;
     ConstraintLayout hide;
     BottomNavigationView menu;
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getUid());
         startChat = findViewById(R.id.startChat);
         fazoolText = findViewById(R.id.fazoolText);
-        justForNow = findViewById(R.id.justForNow);
         upload_story = findViewById(R.id.upload_story);
         menu  =findViewById(R.id.bottomNav);
         archive = findViewById(R.id.archiveBTN);
@@ -218,14 +219,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, StartChat.class));
             }
         });
-        justForNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this,MainLoginScreen.class));
-                finish();
-            }
-        });
 
 
         gallary = registerForActivityResult(new ActivityResultContracts.GetContent() , new ActivityResultCallback<Uri>() {
@@ -285,6 +278,41 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        String id = snapshot1.child("id").getValue(String.class);
+                        String name = snapshot1.child("name").getValue(String.class);
+                        String image = snapshot1.child("image").getValue(String.class);
+                        String time = snapshot1.child("time").getValue(String.class);
+                        String token = snapshot1.child("token").getValue(String.class);
+                        if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
+                            Cursor cursor = db.realAllData();
+                            while (cursor.moveToNext()){
+                                if (cursor.getCount()>0){
+                                    if (!Objects.equals(cursor.getString(0), id)){
+                                        db.insert(id,name,image,"",time,"false","false",token);
+                                    }
+                                }else{
+                                    db.insert(id,name,image,"",time,"false","false",token);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
     }
 
     @Override
@@ -320,19 +348,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_items,menu);
+        return true;
 
+    }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
-//            super.onActivityResult(requestCode, resultCode, data);
-//            if (data.getData()!=null){
-//                uri = data.getData();
-//
-//
-//
-//            }
-//        }
-//
-//    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout_menu:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MainActivity.this,MainLoginScreen.class));
+                finish();
+                break;
+            default:
+                Toast.makeText(this, "Not CLicked", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

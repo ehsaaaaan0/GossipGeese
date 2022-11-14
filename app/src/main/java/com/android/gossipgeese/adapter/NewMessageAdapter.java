@@ -16,6 +16,7 @@ import com.android.gossipgeese.R;
 import com.android.gossipgeese.StartMessaging;
 import com.android.gossipgeese.database.DbHealper;
 import com.android.gossipgeese.model.NewMessageModel;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,7 +56,7 @@ public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.my
         holder.name.setText(model.getName());
         holder.time.setText(model.getTime());
         holder.lastMessage.setText(model.getLastMsg());
-        Picasso.get().load(model.getImage()).into(holder.image);
+        Glide.with(context).load(model.getImage()).into(holder.image);
 
         FirebaseDatabase.getInstance().getReference().child("chats")
                 .child(FirebaseAuth.getInstance().getUid() + model.getId())

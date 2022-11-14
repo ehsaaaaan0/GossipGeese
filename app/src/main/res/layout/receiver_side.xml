@@ -62,6 +62,7 @@
             app:shareCornerRadius="100"
             app:playPauseCornerRadius="100"
             app:showTiming="true"
+            android:visibility="gone"
             app:viewCornerRadius="100"
             app:viewBackground="#C6C4CF"
             app:progressTimeColor="#000"
@@ -74,7 +75,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/hide_rec"
-            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/receiverImage"
             app:layout_constraintTop_toTopOf="@id/receiverImage">
             <LinearLayout
@@ -90,14 +90,12 @@
 
             <ImageView
                 android:id="@+id/rec_image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:maxWidth="310dp"
-                android:maxHeight="310dp"
                 android:scaleType="centerCrop"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ic_profile" />
@@ -110,21 +108,25 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:orientation="horizontal"
+            android:maxHeight="@dimen/_200mdp"
+            android:maxWidth="@dimen/_240mdp"
             app:layout_constraintTop_toBottomOf="@id/linearLayout"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/receiverMsg"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/receiver_bg"
                 android:gravity="center|left"
-                android:lines="4"
-                android:maxWidth="@dimen/_220mdp"
-                android:maxLines="4"
                 android:minWidth="40dp"
+                android:minHeight="40dp"
                 android:padding="4dp"
-                android:text="Msg Receiver This"
+                android:maxHeight="@dimen/_180mdp"
+                android:maxLines="20"
+                android:maxWidth="@dimen/_220mdp"
+                android:singleLine="false"
+                android:text="Msg Msg Receiver "
                 android:textColor="@color/blurBlack"
                 android:textSize="15dp" />
         </LinearLayout>

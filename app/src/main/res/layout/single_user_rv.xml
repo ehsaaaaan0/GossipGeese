@@ -62,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:text="Last Message"
+                android:singleLine="true"
                 android:textSize="@dimen/_12font_mdp"
                 app:layout_constraintBottom_toBottomOf="@id/userImage"
                 app:layout_constraintStart_toStartOf="@id/userName"
