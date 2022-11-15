@@ -171,7 +171,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                             .setContentHolder(new ViewHolder(R.layout.select_option2)).setExpanded(true, 1300)
                             .create();
                     View v = dialogPlus.getHolderView();
-                    TextView copy, delete,react,forward;
+                    TextView copy, delete,forward;
                     copy = v.findViewById(R.id.copy);
                     delete = v.findViewById(R.id.delete);
                     forward = v.findViewById(R.id.forwardMsg);
