@@ -269,8 +269,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, StartChat.class));
                 }
                 else if (item.getItemId()==R.id.status){
-
-                    Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, MyProfile.class));
                 }
 
                 return true;
