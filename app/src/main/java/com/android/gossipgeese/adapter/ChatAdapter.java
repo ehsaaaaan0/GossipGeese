@@ -119,12 +119,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 ((ReceiverViewHolder)holder).reactionRec.setVisibility(View.VISIBLE);
                 FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(pos));
             }
-//
-//            messageModel.setFeeling(pos);
-
-
-
-            return true; // true is closing popup, false is requesting a new selection
+            return true;
         });
 
 
@@ -345,6 +340,16 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     return true;
                 }
             });
+
+
+            ((ReceiverViewHolder) holder).show_rec_option.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    popup.onTouch(v, event);
+                    return false;
+                }
+            });
+
 
         }
 
