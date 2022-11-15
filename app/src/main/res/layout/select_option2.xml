@@ -19,6 +19,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:weightSum="6"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_like"
+                    android:id="@+id/rec0"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_love"
+                    android:id="@+id/rec1"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_laugh"
+                    android:id="@+id/rec2"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_wow"
+                    android:id="@+id/rec3"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_sad"
+                    android:id="@+id/rec4"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_angry"
+                    android:layout_weight="1"
+                    android:id="@+id/rec5"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/forwardMsg"
@@ -89,22 +139,7 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/blurBlack" />
 
-            <TextView
-                android:id="@+id/react"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:drawableEnd="@drawable/emoji"
-                android:drawableRight="@drawable/emoji"
-                android:fontFamily="sans-serif"
-                android:gravity="center|start"
-                android:paddingEnd="20dp"
-                android:paddingRight="20dp"
-                android:text="React to Message"
-                android:textColor="@color/blurBlack"
-                android:textSize="@dimen/_15font_mdp"
-                android:textStyle="bold" />
+
 
             <View
                 android:layout_width="match_parent"

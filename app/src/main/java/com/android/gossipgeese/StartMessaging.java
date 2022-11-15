@@ -81,7 +81,7 @@ public class StartMessaging extends AppCompatActivity {
     RecyclerView rv;
     CircleImageView userImage;
     ImageView vc;
-    String senderRoom, receiverRoom,name;
+    String senderRoom, receiverRoom,name,email;
     ImageView send,sendImage;
     EditText msg;
     LinearLayout sendM;
@@ -93,6 +93,7 @@ public class StartMessaging extends AppCompatActivity {
     String senderName;
     MediaRecorder mediaRecorder;
     String audioPath;
+    LinearLayout video;
     //    public static List<com.android.gossipgeese.notification.MessageModel> MESSAGES = new ArrayList<>();
     TextView userStatus,userName;
 
@@ -106,6 +107,7 @@ public class StartMessaging extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_start_messaging);
+        video = findViewById(R.id.videoLiner);
         send = findViewById(R.id.sendMessageBTN);
         rv = findViewById(R.id.showMessaged);
         msg = findViewById(R.id.enterMessage);
@@ -131,6 +133,17 @@ public class StartMessaging extends AppCompatActivity {
 
 
 
+        FirebaseDatabase.getInstance().getReference().child("users").child(receiverId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                email = snapshot.child("email").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         vc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -371,6 +384,17 @@ public class StartMessaging extends AppCompatActivity {
             }
         });
 
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(StartMessaging.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(StartMessaging.this, OutgoingInvitationActivity.class)
+//                        .putExtra("token",token)
+//                        .putExtra("name",name)
+//                        .putExtra("id",receiverId)
+//                        .putExtra("email",email));
+            }
+        });
 
 
 

@@ -97,6 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10mdp"
+
         android:background="@drawable/chat_icons"
         app:layout_constraintBottom_toBottomOf="@id/videoLiner"
         app:layout_constraintEnd_toStartOf="@id/videoLiner"

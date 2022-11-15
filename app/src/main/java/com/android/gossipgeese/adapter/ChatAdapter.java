@@ -124,6 +124,8 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
 
         if (holder.getClass()==SenderViewHolder.class){
+            ((SenderViewHolder)holder).senderMsg.setText(model.getMessage());
+
             String getImge = model.getImage();
 
             if (Objects.equals(model.getType(), "voice")){
@@ -150,8 +152,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     }
                 });
             }
-            Picasso.get().load(model.getImage()).into(((SenderViewHolder)holder).image_msg);
-            ((SenderViewHolder)holder).senderMsg.setText(model.getMessage());
+            Picasso.get().load(model.getImage()).placeholder(R.drawable.ic_profile).into(((SenderViewHolder)holder).image_msg);
             FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -174,7 +175,62 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     copy = v.findViewById(R.id.copy);
                     delete = v.findViewById(R.id.delete);
                     forward = v.findViewById(R.id.forwardMsg);
-                    react = v.findViewById(R.id.react);
+                    ImageView rec0,rec1,rec2,rec3,rec4,rec5;
+                    rec0 = v.findViewById(R.id.rec0);
+                    rec1 = v.findViewById(R.id.rec1);
+                    rec2 = v.findViewById(R.id.rec2);
+                    rec3 = v.findViewById(R.id.rec3);
+                    rec4 = v.findViewById(R.id.rec4);
+                    rec5 = v.findViewById(R.id.rec5);
+
+                    rec0.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
+                            dialogPlus.dismiss();
+                        }
+                    });
 
                     forward.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -203,13 +259,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                             dialogPlus.dismiss();
                         }
                     });
-                    react.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ((SenderViewHolder)holder).showReaction.performClick();
-                            dialogPlus.dismiss();
-                        }
-                    });
+
 
 
                     dialogPlus.show();
@@ -228,13 +278,13 @@ public class ChatAdapter extends RecyclerView.Adapter {
             }else{
                 ((SenderViewHolder)holder).reaction.setVisibility(View.GONE);
             }
-            ((SenderViewHolder) holder).showReaction.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    popup.onTouch(v, event);
-                    return false;
-                }
-            });
+//            ((SenderViewHolder) holder).showReaction.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    popup.onTouch(v, event);
+//                    return false;
+//                }
+//            });
         }else{
             String getImge = model.getImage();
 
@@ -289,11 +339,66 @@ public class ChatAdapter extends RecyclerView.Adapter {
                             .setContentHolder(new ViewHolder(R.layout.select_option2)).setExpanded(true, 1300)
                             .create();
                     View v = dialogPlus.getHolderView();
-                    TextView copy, delete,react,forward;
+                    TextView copy, delete,forward;
                     copy = v.findViewById(R.id.copy);
                     delete = v.findViewById(R.id.delete);
                     forward = v.findViewById(R.id.forwardMsg);
-                    react = v.findViewById(R.id.react);
+                    ImageView rec0,rec1,rec2,rec3,rec4,rec5;
+                    rec0 = v.findViewById(R.id.rec0);
+                    rec1 = v.findViewById(R.id.rec1);
+                    rec2 = v.findViewById(R.id.rec2);
+                    rec3 = v.findViewById(R.id.rec3);
+                    rec4 = v.findViewById(R.id.rec4);
+                    rec5 = v.findViewById(R.id.rec5);
+
+                    rec0.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    rec5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
+                            dialogPlus.dismiss();
+                        }
+                    });
 
                     forward.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -322,13 +427,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                             dialogPlus.dismiss();
                         }
                     });
-                    react.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ((SenderViewHolder)holder).showReaction.performClick();
-                            dialogPlus.dismiss();
-                        }
-                    });
+
 
 
                     dialogPlus.show();
@@ -342,13 +441,13 @@ public class ChatAdapter extends RecyclerView.Adapter {
             });
 
 
-            ((ReceiverViewHolder) holder).show_rec_option.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    popup.onTouch(v, event);
-                    return false;
-                }
-            });
+//            ((ReceiverViewHolder) holder).show_rec_option.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    popup.onTouch(v, event);
+//                    return false;
+//                }
+//            });
 
 
         }

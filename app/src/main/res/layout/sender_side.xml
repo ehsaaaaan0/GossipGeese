@@ -90,6 +90,7 @@
                 android:layout_marginBottom="3dp"
                 android:scaleType="centerCrop"
                 android:padding="20dp"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_profile" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,7 +100,6 @@
                 android:layout_alignParentEnd="false"
                 android:layout_gravity="left"
                 android:layout_marginLeft="3dp"
-                android:visibility="gone"
                 android:background="@drawable/sender_bg"
                 >
 
