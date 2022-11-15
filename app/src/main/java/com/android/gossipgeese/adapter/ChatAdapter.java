@@ -168,10 +168,9 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
                 }
             });
-            ((SenderViewHolder)holder).senderMsg.setOnLongClickListener(new View.OnLongClickListener() {
+            ((SenderViewHolder)holder).show_options.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-
                     DialogPlus dialogPlus = DialogPlus.newDialog(context)
                             .setContentHolder(new ViewHolder(R.layout.select_option2)).setExpanded(true, 1300)
                             .create();
@@ -253,13 +252,14 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 ((ReceiverViewHolder)holder).voicePlayer_rec.setVisibility(View.GONE);
             }
 
-
+            ((ReceiverViewHolder)holder).receiverMsg.setText(model.getMessage());
             if (TextUtils.isEmpty(getImge)){
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.GONE);
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.VISIBLE);
             }else{
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.VISIBLE);
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
+                Picasso.get().load(model.getImage()).into(((ReceiverViewHolder)holder).rec_image);
                 ((ReceiverViewHolder)holder).rec_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -268,7 +268,6 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     }
                 });
             }
-            ((ReceiverViewHolder)holder).receiverMsg.setText(model.getMessage());
             FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -287,6 +286,66 @@ public class ChatAdapter extends RecyclerView.Adapter {
             }else{
                 ((ReceiverViewHolder)holder).reactionRec.setVisibility(View.GONE);
             }
+
+            ((ReceiverViewHolder)holder).show_rec_option.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    DialogPlus dialogPlus = DialogPlus.newDialog(context)
+                            .setContentHolder(new ViewHolder(R.layout.select_option2)).setExpanded(true, 1300)
+                            .create();
+                    View v = dialogPlus.getHolderView();
+                    TextView copy, delete,react,forward;
+                    copy = v.findViewById(R.id.copy);
+                    delete = v.findViewById(R.id.delete);
+                    forward = v.findViewById(R.id.forwardMsg);
+                    react = v.findViewById(R.id.react);
+
+                    forward.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            context.startActivity(new Intent(context, ForwardMsg.class)
+                                    .putExtra("msg",model.getMessage()));
+                        }
+                    });
+
+                    copy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText("label", ((SenderViewHolder)holder).senderMsg.getText().toString());
+                            clipboard.setPrimaryClip(clip);
+                            Toast.makeText(context, "Text Copied", Toast.LENGTH_SHORT).show();
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).removeValue();
+                            Toast.makeText(context, "Message Deleted", Toast.LENGTH_SHORT).show();
+                            list.remove(holder.getBindingAdapterPosition());
+                            dialogPlus.dismiss();
+                        }
+                    });
+                    react.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ((SenderViewHolder)holder).showReaction.performClick();
+                            dialogPlus.dismiss();
+                        }
+                    });
+
+
+                    dialogPlus.show();
+
+
+
+
+
+                    return true;
+                }
+            });
+
         }
 
 
@@ -324,7 +383,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         CircleImageView receiverImage;
         TextView receiverMsg;
         ImageView reactionRec,rec_image;
-        ConstraintLayout hide_rec;
+        ConstraintLayout hide_rec,show_rec_option;
         VoicePlayerView voicePlayer_rec;
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -333,6 +392,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             reactionRec = itemView.findViewById(R.id.reactionImage_rec);
             rec_image = itemView.findViewById(R.id.rec_image);
             hide_rec = itemView.findViewById(R.id.hide_rec);
+            show_rec_option = itemView.findViewById(R.id.show_rec_option);
             voicePlayer_rec = itemView.findViewById(R.id.voicePlayer_rec);
         }
     }
