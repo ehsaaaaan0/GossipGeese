@@ -97,16 +97,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10mdp"
-
         android:background="@drawable/chat_icons"
         app:layout_constraintBottom_toBottomOf="@id/videoLiner"
         app:layout_constraintEnd_toStartOf="@id/videoLiner"
         app:layout_constraintTop_toTopOf="@id/videoLiner">
 
         <ImageView
+
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="5dp"
+            android:id="@+id/ac"
             android:src="@drawable/call" />
     </LinearLayout>
 

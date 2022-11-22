@@ -1,6 +1,7 @@
 package com.android.gossipgeese.model;
 
 public class NewMessageModel {
+
     String id, name, image, lastMsg, time, recent, archive,token;
 
 
