@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gossipgeese.MainActivity;
 import com.android.gossipgeese.R;
+import com.android.gossipgeese.StartStory;
 import com.android.gossipgeese.ViewStories;
 import com.android.gossipgeese.model.StoryModel;
 import com.android.gossipgeese.model.UserStories;
@@ -49,11 +50,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         StoryModel model = list.get(position);
-        UserStories stories = model.getStories().get(model.getStories().size()-1);
+        UserStories stories = model.getStories().get(model.getStories().size() - 1);
 
         Picasso.get().load(stories.getImage()).placeholder(R.drawable.ic_gossipgeese).into(holder.imageView);
         holder.storyView.setPortionsCount(model.getStories().size());
-
 
 
         FirebaseDatabase.getInstance().getReference().child("users").child(model.getStoryBy()).addValueEventListener(new ValueEventListener() {
@@ -63,69 +63,32 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ArrayList<omari.hamza.storyview.model.MyStory> myStories = new ArrayList<>();
-                        for (UserStories stories1 : model.getStories()){
-                            myStories.add(new MyStory(stories1.getImage()));
-                        }
-                        new StoryView.Builder(((AppCompatActivity)context).getSupportFragmentManager())
-                                .setStoriesList(myStories) // Required
-                                .setStoryDuration(5000) // Default is 2000 Millis (2 Seconds)
-                                .setTitleText(holder.name.getText().toString()) // Default is Hidden
-                                .setSubtitleText("") // Default is Hidden
-                                .setTitleLogoUrl(snapshot.child("image").getValue(String.class)) // Default is Hidden
-                                .setStoryClickListeners(new StoryClickListeners() {
-                                    @Override
-                                    public void onDescriptionClickListener(int position) {
-                                        //your action
-                                    }
-
-                                    @Override
-                                    public void onTitleIconClickListener(int position) {
-                                        //your action
-                                    }
-                                }) // Optional Listeners
-                                .build() // Must be called before calling show method
-                                .show();
-//                context.startActivity(new Intent(context, ViewStories.class)
-//                        .putExtra("id", model.getStoryBy())
-//                        .putExtra("key",model.getStoryKey()));
-                    }
-                });
-
-
-//                holder.imageView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        ArrayList<MyStory> myStories = new ArrayList<>();
-//
-//                        for(UserStories story: model.getStories()){
-//                            myStories.add(new MyStory(
-//                                    story.getImage()
-//                            ));
+//                        ArrayList<omari.hamza.storyview.model.MyStory> myStories = new ArrayList<>();
+//                        for (UserStories stories1 : model.getStories()){
+//                            myStories.add(new MyStory(stories1.getImage()));
 //                        }
-//
-//                        new StoryView.Builder(((AppCompatActivity) context).getSupportFragmentManager())
+//                        new StoryView.Builder(((AppCompatActivity)context).getSupportFragmentManager())
 //                                .setStoriesList(myStories) // Required
 //                                .setStoryDuration(5000) // Default is 2000 Millis (2 Seconds)
-//                                .setTitleText(snapshot.child("username").getValue(String.class)) // Default is Hidden
+//                                .setTitleText(holder.name.getText().toString()) // Default is Hidden
 //                                .setSubtitleText("") // Default is Hidden
 //                                .setTitleLogoUrl(snapshot.child("image").getValue(String.class)) // Default is Hidden
 //                                .setStoryClickListeners(new StoryClickListeners() {
 //                                    @Override
 //                                    public void onDescriptionClickListener(int position) {
-//                                        //your action
 //                                    }
 //
 //                                    @Override
 //                                    public void onTitleIconClickListener(int position) {
-//                                        //your action
 //                                    }
-//                                }) // Optional Listeners
-//                                .build() // Must be called before calling show method
+//                                })
+//                                .build()
 //                                .show();
-//                    }
-//                });
-
+                        context.startActivity(new Intent(context, StartStory.class)
+                                .putExtra("id", model.getStoryBy())
+                                .putExtra("key", model.getStoryKey()));
+                    }
+                });
 
             }
 
@@ -146,8 +109,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
     public class myViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imageView;
         TextView name;
-         CircularStatusView storyView;
-//        View storyView, storyView2, storyView3, storyView4, storyView5,storyView6;
+        CircularStatusView storyView;
+
+        //        View storyView, storyView2, storyView3, storyView4, storyView5,storyView6;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.story_show_user);

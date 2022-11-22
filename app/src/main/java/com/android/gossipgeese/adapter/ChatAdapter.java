@@ -168,7 +168,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 @Override
                 public boolean onLongClick(View view) {
                     DialogPlus dialogPlus = DialogPlus.newDialog(context)
-                            .setContentHolder(new ViewHolder(R.layout.select_option2)).setExpanded(true, 1300)
+                            .setContentHolder(new ViewHolder(R.layout.select_option2)).setExpanded(true, 700)
                             .create();
                     View v = dialogPlus.getHolderView();
                     TextView copy, delete,forward;
@@ -336,7 +336,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 @Override
                 public boolean onLongClick(View view) {
                     DialogPlus dialogPlus = DialogPlus.newDialog(context)
-                            .setContentHolder(new ViewHolder(R.layout.select_option2)).setExpanded(true, 1300)
+                            .setContentHolder(new ViewHolder(R.layout.select_option2)).setExpanded(true, 700)
                             .create();
                     View v = dialogPlus.getHolderView();
                     TextView copy, delete,forward;
