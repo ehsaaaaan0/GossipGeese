@@ -9,13 +9,16 @@ android {
 
     defaultConfig {
         applicationId "com.android.gossipgeese"
-        minSdk 18
+        minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
     }
 
     buildTypes {
@@ -31,10 +34,12 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //noinspection GradleCompatible
     implementation 'com.android.support:support-media-compat:27.1.1'
     implementation 'com.google.firebase:firebase-core:17.5.1'
     implementation 'com.google.firebase:firebase-messaging:20.3.0'
@@ -84,9 +89,35 @@ dependencies {
     //SHow Voice
     implementation 'com.github.JagarYousef:ChatVoicePlayer:1.0.7'
 
+    // Scalable size unit (Support different screen size)
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
 
+    // RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
+    // Material design
+    implementation 'com.google.android.material:material:1.2.1'
 
+    // MultiDex
+    implementation 'com.android.support:multidex:1.0.3'
 
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
 
+    // Swipe refresh layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    implementation 'com.google.firebase:firebase-firestore:21.7.1'
+
+    // Jitsi Meet
+    implementation('org.jitsi.react:jitsi-meet-sdk:2.8.2') { transitive = true }
 }
+
+
+
+

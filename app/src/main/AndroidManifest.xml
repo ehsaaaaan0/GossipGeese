@@ -23,18 +23,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".StartStory"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:name=".IncomingInvitationActivity"
+            android:exported="false" />
         <activity
             android:name=".OutgoingInvitationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="" />
+                android:value=""
+                />
         </activity>
         <activity
             android:name=".MyProfile"
@@ -164,6 +161,15 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="org.jitsi.meet.sdk.ConnectionService"
+            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.telecom.ConnectionService" />
             </intent-filter>
         </service>
     </application>

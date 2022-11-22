@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getUid());
+//        FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getUid());
         startChat = findViewById(R.id.startChat);
         fazoolText = findViewById(R.id.fazoolText);
         upload_story = findViewById(R.id.upload_story);
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
             @Override
             public void onSuccess(String s) {
+                FirebaseMessaging.getInstance().subscribeToTopic(s);
                 HashMap<String,Object> map = new HashMap<>();
                 map.put("token",s);
                 FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid())

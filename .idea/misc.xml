@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/GossipGeese/app/src/main/res/drawable-v24/background_accept_invitation.xml" value="0.154" />
+        <entry key="..\:/Android/GossipGeese/app/src/main/res/drawable-v24/background_meeting_invitation_user_icon.xml" value="0.154" />
+        <entry key="..\:/Android/GossipGeese/app/src/main/res/drawable-v24/ic_accept.xml" value="0.154" />
+        <entry key="..\:/Android/GossipGeese/app/src/main/res/drawable-v24/ic_reject.xml" value="0.154" />
+        <entry key="..\:/Android/GossipGeese/app/src/main/res/layout/activity_incoming_invitation.xml" value="0.1734375" />
+        <entry key="..\:/Android/GossipGeese/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Android/GossipGeese/app/src/main/res/layout/activity_outgoing_invitation.xml" value="0.1734375" />
+        <entry key="..\:/Android/GossipGeese/app/src/main/res/layout/activity_start_messaging.xml" value="0.25" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/FYP/app/src/main/res/layout/activity_enter_otp.xml" value="0.20416666666666666" />
       </map>
     </option>

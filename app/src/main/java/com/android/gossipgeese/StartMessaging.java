@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gossipgeese.adapter.ChatAdapter;
 import com.android.gossipgeese.model.MessageModel;
+import com.android.gossipgeese.model.NewMessageModel;
+import com.android.gossipgeese.model.User;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -67,6 +69,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -76,11 +79,12 @@ public class StartMessaging extends AppCompatActivity {
 
 
     String receiverId;
+    User user = new User();
     String token;
     String senderId;
     RecyclerView rv;
     CircleImageView userImage;
-    ImageView vc;
+    ImageView vc,ac;
     String senderRoom, receiverRoom,name,email;
     ImageView send,sendImage;
     EditText msg;
@@ -108,6 +112,7 @@ public class StartMessaging extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_start_messaging);
         video = findViewById(R.id.videoLiner);
+
         send = findViewById(R.id.sendMessageBTN);
         rv = findViewById(R.id.showMessaged);
         msg = findViewById(R.id.enterMessage);
@@ -118,7 +123,8 @@ public class StartMessaging extends AppCompatActivity {
         userStatus = findViewById(R.id.userStatus);
         userName = findViewById(R.id.userName);
         sendM = findViewById(R.id.sendMessageLayout);
-        vc = findViewById(R.id.vc);
+        vc = findViewById(R.id.vc);/////// Video Call
+        ac=findViewById(R.id.ac);/////// Audio Call
         notificationManager = NotificationManagerCompat.from(StartMessaging.this);
 //        MESSAGES.add(new com.android.gossipgeese.notification.MessageModel("Good Morning","JIM"));
 //        senToChaanel1();
@@ -144,11 +150,33 @@ public class StartMessaging extends AppCompatActivity {
 
             }
         });
+        ac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user.setEmail(email);
+                user.setFirstName(name);
+                user.setLastName(name);
+                user.setToken(token);
+                Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
+                intent.putExtra("user",user );
+                intent.putExtra("type", "audio");
+                startActivity(intent);
+            }
+        });
+
         vc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(StartMessaging.this, "Video Call Going", Toast.LENGTH_SHORT).show();
-            }
+                //Video Call
+                user.setEmail(email);
+                user.setFirstName(name);
+                user.setLastName(name);
+                user.setToken(token);
+                    Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
+                    intent.putExtra("user", user);
+                    intent.putExtra("type", "video");
+                    startActivity(intent);
+                }
         });
         requestQueue = Volley.newRequestQueue(this);
         if (!TextUtils.isEmpty(msgT)){
