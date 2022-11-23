@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gossipgeese.adapter.ChatAdapter;
+import com.android.gossipgeese.model.CurrentUserModel;
 import com.android.gossipgeese.model.MessageModel;
 import com.android.gossipgeese.model.NewMessageModel;
 import com.android.gossipgeese.model.User;
@@ -104,6 +105,7 @@ public class StartMessaging extends AppCompatActivity {
     String URL = "https://fcm.googleapis.com/fcm/send";
     RequestQueue requestQueue;
     ProgressDialog audioDialog;
+    CurrentUserModel c;
 
     private NotificationManagerCompat notificationManager;
     @Override
@@ -150,6 +152,27 @@ public class StartMessaging extends AppCompatActivity {
 
             }
         });
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.child("name").getValue(String.class);
+                String email = snapshot.child("email").getValue(String.class);
+                String token = snapshot.child("token").getValue(String.class);
+                String id = snapshot.child("id").getValue(String.class);
+                c.setToken(token);
+                c.setEmail(email);
+                c.setFirstName(name);
+                c.setLastName(name);
+                c.setId(id);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         ac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,6 +182,7 @@ public class StartMessaging extends AppCompatActivity {
                 user.setToken(token);
                 Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
                 intent.putExtra("user",user );
+                intent.putExtra("current",c);
                 intent.putExtra("type", "audio");
                 startActivity(intent);
             }
@@ -174,6 +198,7 @@ public class StartMessaging extends AppCompatActivity {
                 user.setToken(token);
                     Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
                     intent.putExtra("user", user);
+                    intent.putExtra("current",c);
                     intent.putExtra("type", "video");
                     startActivity(intent);
                 }

@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
             @Override
             public void onSuccess(String s) {
+                Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
                 FirebaseMessaging.getInstance().subscribeToTopic(s);
                 HashMap<String,Object> map = new HashMap<>();
                 map.put("token",s);
@@ -280,42 +281,42 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                            String id = snapshot1.child("id").getValue(String.class);
-                            String name = snapshot1.child("name").getValue(String.class);
-                            String image = snapshot1.child("image").getValue(String.class);
-                            String time = snapshot1.child("time").getValue(String.class);
-                            String token = snapshot1.child("token").getValue(String.class);
-                            if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
-                                Cursor cursor = db.realAllData();
-                                while (cursor.moveToNext()){
-                                    if (cursor.getCount()>0){
-                                        if (!Objects.equals(cursor.getString(0), id)){
-                                            db.insert(id,name,image,"",time,"false","false",token);
-                                        }
-                                    }else{
-                                        db.insert(id,name,image,"",time,"false","false",token);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }else{
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-        }
+//        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+//        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+//                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+//            FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    if (snapshot.exists()){
+//                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//                            String id = snapshot1.child("id").getValue(String.class);
+//                            String name = snapshot1.child("name").getValue(String.class);
+//                            String image = snapshot1.child("image").getValue(String.class);
+//                            String time = snapshot1.child("time").getValue(String.class);
+//                            String token = snapshot1.child("token").getValue(String.class);
+//                            if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
+//                                Cursor cursor = db.realAllData();
+//                                while (cursor.moveToNext()){
+//                                    if (cursor.getCount()>0){
+//                                        if (!Objects.equals(cursor.getString(0), id)){
+//                                            db.insert(id,name,image,"",time,"false","false",token);
+//                                        }
+//                                    }else{
+//                                        db.insert(id,name,image,"",time,"false","false",token);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//        }else{
+//            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+//        }
 
 
 
