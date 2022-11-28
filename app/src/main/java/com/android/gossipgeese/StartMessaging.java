@@ -73,6 +73,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -105,7 +106,7 @@ public class StartMessaging extends AppCompatActivity {
     String URL = "https://fcm.googleapis.com/fcm/send";
     RequestQueue requestQueue;
     ProgressDialog audioDialog;
-    CurrentUserModel c;
+    CurrentUserModel c = new CurrentUserModel();
 
     private NotificationManagerCompat notificationManager;
     @Override
@@ -153,13 +154,15 @@ public class StartMessaging extends AppCompatActivity {
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.child("name").getValue(String.class);
                 String email = snapshot.child("email").getValue(String.class);
                 String token = snapshot.child("token").getValue(String.class);
                 String id = snapshot.child("id").getValue(String.class);
+
+                Toast.makeText(StartMessaging.this, token, Toast.LENGTH_SHORT).show();
                 c.setToken(token);
                 c.setEmail(email);
                 c.setFirstName(name);

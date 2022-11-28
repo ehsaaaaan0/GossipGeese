@@ -17,12 +17,10 @@ import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 
 import com.android.gossipgeese.model.CurrentUserModel;
-import com.android.gossipgeese.model.NewMessageModel;
 import com.android.gossipgeese.model.User;
 import com.android.gossipgeese.network.ApiClient;
 import com.android.gossipgeese.network.ApiService;
 import com.android.gossipgeese.utilities.Constants;
-import com.android.gossipgeese.utilities.PreferenceManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
@@ -42,7 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OutgoingInvitationActivity extends AppCompatActivity {
-    private PreferenceManager preferenceManager;
+
     private String inviterToken = null;
     private String meetingRoom  = null;
     private String meetingType  = null;
@@ -58,7 +56,6 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outgoing_invitation);
-        preferenceManager = new PreferenceManager(getApplicationContext());
 
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
         meetingType = getIntent().getStringExtra("type");
@@ -104,8 +101,8 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
                 if (meetingType != null) {
                     if (getIntent().getBooleanExtra("isMultiple", false)) {
-                        Type type = new TypeToken<ArrayList<NewMessageModel>>(){}.getType();
-                        ArrayList<NewMessageModel> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
+                        Type type = new TypeToken<ArrayList<User>>(){}.getType();
+                        ArrayList<User> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
                         if (receivers != null) {
                             totalReceivers = receivers.size();
                         }
@@ -120,7 +117,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             }
         });
     }
-    private void initiateMeeting(String meetingType, String receiverToken, ArrayList<NewMessageModel> receivers) {
+    private void initiateMeeting(String meetingType, String receiverToken, ArrayList<User> receivers) {
         try {
 
             JSONArray tokens = new JSONArray();
@@ -133,7 +130,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
                 StringBuilder userNames = new StringBuilder();
                 for (int i=0; i < receivers.size(); i++) {
                     tokens.put(receivers.get(i).getToken());
-                    userNames.append(receivers.get(i).getName()).append(" ").append(receivers.get(i).getName()).append("\n");
+                    userNames.append(receivers.get(i).getFirstName()).append(" ").append(receivers.get(i).getFirstName()).append("\n");
                 }
 
                 textFirstChar.setVisibility(View.GONE);
