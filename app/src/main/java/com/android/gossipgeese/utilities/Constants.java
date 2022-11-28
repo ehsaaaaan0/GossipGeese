@@ -8,7 +8,7 @@ public class Constants {
     public static final String KEY_EMAIL = "email";
 
 
-    public static final String REMOTE_MSG_AUTHORIZATION = "Authorization";
+    public static final String REMOTE_MSG_AUTHORIZATION = "authorization";
     public static final String REMOTE_MSG_CONTENT_TYPE = "content-type";
 
     public static final String REMOTE_MSG_TYPE = "type";
