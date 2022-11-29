@@ -22,6 +22,7 @@ public class ViewImage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_image);
+        getSupportActionBar().hide();
         msgImage = findViewById(R.id.msgImage);
         save = findViewById(R.id.save);
         back_tomsg = findViewById(R.id.back_tomsg);

@@ -147,10 +147,8 @@ public class StartMessaging extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 email = snapshot.child("email").getValue(String.class);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -440,17 +438,7 @@ public class StartMessaging extends AppCompatActivity {
             }
         });
 
-        video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(StartMessaging.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(StartMessaging.this, OutgoingInvitationActivity.class)
-//                        .putExtra("token",token)
-//                        .putExtra("name",name)
-//                        .putExtra("id",receiverId)
-//                        .putExtra("email",email));
-            }
-        });
+
 
 
 
@@ -549,7 +537,8 @@ public class StartMessaging extends AppCompatActivity {
                         .putExtra("image", uri)
                         .putExtra("receiverRoom",receiverRoom)
                         .putExtra("senderRoom",senderRoom)
-                        .putExtra("senderId",senderId));
+                        .putExtra("senderId",senderId)
+                        .putExtra("group","individual"));
 
             }
         }
