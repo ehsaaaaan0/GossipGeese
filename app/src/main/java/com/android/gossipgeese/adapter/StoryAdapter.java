@@ -59,6 +59,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
         FirebaseDatabase.getInstance().getReference().child("users").child(model.getStoryBy()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String n = snapshot.child("name").getValue(String.class);
+                String i = snapshot.child("image").getValue(String.class);
                 holder.name.setText(snapshot.child("name").getValue(String.class));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -86,7 +88,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
 //                                .show();
                         context.startActivity(new Intent(context, StartStory.class)
                                 .putExtra("id", model.getStoryBy())
-                                .putExtra("key", model.getStoryKey()));
+                                .putExtra("key", model.getStoryKey())
+                                .putExtra("name",n)
+                                .putExtra("image",i));
                     }
                 });
 

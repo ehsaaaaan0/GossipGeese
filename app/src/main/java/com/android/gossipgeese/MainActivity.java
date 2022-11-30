@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
             @Override
             public void onSuccess(String s) {
-                Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
                 FirebaseMessaging.getInstance().subscribeToTopic(s);
                 HashMap<String,Object> map = new HashMap<>();
                 map.put("token",s);
