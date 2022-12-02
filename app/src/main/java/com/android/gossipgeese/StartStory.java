@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -34,7 +36,7 @@ public class StartStory extends AppCompatActivity {
     ArrayList<UserStories> stories = new ArrayList<>();
     UserStories userStories;
     ImageView story_image,next,back;
-    DownloadManager manager;
+    DownloadManager manager = null;
     AppCompatButton saveImage;
     int newi;
     int l = 0;
@@ -91,16 +93,12 @@ public class StartStory extends AppCompatActivity {
                                     }
                                 }
                             });
+
                             saveImage.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                        manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                                        UserStories model = stories.get(newi);
-                                        Uri uri = Uri.parse(model.getImage());
-                                        DownloadManager.Request request = new DownloadManager.Request(uri);
-                                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-                                        Toast.makeText(StartStory.this, "saved ", Toast.LENGTH_SHORT).show();
+                                        downloadImage("filename.jpg", model.getImage());
                                     }
                                 }
                             });
@@ -125,5 +123,23 @@ public class StartStory extends AppCompatActivity {
 
 
 
+    }
+
+    void downloadImage(String fileName, String imageUri){
+        try{
+            manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            UserStories model = stories.get(newi);
+            String image = imageUri+".jpg";
+            Uri uri = Uri.parse(image);
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE).setAllowedOverRoaming(true)
+                    .setTitle(fileName).setMimeType("image/jpeg").setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, File.separator+fileName+".jpg");
+            manager.enqueue(request);
+            Toast.makeText(StartStory.this, "saved ", Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage().toString()+"", Toast.LENGTH_SHORT).show();
+        }
     }
 }
