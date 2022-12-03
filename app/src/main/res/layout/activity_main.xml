@@ -116,9 +116,9 @@
                     android:layout_marginTop="@dimen/_10mdp"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="Recent Chat"
+                    android:text="Recent Chats"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13font_mdp"
+                    android:textSize="@dimen/_12font_mdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/simple_line" />
 

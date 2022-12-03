@@ -178,7 +178,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:src="@drawable/emoji"
-                        android:tint="@color/colorPrimaryDark" />
+                        app:tint="@color/colorPrimaryDark" />
 
                     <ImageView
                         android:id="@+id/sendImage"
@@ -188,7 +188,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="15dp"
                         android:src="@drawable/sendimage"
-                        android:tint="@color/colorPrimaryDark" />
+                        app:tint="@color/colorPrimaryDark" />
 
 
 
