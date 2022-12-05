@@ -31,6 +31,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dependenciesInfo {
+        includeInApk includeInApk
+        includeInBundle includeInBundle
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4G"
+    }
+
+
+    buildToolsVersion buildToolsVersion
+    ndkVersion ndkVersion
 }
 
 dependencies {

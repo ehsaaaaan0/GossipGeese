@@ -494,7 +494,6 @@ public class StartMessaging extends AppCompatActivity {
                 Toast.makeText(StartMessaging.this, "Error While Sending Audio", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 
@@ -514,6 +513,7 @@ public class StartMessaging extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
