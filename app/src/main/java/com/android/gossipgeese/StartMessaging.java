@@ -129,8 +129,7 @@ public class StartMessaging extends AppCompatActivity {
         vc = findViewById(R.id.vc);/////// Video Call
         ac=findViewById(R.id.ac);/////// Audio Call
         notificationManager = NotificationManagerCompat.from(StartMessaging.this);
-//        MESSAGES.add(new com.android.gossipgeese.notification.MessageModel("Good Morning","JIM"));
-//        senToChaanel1();
+
         Intent i = getIntent();
         receiverId = i.getStringExtra("receiver");
         String image = i.getStringExtra("image");
@@ -138,9 +137,7 @@ public class StartMessaging extends AppCompatActivity {
         token = i.getStringExtra("token");
         name = i.getStringExtra("name");
         userName.setText(name);
-        if (msgT!=null) {
-            msg.setText(msgT);
-        }
+
 
 
 
@@ -162,7 +159,6 @@ public class StartMessaging extends AppCompatActivity {
                 String token = snapshot.child("token").getValue(String.class);
                 String id = snapshot.child("id").getValue(String.class);
 
-                Toast.makeText(StartMessaging.this, token, Toast.LENGTH_SHORT).show();
                 c.setToken(token);
                 c.setEmail(email);
                 c.setFirstName(name);
@@ -552,7 +548,7 @@ public class StartMessaging extends AppCompatActivity {
     private void sendMessagenotification(String message) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("to","/topics/"+receiverId);
+            jsonObject.put("to","/topics/"+token);
             JSONObject jsonObject1 = new JSONObject();
             jsonObject1.put("title", "Message from "+senderName);
             jsonObject1.put("body",message);

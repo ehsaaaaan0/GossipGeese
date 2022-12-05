@@ -261,7 +261,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 if (item.getItemId()==R.id.calls){
-                    Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(MainActivity.this,GroupChat.class));
                 }
                 else if (item.getItemId()==R.id.chats){
