@@ -342,6 +342,7 @@ public class UsernameandDateofbirth extends AppCompatActivity implements DatePic
 
                 }else{
                     String image = uri.toString();
+                    Toast.makeText(this, "phone:"+email_phone, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(UsernameandDateofbirth.this, EnterOTP.class)
                             .putExtra("phone",email_phone)
                             .putExtra("full_name",full_name)

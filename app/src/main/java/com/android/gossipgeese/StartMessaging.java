@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,7 +116,6 @@ public class StartMessaging extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_start_messaging);
         video = findViewById(R.id.videoLiner);
-
         send = findViewById(R.id.sendMessageBTN);
         rv = findViewById(R.id.showMessaged);
         msg = findViewById(R.id.enterMessage);
@@ -137,7 +137,6 @@ public class StartMessaging extends AppCompatActivity {
         token = i.getStringExtra("token");
         name = i.getStringExtra("name");
         userName.setText(name);
-
 
 
 
@@ -232,7 +231,7 @@ public class StartMessaging extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new ChatAdapter(list,this,senderRoom,receiverRoom);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.hasFixedSize();
+        rv.smoothScrollToPosition(adapter.getItemCount());
         FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -354,7 +353,6 @@ public class StartMessaging extends AppCompatActivity {
         voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(StartMessaging.this, "Clicked", Toast.LENGTH_SHORT).show();
                 if (checkPermission()==true){
                     voice.setListenForRecord(true);
                 }else{

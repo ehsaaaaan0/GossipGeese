@@ -28,6 +28,7 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,10 +45,12 @@ import java.util.concurrent.TimeUnit;
 public class EnterOTP extends AppCompatActivity {
     EditText getotp;
     AppCompatButton verifyOTP;
-    String phoneNumber,full_name,password, date,username;
+    String full_name,password, date,username;
     String OTPid;
     FirebaseAuth mAuth;
     ProgressDialog creating ;
+    private String verificationId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,13 +71,13 @@ public class EnterOTP extends AppCompatActivity {
 
 
         Intent i = getIntent();
-        phoneNumber = i.getStringExtra("phone");
+        String phoneNumber = i.getStringExtra("phone");
         full_name = i.getStringExtra("full_name");
         password = i.getStringExtra("password");
         date = i.getStringExtra("date");
         username = i.getStringExtra("image");
-        initiateOTP();
-
+        sendVerificationCode(phoneNumber);
+        Toast.makeText(this, phoneNumber, Toast.LENGTH_SHORT).show();
         verifyOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,117 +86,190 @@ public class EnterOTP extends AppCompatActivity {
                     creating.dismiss();
                     Toast.makeText(EnterOTP.this, "Please Enter OTP", Toast.LENGTH_SHORT).show();
                 }else{
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(OTPid, getotp.getText().toString());
-                    signInWithPhoneAuthCredential(credential);
+                    verifyCode(getotp.getText().toString());
                 }
             }
         });
     }
 
-    private void initiateOTP() {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber,
-                60,
-                TimeUnit.SECONDS,
-                this,
-                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    @Override
-                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        OTPid=s;
-                    }
 
-                    @Override
-                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-//                        signInWithPhoneAuthCredential(phoneAuthCredential);
-                    }
+//    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+//        mAuth.signInWithCredential(credential)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//
+//                            FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                    if (snapshot.exists()){
+//                                        startActivity(new Intent(EnterOTP.this, MainActivity.class));
+//                                    }else{
+//
+//
+//                                        Uri uri = Uri.parse(username);
+//                                        final StorageReference reference = FirebaseStorage.getInstance().getReference().child("profile").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                                        reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                            @Override
+//                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                                    @Override
+//                                                    public void onSuccess(Uri uri) {
+//                                                        String image = uri.toString();
+//                                                        String id = FirebaseAuth.getInstance().getUid();
+//                                                        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+//                                                            @Override
+//                                                            public void onSuccess(String s) {
+//
+//                                                        RegisterModel model = new RegisterModel(id,full_name,phoneNumber,password,image,date,"12:00",s);
+//                                                        FirebaseDatabase.getInstance().getReference().child("users").child(id).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                            @Override
+//                                                            public void onSuccess(Void unused) {
+//                                                                creating.dismiss();
+//
+//                                                                NotificationCompat.Builder builder = new NotificationCompat.Builder(EnterOTP.this, "My Notification");
+//                                                                builder.setContentTitle("Your Account is Registered SuccessFully");
+//                                                                builder.setContentText("Let's Have Some Chat with Each Other");
+//                                                                builder.setSmallIcon(R.drawable.ic_gossipgeese);
+//                                                                builder.setAutoCancel(true);
+//
+//                                                                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(EnterOTP.this);
+//                                                                managerCompat.notify(1, builder.build() );
+//                                                                startActivity(new Intent(EnterOTP.this, MainActivity.class));
+//                                                            }
+//                                                        }).addOnFailureListener(new OnFailureListener() {
+//                                                            @Override
+//                                                            public void onFailure(@NonNull Exception e) {
+//                                                                creating.dismiss();
+//                                                                Toast.makeText(EnterOTP.this, "Account Registered, But Unable to Save Information", Toast.LENGTH_SHORT).show();
+//                                                            }
+//                                                        });
+//
+//
+//                                                            }
+//                                                        });
+//                                                    }
+//                                                });
+//                                            }
+//                                        }).addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                creating.dismiss();
+//                                                Toast.makeText(EnterOTP.this, "Unable to Save Information", Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        });
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                }
+//                            });
+//
+//                        } else {
+//                            creating.dismiss();
+//                            Toast.makeText(EnterOTP.this, "Try again latter", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//    }
 
-                    @Override
-                    public void onVerificationFailed(@NonNull FirebaseException e) {
-
-                    }
-                });
+    private void sendVerificationCode(String number) {
+        // this method is used for getting
+        // OTP on user phone number.
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(mAuth)
+                        .setPhoneNumber(number)            // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)                 // Activity (for callback binding)
+                        .setCallbacks(mCallBack)           // OnVerificationStateChangedCallbacks
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+
+    // initializing our callbacks for on
+    // verification callback method.
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+        // below method is used when
+        // OTP is sent from Firebase
+        @Override
+        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            super.onCodeSent(s, forceResendingToken);
+            // when we receive the OTP it
+            // contains a unique id which
+            // we are storing in our string
+            // which we have already created.
+            verificationId = s;
+        }
+
+        // this method is called when user
+        // receive OTP from Firebase.
+        @Override
+        public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+            // below line is used for getting OTP code
+            // which is sent in phone auth credentials.
+            final String code = phoneAuthCredential.getSmsCode();
+
+            // checking if the code
+            // is null or not.
+            if (code != null) {
+                // if the code is not null then
+                // we are setting that code to
+                // our OTP edittext field.
+                getotp.setText(code);
+
+                // after setting this code
+                // to OTP edittext field we
+                // are calling our verifycode method.
+                verifyCode(code);
+            }
+        }
+
+        // this method is called when firebase doesn't
+        // sends our OTP code due to any error or issue.
+        @Override
+        public void onVerificationFailed(FirebaseException e) {
+            // displaying error message with firebase exception.
+            Toast.makeText(EnterOTP.this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    };
+
+    // below method is use to verify code from Firebase.
+    private void verifyCode(String code) {
+        // below line is used for getting
+        // credentials from our verification id and code.
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+
+        // after getting credential we are
+        // calling sign in method.
+        signInWithCredential(credential);
+    }
+
+    private void signInWithCredential(PhoneAuthCredential credential) {
+        // inside this method we are checking if
+        // the code entered is correct or not.
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()){
-                                        startActivity(new Intent(EnterOTP.this, MainActivity.class));
-                                    }else{
-
-
-                                        Uri uri = Uri.parse(username);
-                                        final StorageReference reference = FirebaseStorage.getInstance().getReference().child("profile").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                        reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                            @Override
-                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                    @Override
-                                                    public void onSuccess(Uri uri) {
-                                                        String image = uri.toString();
-                                                        String id = FirebaseAuth.getInstance().getUid();
-                                                        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
-                                                            @Override
-                                                            public void onSuccess(String s) {
-
-                                                        RegisterModel model = new RegisterModel(id,full_name,phoneNumber,password,image,date,"12:00",s);
-                                                        FirebaseDatabase.getInstance().getReference().child("users").child(id).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void unused) {
-                                                                creating.dismiss();
-
-                                                                NotificationCompat.Builder builder = new NotificationCompat.Builder(EnterOTP.this, "My Notification");
-                                                                builder.setContentTitle("Your Account is Registered SuccessFully");
-                                                                builder.setContentText("Let's Have Some Chat with Each Other");
-                                                                builder.setSmallIcon(R.drawable.ic_gossipgeese);
-                                                                builder.setAutoCancel(true);
-
-                                                                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(EnterOTP.this);
-                                                                managerCompat.notify(1, builder.build() );
-                                                                startActivity(new Intent(EnterOTP.this, MainActivity.class));
-                                                            }
-                                                        }).addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                creating.dismiss();
-                                                                Toast.makeText(EnterOTP.this, "Account Registered, But Unable to Save Information", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        });
-
-
-                                                            }
-                                                        });
-                                                    }
-                                                });
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                creating.dismiss();
-                                                Toast.makeText(EnterOTP.this, "Unable to Save Information", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
+                            // if the code is correct and the task is successful
+                            // we are sending our user to new activity.
+                            Toast.makeText(EnterOTP.this, "works", Toast.LENGTH_SHORT).show();
 
                         } else {
-                            creating.dismiss();
-                            Toast.makeText(EnterOTP.this, "Try again latter", Toast.LENGTH_SHORT).show();
+                            // if the code is not correct then we are
+                            // displaying an error message to the user.
+                            Toast.makeText(EnterOTP.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
     }
 }
+

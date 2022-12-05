@@ -58,8 +58,9 @@ public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.my
         holder.name.setText(model.getName());
         holder.lastMessage.setText(model.getLastMsg());
         Glide.with(context).load(model.getImage()).placeholder(R.drawable.ic_gossipgeese).into(holder.image);
-
-        holder.time.setText(model.getTime());
+        String time =model.getTime();
+        String sub1 = time.substring(0,5);
+        holder.time.setText(sub1);
 
         FirebaseDatabase.getInstance().getReference().child("chats")
                 .child(FirebaseAuth.getInstance().getUid() + model.getId())
@@ -83,19 +84,7 @@ public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.my
 
 
 
-        FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String time = snapshot.child("online").getValue(String.class);
-                String sub1 = time.substring(0,5);
-                holder.time.setText(sub1);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
