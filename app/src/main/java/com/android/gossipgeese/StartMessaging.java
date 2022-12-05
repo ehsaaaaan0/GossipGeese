@@ -497,19 +497,7 @@ public class StartMessaging extends AppCompatActivity {
 
     }
 
-//    private void setUpRecording() {
-//        mediaRecorder = new MediaRecorder();
-//        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-//
-//        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "GoosipGesse/Media/Recording");
-//        if (!file.exists()) {
-//            file.mkdir();
-//            audioPath = file.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".3gp";
-//            mediaRecorder.setOutputFile(audioPath);
-//        }
-//    }
+
 
     private void getUserStatus() {
         FirebaseDatabase.getInstance().getReference().child("users").child(receiverId).child("status").addValueEventListener(new ValueEventListener() {

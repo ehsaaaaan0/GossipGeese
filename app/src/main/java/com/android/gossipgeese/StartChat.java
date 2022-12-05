@@ -73,9 +73,32 @@ public class StartChat extends AppCompatActivity {
                                 if (cursor.getCount()>0){
                                     if (!Objects.equals(cursor.getString(0), id)){
                                         db.insert(id,name,image,"",time,"false","false",token);
+                                        list.clear();
+                                        Cursor cursor1 = db.realAllData();
+                                        while (cursor1.moveToNext()){
+                                            if (cursor1.getCount()>0){
+                                                if (cursor1.getString(1)!=null) {
+                                                    NewMessageModel model = new NewMessageModel(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), cursor1.getString(3), cursor1.getString(4), cursor1.getString(5), cursor1.getString(6), cursor1.getString(7));
+                                                    list.add(model);
+                                                }
+                                            }
+                                            adapter.notifyDataSetChanged();
+                                            rv.setAdapter(adapter);
+                                        }
                                     }
                                 }else{
                                     db.insert(id,name,image,"",time,"false","false",token);
+                                    Cursor cursor1 = db.realAllData();
+                                    while (cursor1.moveToNext()){
+                                        if (cursor1.getCount()>0){
+                                            if (cursor1.getString(1)!=null) {
+                                                NewMessageModel model = new NewMessageModel(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), cursor1.getString(3), cursor1.getString(4), cursor1.getString(5), cursor1.getString(6), cursor1.getString(7));
+                                                list.add(model);
+                                            }
+                                        }
+                                        adapter.notifyDataSetChanged();
+                                        rv.setAdapter(adapter);
+                                    }
                                 }
                             }
                           adapter.notifyDataSetChanged();
