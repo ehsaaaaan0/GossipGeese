@@ -78,6 +78,7 @@
         android:id="@+id/videoLiner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:elevation="20dp"
         android:layout_marginEnd="@dimen/_10mdp"
         android:background="@drawable/chat_icons"
         app:layout_constraintBottom_toBottomOf="@id/userImage"
@@ -97,6 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10mdp"
         android:background="@drawable/chat_icons"
+        android:elevation="20dp"
         app:layout_constraintBottom_toBottomOf="@id/videoLiner"
         app:layout_constraintEnd_toStartOf="@id/videoLiner"
         app:layout_constraintTop_toTopOf="@id/videoLiner">
@@ -114,6 +116,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
+        android:elevation="10dp"
         android:background="@drawable/main_second"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
