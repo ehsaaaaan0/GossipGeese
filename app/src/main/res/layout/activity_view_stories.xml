@@ -23,7 +23,7 @@
         android:fontFamily="sans-serif"
         android:text="Send Image"
         android:textColor="#FFF"
-        android:textSize="@dimen/_18font_mdp"
+        android:textSize="@dimen/_12font_mdp"
         app:layout_constraintBottom_toBottomOf="@id/back_"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
