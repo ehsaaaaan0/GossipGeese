@@ -26,6 +26,8 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -54,9 +56,10 @@ public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.my
         NewMessageModel model = list.get(position);
         DbHealper db = new DbHealper(context);
         holder.name.setText(model.getName());
-        holder.time.setText(model.getTime());
         holder.lastMessage.setText(model.getLastMsg());
-        Glide.with(context).load(model.getImage()).into(holder.image);
+        Glide.with(context).load(model.getImage()).placeholder(R.drawable.ic_gossipgeese).into(holder.image);
+
+        holder.time.setText(model.getTime());
 
         FirebaseDatabase.getInstance().getReference().child("chats")
                 .child(FirebaseAuth.getInstance().getUid() + model.getId())
@@ -77,6 +80,22 @@ public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.my
 
                     }
                 });
+
+
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String time = snapshot.child("online").getValue(String.class);
+                String sub1 = time.substring(0,5);
+                holder.time.setText(sub1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

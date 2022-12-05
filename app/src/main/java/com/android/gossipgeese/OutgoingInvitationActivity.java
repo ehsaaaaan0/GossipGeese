@@ -119,7 +119,6 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
     }
     private void initiateMeeting(String meetingType, String receiverToken, ArrayList<User> receivers) {
         try {
-
             JSONArray tokens = new JSONArray();
 
             if (receiverToken != null) {

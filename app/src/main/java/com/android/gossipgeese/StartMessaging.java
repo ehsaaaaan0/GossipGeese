@@ -138,7 +138,9 @@ public class StartMessaging extends AppCompatActivity {
         token = i.getStringExtra("token");
         name = i.getStringExtra("name");
         userName.setText(name);
-
+        if (msgT!=null) {
+            msg.setText(msgT);
+        }
 
 
 
@@ -234,6 +236,7 @@ public class StartMessaging extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new ChatAdapter(list,this,senderRoom,receiverRoom);
         rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.hasFixedSize();
         FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

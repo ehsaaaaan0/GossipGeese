@@ -66,8 +66,6 @@ public class ChatAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-
-
         if (viewType == SENDER_VIEW_TYPE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sender_side, parent, false);
             return new SenderViewHolder(view);
@@ -79,12 +77,10 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-
         if (list.get(position).getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 return SENDER_VIEW_TYPE;
         }else {
                 return RECEIVER_VIEW_TYPE;
-
         }
     }
 

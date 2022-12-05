@@ -64,7 +64,7 @@ public class StartChat extends AppCompatActivity {
                         String id = snapshot1.child("id").getValue(String.class);
                         String name = snapshot1.child("name").getValue(String.class);
                         String image = snapshot1.child("image").getValue(String.class);
-                        String time = snapshot1.child("time").getValue(String.class);
+                        String time = snapshot1.child("online").getValue(String.class);
                         String token = snapshot1.child("token").getValue(String.class);
                         if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
                             db.insert(id,name,image,"",time,"false","false",token);

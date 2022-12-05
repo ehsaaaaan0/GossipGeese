@@ -128,8 +128,6 @@ public class EnterOTP extends AppCompatActivity {
                                     }else{
 
 
-
-
                                         Uri uri = Uri.parse(username);
                                         final StorageReference reference = FirebaseStorage.getInstance().getReference().child("profile").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                         reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

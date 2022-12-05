@@ -65,27 +65,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        ArrayList<omari.hamza.storyview.model.MyStory> myStories = new ArrayList<>();
-//                        for (UserStories stories1 : model.getStories()){
-//                            myStories.add(new MyStory(stories1.getImage()));
-//                        }
-//                        new StoryView.Builder(((AppCompatActivity)context).getSupportFragmentManager())
-//                                .setStoriesList(myStories) // Required
-//                                .setStoryDuration(5000) // Default is 2000 Millis (2 Seconds)
-//                                .setTitleText(holder.name.getText().toString()) // Default is Hidden
-//                                .setSubtitleText("") // Default is Hidden
-//                                .setTitleLogoUrl(snapshot.child("image").getValue(String.class)) // Default is Hidden
-//                                .setStoryClickListeners(new StoryClickListeners() {
-//                                    @Override
-//                                    public void onDescriptionClickListener(int position) {
-//                                    }
-//
-//                                    @Override
-//                                    public void onTitleIconClickListener(int position) {
-//                                    }
-//                                })
-//                                .build()
-//                                .show();
                         context.startActivity(new Intent(context, StartStory.class)
                                 .putExtra("id", model.getStoryBy())
                                 .putExtra("key", model.getStoryKey())

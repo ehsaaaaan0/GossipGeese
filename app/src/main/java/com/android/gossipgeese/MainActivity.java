@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getUid());
         startChat = findViewById(R.id.startChat);
         fazoolText = findViewById(R.id.fazoolText);
         upload_story = findViewById(R.id.upload_story);
@@ -225,8 +224,6 @@ public class MainActivity extends AppCompatActivity {
         gallary = registerForActivityResult(new ActivityResultContracts.GetContent() , new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
-
-
                 StorageReference reference = FirebaseStorage.getInstance().getReference().child("stories").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child(new Date().getTime()+"");
                 reference.putFile(result).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
