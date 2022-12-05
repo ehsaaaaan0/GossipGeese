@@ -16,12 +16,11 @@ import android.widget.Toast;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 
-import com.android.gossipgeese.model.NewMessageModel;
+import com.android.gossipgeese.model.CurrentUserModel;
 import com.android.gossipgeese.model.User;
 import com.android.gossipgeese.network.ApiClient;
 import com.android.gossipgeese.network.ApiService;
 import com.android.gossipgeese.utilities.Constants;
-import com.android.gossipgeese.utilities.PreferenceManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
@@ -41,7 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OutgoingInvitationActivity extends AppCompatActivity {
-    private PreferenceManager preferenceManager;
+
     private String inviterToken = null;
     private String meetingRoom  = null;
     private String meetingType  = null;
@@ -49,6 +48,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
     private TextView textFirstChar, textUsername, textEmail;
 
     private int rejectionCount = 0;
+    CurrentUserModel current;
     private int totalReceivers = 0;
 
 
@@ -56,7 +56,6 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outgoing_invitation);
-        preferenceManager = new PreferenceManager(getApplicationContext());
 
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
         meetingType = getIntent().getStringExtra("type");
@@ -74,6 +73,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         textEmail      = findViewById(R.id.textEmail);
 
         User user = (User) getIntent().getSerializableExtra("user");
+         current = (CurrentUserModel) getIntent().getSerializableExtra("current");
 
         if (user != null) {
 //            textFirstChar.setText(user.getName().substring(0, 1));
@@ -85,8 +85,8 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         ImageView imageStopInvitation = findViewById(R.id.imageStopInvitation);
         imageStopInvitation.setOnClickListener(view -> {
             if (getIntent().getBooleanExtra("isMultiple", false)) {
-                Type type = new TypeToken<ArrayList<NewMessageModel>>(){}.getType();
-                ArrayList<NewMessageModel> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
+                Type type = new TypeToken<ArrayList<User>>(){}.getType();
+                ArrayList<User> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
                 cancelInvitation( null, receivers);
             } else {
                 if (user != null) {
@@ -101,8 +101,8 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
                 if (meetingType != null) {
                     if (getIntent().getBooleanExtra("isMultiple", false)) {
-                        Type type = new TypeToken<ArrayList<NewMessageModel>>(){}.getType();
-                        ArrayList<NewMessageModel> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
+                        Type type = new TypeToken<ArrayList<User>>(){}.getType();
+                        ArrayList<User> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
                         if (receivers != null) {
                             totalReceivers = receivers.size();
                         }
@@ -117,9 +117,8 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             }
         });
     }
-    private void initiateMeeting(String meetingType, String receiverToken, ArrayList<NewMessageModel> receivers) {
+    private void initiateMeeting(String meetingType, String receiverToken, ArrayList<User> receivers) {
         try {
-
             JSONArray tokens = new JSONArray();
 
             if (receiverToken != null) {
@@ -130,7 +129,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
                 StringBuilder userNames = new StringBuilder();
                 for (int i=0; i < receivers.size(); i++) {
                     tokens.put(receivers.get(i).getToken());
-                    userNames.append(receivers.get(i).getName()).append(" ").append(receivers.get(i).getName()).append("\n");
+                    userNames.append(receivers.get(i).getFirstName()).append(" ").append(receivers.get(i).getFirstName()).append("\n");
                 }
 
                 textFirstChar.setVisibility(View.GONE);
@@ -143,13 +142,13 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
             data.put(Constants.REMOTE_MSG_TYPE, Constants.REMOTE_MSG_INVITATION);
             data.put(Constants.REMOTE_MSG_MEETING_TYPE, meetingType);
-            data.put(Constants.KEY_FIRST_NAME, preferenceManager.getString(Constants.KEY_FIRST_NAME));
-            data.put(Constants.KEY_LAST_NAME, preferenceManager.getString(Constants.KEY_LAST_NAME));
-            data.put(Constants.KEY_EMAIL, preferenceManager.getString(Constants.KEY_EMAIL));
+            data.put(Constants.KEY_FIRST_NAME, current.getFirstName());
+            data.put(Constants.KEY_LAST_NAME, current.getLastName());
+            data.put(Constants.KEY_EMAIL, current.getToken());
             data.put(Constants.REMOTE_MSG_INVITER_TOKEN, inviterToken);
 
             meetingRoom =
-                    preferenceManager.getString(Constants.KEY_USER_ID) + "_" +
+                    current.getId() + "_" +
                             UUID.randomUUID().toString().substring(0, 5);
             data.put(Constants.REMOTE_MSG_MEETING_ROOM, meetingRoom);
 
@@ -191,7 +190,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         });
     }
 
-    private void cancelInvitation(String receiverToken, ArrayList<NewMessageModel> receivers) {
+    private void cancelInvitation(String receiverToken, ArrayList<User> receivers) {
         try {
 
             JSONArray tokens = new JSONArray();
@@ -201,7 +200,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             }
 
             if (receivers != null && receivers.size() > 0) {
-                for (NewMessageModel user : receivers) {
+                for (User user : receivers) {
                     tokens.put(user.getToken());
                 }
             }

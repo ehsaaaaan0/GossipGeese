@@ -73,9 +73,32 @@ public class StartChat extends AppCompatActivity {
                                 if (cursor.getCount()>0){
                                     if (!Objects.equals(cursor.getString(0), id)){
                                         db.insert(id,name,image,"",time,"false","false",token);
+                                        list.clear();
+                                        Cursor cursor1 = db.realAllData();
+                                        while (cursor1.moveToNext()){
+                                            if (cursor1.getCount()>0){
+                                                if (cursor1.getString(1)!=null) {
+                                                    NewMessageModel model = new NewMessageModel(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), cursor1.getString(3), cursor1.getString(4), cursor1.getString(5), cursor1.getString(6), cursor1.getString(7));
+                                                    list.add(model);
+                                                }
+                                            }
+                                            adapter.notifyDataSetChanged();
+                                            rv.setAdapter(adapter);
+                                        }
                                     }
                                 }else{
                                     db.insert(id,name,image,"",time,"false","false",token);
+                                    Cursor cursor1 = db.realAllData();
+                                    while (cursor1.moveToNext()){
+                                        if (cursor1.getCount()>0){
+                                            if (cursor1.getString(1)!=null) {
+                                                NewMessageModel model = new NewMessageModel(cursor1.getString(0), cursor1.getString(1), cursor1.getString(2), cursor1.getString(3), cursor1.getString(4), cursor1.getString(5), cursor1.getString(6), cursor1.getString(7));
+                                                list.add(model);
+                                            }
+                                        }
+                                        adapter.notifyDataSetChanged();
+                                        rv.setAdapter(adapter);
+                                    }
                                 }
                             }
                           adapter.notifyDataSetChanged();
@@ -122,7 +145,6 @@ public class StartChat extends AppCompatActivity {
     private void searchh(String s) {
 
 
-//        Query query = ref.orderByChild("username").startAt(s).endAt(s +"\uf8ff");
         list.clear();
         Cursor cursor = db.realAllData();
         while (cursor.moveToNext()){
@@ -138,85 +160,6 @@ public class StartChat extends AppCompatActivity {
         }
 
     }
-
-//    private void uploadToLocalDatabase() {
-//        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()){
-//                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-//                        String id = snapshot1.child("id").getValue(String.class);
-//                        String name = snapshot1.child("name").getValue(String.class);
-//                        String image = snapshot1.child("image").getValue(String.class);
-//                        String time = snapshot1.child("time").getValue(String.class);
-//                        String token = snapshot1.child("token").getValue(String.class);
-//                        if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
-//                            Cursor cursor = db.realAllData();
-//                            while (cursor.moveToNext()){
-//                                if (cursor.getCount()>0){
-//                                    if (!Objects.equals(cursor.getString(0), id)){
-//                                        db.insert(id,name,image,"",time,"false","false",token);
-//                                    }
-//                                }else{
-//                                    db.insert(id,name,image,"",time,"false","false",token);
-//                                }
-//                            }
-//                        }
-//                    }
-//                    adapter.notifyDataSetChanged();
-//                    rv.setAdapter(adapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//    }
-//
-//    @Override
-//    protected void onStart() {
-//        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()){
-//                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-//                        String id = snapshot1.child("id").getValue(String.class);
-//                        String name = snapshot1.child("name").getValue(String.class);
-//                        String image = snapshot1.child("image").getValue(String.class);
-//                        String time = snapshot1.child("time").getValue(String.class);
-//                        String token = snapshot1.child("token").getValue(String.class);
-//                        if (!Objects.equals(id, FirebaseAuth.getInstance().getUid())) {
-////                            NewMessageModel model = new NewMessageModel(id, name, image, " ", time, "false", "false");
-////                            list.add(model);
-//                            db.insert(id,name,image,"",time,"false","false",token);
-//
-//                            Cursor cursor = db.realAllData();
-//                            while (cursor.moveToNext()){
-//                                if (cursor.getCount()>0){
-//                                    if (!Objects.equals(cursor.getString(0), id)){
-//                                        db.insert(id,name,image,"last",time,"false","false",token);
-//                                    }
-//                                }else{
-//                                    db.insert(id,name,image,"last",time,"false","false",token);
-//                                }
-//                            }
-//                        }
-//                    }
-//                    adapter.notifyDataSetChanged();
-//                    rv.setAdapter(adapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        super.onStart();
-//    }
 
 
 

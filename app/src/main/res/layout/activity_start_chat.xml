@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".StartChat">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -41,12 +53,17 @@
         app:layout_constraintTop_toTopOf="@+id/aName" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/users_rv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/users_rv"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/_4mdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_main"
-        android:layout_margin="@dimen/_4mdp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_main" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

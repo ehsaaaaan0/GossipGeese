@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gossipgeese.adapter.ChatAdapter;
+import com.android.gossipgeese.model.CurrentUserModel;
 import com.android.gossipgeese.model.MessageModel;
 import com.android.gossipgeese.model.NewMessageModel;
 import com.android.gossipgeese.model.User;
@@ -72,6 +73,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -104,6 +106,7 @@ public class StartMessaging extends AppCompatActivity {
     String URL = "https://fcm.googleapis.com/fcm/send";
     RequestQueue requestQueue;
     ProgressDialog audioDialog;
+    CurrentUserModel c = new CurrentUserModel();
 
     private NotificationManagerCompat notificationManager;
     @Override
@@ -126,8 +129,7 @@ public class StartMessaging extends AppCompatActivity {
         vc = findViewById(R.id.vc);/////// Video Call
         ac=findViewById(R.id.ac);/////// Audio Call
         notificationManager = NotificationManagerCompat.from(StartMessaging.this);
-//        MESSAGES.add(new com.android.gossipgeese.notification.MessageModel("Good Morning","JIM"));
-//        senToChaanel1();
+
         Intent i = getIntent();
         receiverId = i.getStringExtra("receiver");
         String image = i.getStringExtra("image");
@@ -144,12 +146,32 @@ public class StartMessaging extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 email = snapshot.child("email").getValue(String.class);
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.child("name").getValue(String.class);
+                String email = snapshot.child("email").getValue(String.class);
+                String token = snapshot.child("token").getValue(String.class);
+                String id = snapshot.child("id").getValue(String.class);
+
+                c.setToken(token);
+                c.setEmail(email);
+                c.setFirstName(name);
+                c.setLastName(name);
+                c.setId(id);
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
         ac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,6 +181,7 @@ public class StartMessaging extends AppCompatActivity {
                 user.setToken(token);
                 Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
                 intent.putExtra("user",user );
+                intent.putExtra("current",c);
                 intent.putExtra("type", "audio");
                 startActivity(intent);
             }
@@ -174,6 +197,7 @@ public class StartMessaging extends AppCompatActivity {
                 user.setToken(token);
                     Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
                     intent.putExtra("user", user);
+                    intent.putExtra("current",c);
                     intent.putExtra("type", "video");
                     startActivity(intent);
                 }
@@ -208,6 +232,7 @@ public class StartMessaging extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new ChatAdapter(list,this,senderRoom,receiverRoom);
         rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.hasFixedSize();
         FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -412,17 +437,7 @@ public class StartMessaging extends AppCompatActivity {
             }
         });
 
-        video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(StartMessaging.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(StartMessaging.this, OutgoingInvitationActivity.class)
-//                        .putExtra("token",token)
-//                        .putExtra("name",name)
-//                        .putExtra("id",receiverId)
-//                        .putExtra("email",email));
-            }
-        });
+
 
 
 
@@ -482,19 +497,7 @@ public class StartMessaging extends AppCompatActivity {
 
     }
 
-//    private void setUpRecording() {
-//        mediaRecorder = new MediaRecorder();
-//        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-//
-//        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "GoosipGesse/Media/Recording");
-//        if (!file.exists()) {
-//            file.mkdir();
-//            audioPath = file.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".3gp";
-//            mediaRecorder.setOutputFile(audioPath);
-//        }
-//    }
+
 
     private void getUserStatus() {
         FirebaseDatabase.getInstance().getReference().child("users").child(receiverId).child("status").addValueEventListener(new ValueEventListener() {
@@ -521,7 +524,8 @@ public class StartMessaging extends AppCompatActivity {
                         .putExtra("image", uri)
                         .putExtra("receiverRoom",receiverRoom)
                         .putExtra("senderRoom",senderRoom)
-                        .putExtra("senderId",senderId));
+                        .putExtra("senderId",senderId)
+                        .putExtra("group","individual"));
 
             }
         }
@@ -532,7 +536,7 @@ public class StartMessaging extends AppCompatActivity {
     private void sendMessagenotification(String message) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("to","/topics/"+receiverId);
+            jsonObject.put("to","/topics/"+token);
             JSONObject jsonObject1 = new JSONObject();
             jsonObject1.put("title", "Message from "+senderName);
             jsonObject1.put("body",message);

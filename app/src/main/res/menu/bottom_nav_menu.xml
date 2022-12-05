@@ -7,8 +7,8 @@
         android:title="Messages" />
     <item
         android:id="@+id/calls"
-        android:icon="@drawable/call"
-        android:title="Calls" />
+        android:icon="@drawable/grouopchat"
+        android:title="Public Chat" />
 
     <item
         android:id="@+id/status"

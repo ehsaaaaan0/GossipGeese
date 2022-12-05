@@ -88,8 +88,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="3dp"
-                android:scaleType="centerCrop"
                 android:padding="20dp"
+                android:scaleType="centerCrop"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_profile" />
 
@@ -134,9 +134,9 @@
         android:layout_height="25dp"
         android:elevation="20dp"
         android:src="@drawable/ic_laugh"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/showReaction"
         app:layout_constraintStart_toStartOf="@+id/showReaction"
-        app:layout_constraintTop_toTopOf="@+id/showReaction"/>
+        app:layout_constraintTop_toTopOf="@+id/showReaction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

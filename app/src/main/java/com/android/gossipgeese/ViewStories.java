@@ -29,18 +29,20 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Random;
 
 public class ViewStories extends AppCompatActivity {
 
     ImageView img,sendMessage;
-    String receiverRoom, senderRoom,senderId;
+    String receiverRoom, senderRoom,senderId,group;
     EditText msg;
     ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_stories);
+        getSupportActionBar().hide();
         sendMessage = findViewById(R.id.sendMessage);
         msg = findViewById(R.id.enterMessage);
         img = findViewById(R.id.story_image);
@@ -54,53 +56,94 @@ public class ViewStories extends AppCompatActivity {
         receiverRoom = i.getStringExtra("receiverRoom");
         senderRoom = i.getStringExtra("senderRoom");
         senderId = i.getStringExtra("senderId");
+        group = i.getStringExtra("group");
 
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.show();
-                final StorageReference reference = FirebaseStorage.getInstance().getReference().child("chat").child(new Date().getTime()+"");
-                reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                String message = msg.getText().toString();
-                                String image = uri.toString();
-                                String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-                                String key = FirebaseDatabase.getInstance().getReference().child("Key").push().getKey();
-                                MessageModel model = new MessageModel(senderId,key,image,currentTime,message,"null");
-                                FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                dialog.dismiss();
-                                                onBackPressed();
-                                                finish();
-                                            }
-                                        });
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        dialog.dismiss();
-                                        Toast.makeText(ViewStories.this, "Unable to Send Message", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ViewStories.this, "Error Sending Image", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (Objects.equals(group, "group")) {
+                    dialog.show();
+                    final StorageReference reference = FirebaseStorage.getInstance().getReference().child("chat").child(new Date().getTime() + "");
+                    reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String message = msg.getText().toString();
+                                    String image = uri.toString();
+                                    String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                                    String key = FirebaseDatabase.getInstance().getReference().child("Key").push().getKey();
+                                    MessageModel model = new MessageModel(senderId, key, image, currentTime, message, "null");
+                                    FirebaseDatabase.getInstance().getReference().child("public").child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                                    dialog.dismiss();
+                                                    onBackPressed();
+                                                    finish();
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            dialog.dismiss();
+                                            Toast.makeText(ViewStories.this, "Unable to Send Message", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ViewStories.this, "Error Sending Image", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    dialog.show();
+                    final StorageReference reference = FirebaseStorage.getInstance().getReference().child("chat").child(new Date().getTime() + "");
+                    reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String message = msg.getText().toString();
+                                    String image = uri.toString();
+                                    String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                                    String key = FirebaseDatabase.getInstance().getReference().child("Key").push().getKey();
+                                    MessageModel model = new MessageModel(senderId, key, image, currentTime, message, "null");
+                                    FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    dialog.dismiss();
+                                                    onBackPressed();
+                                                    finish();
+                                                }
+                                            });
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            dialog.dismiss();
+                                            Toast.makeText(ViewStories.this, "Unable to Send Message", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ViewStories.this, "Error Sending Image", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
 
+                }
             }
         });
 

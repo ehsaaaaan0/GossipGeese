@@ -2,18 +2,15 @@ package com.android.gossipgeese.adapter;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
-
-
 import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.content.ClipboardManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,31 +37,28 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.jagar.chatvoiceplayerlibrary.VoicePlayerView;
 
-public class ChatAdapter extends RecyclerView.Adapter {
+public class GroupChatAdapter extends RecyclerView.Adapter {
     ArrayList<MessageModel> list;
     Context context;
     int SENDER_VIEW_TYPE = 1;
     int RECEIVER_VIEW_TYPE = 2;
-    String senderRoom, receiverRoom;
 
-    public ChatAdapter(ArrayList<MessageModel> list, Context context,String senderRoom,String receiverRoom) {
+    public GroupChatAdapter(ArrayList<MessageModel> list, Context context) {
         this.list = list;
         this.context = context;
-        this.senderRoom=senderRoom;
-        this.receiverRoom=receiverRoom;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
 
         if (viewType == SENDER_VIEW_TYPE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sender_side, parent, false);
@@ -77,10 +71,12 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+
         if (list.get(position).getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 return SENDER_VIEW_TYPE;
         }else {
                 return RECEIVER_VIEW_TYPE;
+
         }
     }
 
@@ -107,14 +103,10 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
                 ((SenderViewHolder) holder).reaction.setImageResource(reactions[pos]);
                 ((SenderViewHolder) holder).reaction.setVisibility(View.VISIBLE);
-                FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(pos));
+                FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(pos));
             }
 
-            else {
-                ((ReceiverViewHolder)holder).reactionRec.setImageResource(reactions[pos]);
-                ((ReceiverViewHolder)holder).reactionRec.setVisibility(View.VISIBLE);
-                FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(pos));
-            }
+
             return true;
         });
 
@@ -182,48 +174,42 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     rec0.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
                             dialogPlus.dismiss();
                         }
                     });
                     rec1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
-                            dialogPlus.dismiss();
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
+                             dialogPlus.dismiss();
                         }
                     });
                     rec2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
                             dialogPlus.dismiss();
                         }
                     });
                     rec3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
                             dialogPlus.dismiss();
                         }
                     });
                     rec4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
                             dialogPlus.dismiss();
                         }
                     });
                     rec5.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
                             dialogPlus.dismiss();
                         }
                     });
@@ -249,7 +235,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     delete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).removeValue();
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).removeValue();
                             Toast.makeText(context, "Message Deleted", Toast.LENGTH_SHORT).show();
                             list.remove(holder.getBindingAdapterPosition());
                             dialogPlus.dismiss();
@@ -350,48 +336,42 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     rec0.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(0));
                             dialogPlus.dismiss();
                         }
                     });
                     rec1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(1));
                             dialogPlus.dismiss();
                         }
                     });
                     rec2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(2));
                             dialogPlus.dismiss();
                         }
                     });
                     rec3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(3));
                             dialogPlus.dismiss();
                         }
                     });
                     rec4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(4));
                             dialogPlus.dismiss();
                         }
                     });
                     rec5.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).child("reaction").setValue(String.valueOf(5));
                             dialogPlus.dismiss();
                         }
                     });
@@ -417,7 +397,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     delete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child(model.getMsgKey()).removeValue();
+                            FirebaseDatabase.getInstance().getReference().child("public").child(model.getMsgKey()).removeValue();
                             Toast.makeText(context, "Message Deleted", Toast.LENGTH_SHORT).show();
                             list.remove(holder.getBindingAdapterPosition());
                             dialogPlus.dismiss();

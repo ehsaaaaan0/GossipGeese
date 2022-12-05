@@ -54,11 +54,9 @@ public class IncomingInvitationActivity extends AppCompatActivity {
             textFirstChar.setText(firstName.substring(0, 1));
         }
 
-        textUserName.setText(String.format(
-                "%s %s",
-                firstName,
-                getIntent().getStringExtra(Constants.KEY_LAST_NAME)
-        ));
+        textUserName.setText(
+                firstName);
+
 
         textEmail.setText(getIntent().getStringExtra(Constants.KEY_EMAIL));
 
@@ -111,7 +109,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
 
                             JitsiMeetConferenceOptions.Builder builder = new JitsiMeetConferenceOptions.Builder();
                             builder.setServerURL(serverURL);
-                            builder.setWelcomePageEnabled(false);
+//                            builder.setWelcomePageEnabled(false);
                             builder.setRoom(getIntent().getStringExtra(Constants.REMOTE_MSG_MEETING_ROOM));
 
                             if (meetingType.equals("audio")) {

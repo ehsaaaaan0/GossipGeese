@@ -50,6 +50,7 @@ public class MyProfile extends AppCompatActivity {
         dialog.setMessage("Setting-Up Profile");
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -149,5 +150,11 @@ public class MyProfile extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
     }
 }

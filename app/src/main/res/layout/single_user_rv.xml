@@ -33,8 +33,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImage"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:padding="2dp"
@@ -51,7 +51,7 @@
                 android:fontFamily="sans-serif"
                 android:text="Ehsan Abid"
                 android:textColor="#000"
-                android:textSize="@dimen/_14font_mdp"
+                android:textSize="@dimen/_12font_mdp"
                 app:layout_constraintBottom_toTopOf="@+id/userLast"
                 app:layout_constraintStart_toEndOf="@id/userImage"
                 app:layout_constraintTop_toTopOf="@id/userImage" />
@@ -63,7 +63,7 @@
                 android:fontFamily="sans-serif"
                 android:text="Last Message"
                 android:singleLine="true"
-                android:textSize="@dimen/_12font_mdp"
+                android:textSize="@dimen/_11font_mdp"
                 app:layout_constraintBottom_toBottomOf="@id/userImage"
                 app:layout_constraintStart_toStartOf="@id/userName"
                 app:layout_constraintTop_toBottomOf="@id/userName" />
