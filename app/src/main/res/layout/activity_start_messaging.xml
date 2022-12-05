@@ -121,18 +121,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userImage">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/showMessaged"
-            android:layout_width="0dp"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@id/rec_msg"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/rec_msg"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="SpeakableTextPresentCheck">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/showMessaged"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@id/rec_msg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </ScrollView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/rec_msg"
@@ -149,14 +164,14 @@
 
 
                 <LinearLayout
+                    android:id="@+id/sendMessageLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:id="@+id/sendMessageLayout"
                     android:background="@drawable/msgbg_"
                     android:gravity="center"
-                    android:visibility="visible"
                     android:orientation="horizontal"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sendMessage"
                     app:layout_constraintStart_toStartOf="parent"
@@ -191,7 +206,6 @@
                         android:tint="@color/colorPrimaryDark" />
 
 
-
                 </LinearLayout>
 
                 <com.devlomi.record_view.RecordView
@@ -200,42 +214,42 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_toLeftOf="@id/sendMessage"
-                    app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
-                    app:slide_to_cancel_arrow_color="#000000"
-                    app:slide_to_cancel_bounds="8dp"
                     android:visibility="gone"
-                    app:slide_to_cancel_margin_right="10dp"
-                    app:slide_to_cancel_text="Slide To Cancel"
                     app:counter_time_color="#ff0000"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sendMessage"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
+                    app:slide_to_cancel_arrow_color="#000000"
+                    app:slide_to_cancel_bounds="8dp"
+                    app:slide_to_cancel_margin_right="10dp"
+                    app:slide_to_cancel_text="Slide To Cancel" />
 
                 <LinearLayout
+                    android:id="@+id/sendMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sendMessage"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.5">
-                <ImageView
-                    android:id="@+id/sendMessageBTN"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:visibility="gone"
-                    android:background="@drawable/bg_send"
-                    android:src="@drawable/send_btn"
-                    />
+
+                    <ImageView
+                        android:id="@+id/sendMessageBTN"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/bg_send"
+                        android:src="@drawable/send_btn"
+                        android:visibility="gone" />
+
                     <com.devlomi.record_view.RecordButton
                         android:id="@+id/sendVoiceBTN"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/bg_send"
                         android:src="@drawable/voicmic"
-                        />
+                        tools:ignore="SpeakableTextPresentCheck" />
 
                 </LinearLayout>
 
