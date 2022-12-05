@@ -30,10 +30,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyProfile extends AppCompatActivity {
     ImageView back;
     CircleImageView profile;
-    EditText name,bio;
+    EditText name,bio,mail;
     AppCompatButton update;
     ProgressDialog dialog;
-    String naemS ,bioS;
+    String naemS ,bioS,mailS;
     Uri sFile;
     int reqCode =0;
     @Override
@@ -44,6 +44,7 @@ public class MyProfile extends AppCompatActivity {
         profile = findViewById(R.id.profile_image);
         name = findViewById(R.id.etname);
         bio = findViewById(R.id.etabout);
+        mail= findViewById(R.id.etemail);
         update = findViewById(R.id.setup);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Setting-Up Profile");
@@ -58,8 +59,10 @@ public class MyProfile extends AppCompatActivity {
                     dialog.show();
                     Picasso.get().load(snapshot.child("image").getValue(String.class)).into(profile);
                     name.setText(snapshot.child("name").getValue(String.class));
+                    mail.setText(snapshot.child("mail").getValue(String.class));
                     bio.setText(snapshot.child("bio").getValue(String.class));
                     naemS = snapshot.child("name").getValue(String.class);
+                    mailS = snapshot.child("mail").getValue(String.class);
                     bioS = snapshot.child("bio").getValue(String.class);
                     dialog.dismiss();
                 }
@@ -124,6 +127,7 @@ public class MyProfile extends AppCompatActivity {
                             FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid())
                                     .child("image").setValue(uri.toString());
                             FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).child("name").setValue(name.getText().toString().trim());
+                            FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).child("mail").setValue(mail.getText().toString().trim());
                             FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).child("bio").setValue(bio.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {

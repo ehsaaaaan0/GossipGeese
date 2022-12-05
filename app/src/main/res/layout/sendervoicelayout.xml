@@ -7,16 +7,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/showReaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/showReaction"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="-10dp"
         android:maxWidth="@dimen/_250mdp"
         android:maxHeight="@dimen/_220mdp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <View
+            android:id="@+id/view4"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/yellow"
@@ -31,24 +37,23 @@
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/_10mdp"
             android:layout_marginEnd="@dimen/_10mdp"
-            android:layout_marginRight="@dimen/_10mdp"
             android:padding="2dp"
             android:src="@drawable/ic_gossipgeese"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="false"
             android:layout_gravity="right"
-            android:layout_marginEnd="11dp"
+            android:layout_marginEnd="35dp"
             android:layout_marginBottom="3dp"
             android:maxWidth="310dp"
             android:maxHeight="1000dp"
             android:minWidth="65dp"
             android:orientation="vertical"
-            android:paddingStart="5dp"
+            android:paddingStart="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/senderImage"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,39 +61,39 @@
 
             <me.jagar.chatvoiceplayerlibrary.VoicePlayerView
                 android:id="@+id/voicePlayerView"
-                android:layout_width="wrap_content"
+                android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 app:enableVisualizer="true"
-                app:visualizationPlayedColor="#ff7700"
-                app:visualizationNotPlayedColor="#727171"
                 app:playPauseBackgroundColor="#ff7700"
-                app:timingBackgroundColor="#6AFF7700"
-                app:seekBarProgressColor="#000"
-                app:showShareButton="false"
-                app:shareCornerRadius="100"
                 app:playPauseCornerRadius="100"
-                app:showTiming="true"
-                app:viewCornerRadius="100"
-                app:viewBackground="#C6C4CF"
+                app:playProgressbarColor="#ff7700"
                 app:progressTimeColor="#000"
+                app:seekBarProgressColor="#000"
                 app:seekBarThumbColor="#FFC107"
                 app:shareBackgroundColor="#ff7700"
-                app:playProgressbarColor="#ff7700"/>
+                app:shareCornerRadius="100"
+                app:showShareButton="false"
+                app:showTiming="true"
+                app:timingBackgroundColor="#6AFF7700"
+                app:viewBackground="#C6C4CF"
+                app:viewCornerRadius="100"
+                app:visualizationNotPlayedColor="#727171"
+                app:visualizationPlayedColor="#ff7700" />
 
 
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/reactionImage"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:elevation="20dp"
-        android:src="@drawable/ic_laugh"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/showReaction"
-        app:layout_constraintStart_toStartOf="@+id/showReaction"
-        app:layout_constraintTop_toTopOf="@+id/showReaction" />
+    <!--    <ImageView-->
+<!--        android:id="@+id/reactionImage"-->
+<!--        android:layout_width="35dp"-->
+<!--        android:layout_height="25dp"-->
+<!--        android:elevation="20dp"-->
+<!--        android:src="@drawable/ic_laugh"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/showReaction"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/showReaction"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/showReaction" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
