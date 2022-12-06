@@ -112,7 +112,7 @@ public class StartMessaging extends AppCompatActivity {
     CurrentUserModel c = new CurrentUserModel();
     ImageView emojiKeyboard;
 
-    private NotificationManagerCompat notificationManager;
+//    private NotificationManagerCompat notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +132,7 @@ public class StartMessaging extends AppCompatActivity {
         sendM = findViewById(R.id.sendMessageLayout);
         vc = findViewById(R.id.vc);/////// Video Call
         ac=findViewById(R.id.ac);/////// Audio Call
-        notificationManager = NotificationManagerCompat.from(StartMessaging.this);
+//        notificationManager = NotificationManagerCompat.from(StartMessaging.this);
 
         Intent i = getIntent();
         receiverId = i.getStringExtra("receiver");
@@ -300,7 +300,7 @@ public class StartMessaging extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                sendMessagenotification(message);
+                                sendNotification(name,message,token);
                                 adapter.notifyDataSetChanged();
                             }
                         });
@@ -543,40 +543,87 @@ public class StartMessaging extends AppCompatActivity {
     }
 
 
-    private void sendMessagenotification(String message) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("to","/topics/"+token);
-            JSONObject jsonObject1 = new JSONObject();
-            jsonObject1.put("title", "Message from "+senderName);
-            jsonObject1.put("body",message);
-            JSONObject jsonObject2 = new JSONObject();
-            jsonObject2.put("userId",FirebaseAuth.getInstance().getUid());
-            jsonObject2.put("recId",receiverId);
-            jsonObject2.put("type","sms");
-            jsonObject.put("notification",jsonObject1);
-            jsonObject.put("data",jsonObject2);
+//    private void sendMessagenotification(String message) {
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("to","/topics/"+token);
+//            JSONObject jsonObject1 = new JSONObject();
+//            jsonObject1.put("title", "Message from "+senderName);
+//            jsonObject1.put("body",message);
+//            JSONObject jsonObject2 = new JSONObject();
+//            jsonObject2.put("userId",FirebaseAuth.getInstance().getUid());
+//            jsonObject2.put("recId",receiverId);
+//            jsonObject2.put("type","sms");
+//            jsonObject.put("notification",jsonObject1);
+//            jsonObject.put("data",jsonObject2);
+//
+//            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,URL, jsonObject, new Response.Listener<JSONObject>() {
+//                @Override
+//                public void onResponse(JSONObject response) {
+//                }
+//            }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                }
+//            }){
+//                @Override
+//                public Map<String, String> getHeaders() throws AuthFailureError {
+//                    Map<String,String>map = new HashMap<>();
+//                    map.put("content-type","application/json");
+//                    map.put("authorization","key=AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E");
+//                    return map;
+//                }
+//            };
+//            requestQueue.add(request);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,URL, jsonObject, new Response.Listener<JSONObject>() {
+    void sendNotification(String name, String message,String token){
+        try {
+            RequestQueue queue = Volley.newRequestQueue(this);
+
+            String url = "https://fcm.googleapis.com/fcm/send";
+
+            JSONObject data = new JSONObject();
+            data.put("title", name);
+            data.put("body", message);
+            JSONObject notificationData = new JSONObject();
+            notificationData.put("notification", data);
+            notificationData.put("to",token);
+
+            JsonObjectRequest request = new JsonObjectRequest(url, notificationData
+                    , new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    // Toast.makeText(ChatActivity.this, "success", Toast.LENGTH_SHORT).show();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(StartMessaging.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String>map = new HashMap<>();
-                    map.put("content-type","application/json");
-                    map.put("authorization","key=AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E");
+                    HashMap<String, String> map = new HashMap<>();
+                    String key = "Key=AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E";
+                    map.put("Content-Type", "application/json");
+                    map.put("Authorization", key);
+
                     return map;
                 }
             };
-            requestQueue.add(request);
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            queue.add(request);
+
+
+        } catch (Exception ex) {
+
         }
+
+
     }
+
 }

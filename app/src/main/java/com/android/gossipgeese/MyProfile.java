@@ -39,6 +39,7 @@ public class MyProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_my_profile);
         back = findViewById(R.id.back);
         profile = findViewById(R.id.profile_image);

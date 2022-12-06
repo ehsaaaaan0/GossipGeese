@@ -52,7 +52,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.myViewHolder
         StoryModel model = list.get(position);
         UserStories stories = model.getStories().get(model.getStories().size() - 1);
 
-        Picasso.get().load(stories.getImage()).placeholder(R.drawable.ic_gossipgeese).into(holder.imageView);
+        Picasso.get().load(stories.getImage()).placeholder(R.drawable.ic_profile).into(holder.imageView);
         holder.storyView.setPortionsCount(model.getStories().size());
 
 
