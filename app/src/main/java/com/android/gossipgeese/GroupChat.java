@@ -74,7 +74,7 @@ public class GroupChat extends AppCompatActivity {
     MediaRecorder mediaRecorder;
     String audioPath;
     LinearLayout video;
-    TextView userStatus,userName;
+    TextView userName;
     ProgressDialog audioDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,6 @@ public class GroupChat extends AppCompatActivity {
         voice = findViewById(R.id.sendVoiceBTN);
         userImage = findViewById(R.id.userImage);
         sendImage = findViewById(R.id.sendImage);
-        userStatus = findViewById(R.id.userStatus);
         userName = findViewById(R.id.userName);
         sendM = findViewById(R.id.sendMessageLayout);
         vc = findViewById(R.id.vc);/////// Video Call
@@ -199,7 +198,6 @@ public class GroupChat extends AppCompatActivity {
         voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(GroupChat.this, "Clicked", Toast.LENGTH_SHORT).show();
                 if (checkPermission()==true){
                     voice.setListenForRecord(true);
 

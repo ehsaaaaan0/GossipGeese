@@ -55,10 +55,7 @@ public class DbHealper extends SQLiteOpenHelper {
 
 
 
-    public void delete(){
-        SQLiteDatabase sb = this.getWritableDatabase();
-        sb.execSQL("drop table if exists "+tbl);
-    }
+
 
     public boolean updateData(String id,String recent, String archive){
         SQLiteDatabase db = this.getWritableDatabase();

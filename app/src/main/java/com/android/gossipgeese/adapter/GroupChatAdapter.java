@@ -144,7 +144,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter {
             FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-               Picasso.get().load(snapshot.child("image").getValue(String.class)).into(((SenderViewHolder)holder).senderImage);
+               Picasso.get().load(snapshot.child("image").getValue(String.class)).placeholder(R.drawable.ic_profile).into(((SenderViewHolder)holder).senderImage);
                 }
 
                 @Override
@@ -286,7 +286,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter {
             }else{
                 ((ReceiverViewHolder)holder).rec_image.setVisibility(View.VISIBLE);
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
-                Picasso.get().load(model.getImage()).into(((ReceiverViewHolder)holder).rec_image);
+                Picasso.get().load(model.getImage()).placeholder(R.drawable.ic_profile).into(((ReceiverViewHolder)holder).rec_image);
                 ((ReceiverViewHolder)holder).rec_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -298,7 +298,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter {
             FirebaseDatabase.getInstance().getReference().child("users").child(model.getId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Picasso.get().load(snapshot.child("image").getValue(String.class)).into(((ReceiverViewHolder)holder).receiverImage);
+                    Picasso.get().load(snapshot.child("image").getValue(String.class)).placeholder(R.drawable.ic_profile).into(((ReceiverViewHolder)holder).receiverImage);
                 }
 
                 @Override

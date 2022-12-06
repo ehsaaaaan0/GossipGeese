@@ -13,9 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.gossipgeese.model.CallLogModel;
 import com.android.gossipgeese.network.ApiClient;
 import com.android.gossipgeese.network.ApiService;
 import com.android.gossipgeese.utilities.Constants;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
@@ -54,11 +58,10 @@ public class IncomingInvitationActivity extends AppCompatActivity {
             textFirstChar.setText(firstName.substring(0, 1));
         }
 
-        textUserName.setText(
-                firstName);
+        textUserName.setText(firstName);
 
 
-        textEmail.setText(getIntent().getStringExtra(Constants.KEY_EMAIL));
+//        textEmail.setText(getIntent().getStringExtra(Constants.KEY_EMAIL));
 
         ImageView imageAcceptInvitation = findViewById(R.id.imageAcceptInvitation);
         imageAcceptInvitation.setOnClickListener(view -> sendInvitationResponse(
@@ -103,6 +106,10 @@ public class IncomingInvitationActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
                     if (type.equals(Constants.REMOTE_MSG_INVITATION_ACCEPTED)) {
+                        String key = FirebaseDatabase.getInstance().getReference().child("test").push().getKey();
+                        String id = FirebaseAuth.getInstance().getUid();
+                        CallLogModel callLog = new CallLogModel(id,key,"Accepted Incoming Call");
+                        FirebaseDatabase.getInstance().getReference().child("Call").child(id).child(key).setValue(callLog);
 
                         try {
                             URL serverURL = new URL("https://meet.jit.si");
@@ -124,6 +131,10 @@ public class IncomingInvitationActivity extends AppCompatActivity {
                             finish();
                         }
                     } else {
+                        String key = FirebaseDatabase.getInstance().getReference().child("test").push().getKey();
+                        String id = FirebaseAuth.getInstance().getUid();
+                        CallLogModel callLog = new CallLogModel(id,key,"Rejected InComing Call");
+                        FirebaseDatabase.getInstance().getReference().child("Call").child(id).child(key).setValue(callLog);
                         Toast.makeText(IncomingInvitationActivity.this, "Invitation Rejected", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -147,6 +158,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
             String type = intent.getStringExtra(Constants.REMOTE_MSG_INVITATION_RESPONSE);
             if (type != null) {
                 if (type.equals(Constants.REMOTE_MSG_INVITATION_CANCELLED)) {
+
                     Toast.makeText(context, "Invitation Cancelled", Toast.LENGTH_SHORT).show();
                     finish();
                 }

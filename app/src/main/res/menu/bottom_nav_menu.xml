@@ -5,6 +5,12 @@
         android:id="@+id/chats"
         android:icon="@drawable/chat"
         android:title="Messages" />
+
+    <item
+        android:id="@+id/callLog"
+        android:icon="@drawable/call"
+        android:title="Call Log"/>
+
     <item
         android:id="@+id/calls"
         android:icon="@drawable/grouopchat"

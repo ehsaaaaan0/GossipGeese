@@ -16,12 +16,15 @@ import android.widget.Toast;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 
+import com.android.gossipgeese.model.CallLogModel;
 import com.android.gossipgeese.model.CurrentUserModel;
 import com.android.gossipgeese.model.User;
 import com.android.gossipgeese.network.ApiClient;
 import com.android.gossipgeese.network.ApiService;
 import com.android.gossipgeese.utilities.Constants;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -124,6 +127,9 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             if (receiverToken != null) {
                 tokens.put(receiverToken);
             }
+
+
+
 
             if (receivers != null && receivers.size() > 0) {
                 StringBuilder userNames = new StringBuilder();
@@ -228,6 +234,10 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
             String type = intent.getStringExtra(Constants.REMOTE_MSG_INVITATION_RESPONSE);
             if (type != null) {
                 if (type.equals(Constants.REMOTE_MSG_INVITATION_ACCEPTED)) {
+                    String key = FirebaseDatabase.getInstance().getReference().child("test").push().getKey();
+                    String id = FirebaseAuth.getInstance().getUid();
+                    CallLogModel callLog = new CallLogModel(id,key,"Accepted OutGoing Call");
+                    FirebaseDatabase.getInstance().getReference().child("Call").child(id).child(key).setValue(callLog);
 
                     try {
                         URL serverURL = new URL("https://meet.jit.si");
@@ -251,6 +261,11 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
                 } else if (type.equals(Constants.REMOTE_MSG_INVITATION_REJECTED)) {
                     rejectionCount += 1;
                     if (rejectionCount == totalReceivers) {
+
+                        String key = FirebaseDatabase.getInstance().getReference().child("test").push().getKey();
+                        String id = FirebaseAuth.getInstance().getUid();
+                        CallLogModel callLog = new CallLogModel(id,key,"Rejected OutGoing Call");
+                        FirebaseDatabase.getInstance().getReference().child("Call").child(id).child(key).setValue(callLog);
                         Toast.makeText(context, "Invitation Rejected", Toast.LENGTH_SHORT).show();
                         finish();
                     }

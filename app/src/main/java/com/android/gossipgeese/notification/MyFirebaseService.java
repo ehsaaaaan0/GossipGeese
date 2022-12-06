@@ -1,34 +1,34 @@
-package com.android.gossipgeese.notification;
-
-
-import static com.android.gossipgeese.notification.App.CHANNEL_1_ID;
-
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.app.RemoteInput;
-
-import com.android.gossipgeese.MainActivity;
-import com.android.gossipgeese.R;
-import com.android.gossipgeese.StartMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
-
-import java.util.ArrayList;
-import java.util.List;
+//package com.android.gossipgeese.notification;
+//
+//
+//import static com.android.gossipgeese.notification.App.CHANNEL_1_ID;
+//
+//import android.app.Notification;
+//import android.app.PendingIntent;
+//import android.content.Intent;
+//import android.app.NotificationChannel;
+//import android.app.NotificationManager;
+//import android.app.PendingIntent;
+//import android.content.Context;
+//import android.content.Intent;
+//import android.media.RingtoneManager;
+//import android.net.Uri;
+//import android.os.Build;
+//import android.util.Log;
+//
+//import androidx.annotation.NonNull;
+//import androidx.core.app.NotificationCompat;
+//import androidx.core.app.NotificationManagerCompat;
+//import androidx.core.app.RemoteInput;
+//
+//import com.android.gossipgeese.MainActivity;
+//import com.android.gossipgeese.R;
+//import com.android.gossipgeese.StartMessaging;
+//import com.google.firebase.messaging.FirebaseMessagingService;
+//import com.google.firebase.messaging.RemoteMessage;
+//
+//import java.util.ArrayList;
+//import java.util.List;
 //
 //public class MyFirebaseService extends FirebaseMessagingService {
 //    public static List<MessageModel> MESSAGES = new ArrayList<>();

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryVariant"
-    tools:context=".GroupChat">
+    tools:context=".StartMessaging">
 
     <ImageView
         android:id="@+id/back"
@@ -27,104 +27,118 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/back"
         app:layout_constraintTop_toTopOf="@id/back" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/yellow"
-        app:layout_constraintBottom_toBottomOf="@id/userImage"
-        app:layout_constraintEnd_toEndOf="@id/userImage"
-        app:layout_constraintStart_toStartOf="@id/userImage"
-        app:layout_constraintTop_toTopOf="@id/userImage" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userImage"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_gossipgeese"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/constraintHere"
+        app:layout_constraintBottom_toTopOf="@+id/secondConst"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/back" />
-
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10mdp"
-        android:layout_marginLeft="@dimen/_10mdp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif"
-        android:text=""
-        android:textColor="#FFF"
-        android:textSize="@dimen/_15font_mdp"
-        app:layout_constraintBottom_toTopOf="@+id/userLast"
-        app:layout_constraintStart_toEndOf="@id/userImage"
-        app:layout_constraintTop_toTopOf="@id/userImage" />
-
-    <TextView
-        android:id="@+id/userStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Offline"
-        android:textAllCaps="true"
-        android:textColor="#03FF0D"
-        android:textSize="@dimen/_11font_mdp"
-        app:layout_constraintBottom_toBottomOf="@id/userImage"
-        app:layout_constraintStart_toStartOf="@id/userName"
-        app:layout_constraintTop_toBottomOf="@id/userName" />
-
-    <LinearLayout
-        android:id="@+id/videoLiner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10mdp"
-        android:background="@drawable/chat_icons"
-        app:layout_constraintBottom_toBottomOf="@id/userImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/userImage">
+        app:layout_constraintTop_toBottomOf="@id/back">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="5dp"
-            android:id="@+id/vc"
-            android:src="@drawable/videocall" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10mdp"
-        android:background="@drawable/chat_icons"
-        app:layout_constraintBottom_toBottomOf="@id/videoLiner"
-        app:layout_constraintEnd_toStartOf="@id/videoLiner"
-        app:layout_constraintTop_toTopOf="@id/videoLiner">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/yellow"
+            app:layout_constraintBottom_toBottomOf="@id/userImage"
+            app:layout_constraintEnd_toEndOf="@id/userImage"
+            app:layout_constraintStart_toStartOf="@id/userImage"
+            app:layout_constraintTop_toTopOf="@id/userImage" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userImage"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_gossipgeese"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back" />
 
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="5dp"
-            android:id="@+id/ac"
-            android:src="@drawable/call" />
-    </LinearLayout>
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10mdp"
+            android:layout_marginLeft="@dimen/_10mdp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+            android:text="Public Chat"
+            android:textColor="#FFF"
+            android:textSize="@dimen/_12font_mdp"
+            app:layout_constraintStart_toEndOf="@id/userImage"
+            app:layout_constraintTop_toTopOf="@id/userImage" />
 
+        <TextView
+            android:id="@+id/userStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Users Available Here"
+            android:textAllCaps="true"
+            android:textColor="#03FF0D"
+            android:textSize="@dimen/_10font_mdp"
+            app:layout_constraintBottom_toBottomOf="@id/userImage"
+            app:layout_constraintStart_toStartOf="@id/userName"
+            app:layout_constraintTop_toBottomOf="@id/userName" />
+
+        <LinearLayout
+            android:id="@+id/videoLiner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:layout_marginEnd="@dimen/_10mdp"
+            android:background="@drawable/chat_icons"
+            app:layout_constraintBottom_toBottomOf="@id/userImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/userImage">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:id="@+id/vc"
+                android:src="@drawable/videocall" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10mdp"
+            android:background="@drawable/chat_icons"
+            android:elevation="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/videoLiner"
+            app:layout_constraintEnd_toStartOf="@id/videoLiner"
+            app:layout_constraintTop_toTopOf="@id/videoLiner">
+
+            <ImageView
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:id="@+id/ac"
+                android:src="@drawable/call" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:id="@+id/secondConst"
+        android:layout_marginTop="20dp"
+        android:elevation="10dp"
         android:background="@drawable/main_second"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userImage">
+        app:layout_constraintTop_toBottomOf="@id/constraintHere">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/showMessaged"
-            android:layout_width="0dp"
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:id="@+id/showMSG"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
@@ -132,12 +146,25 @@
             app:layout_constraintBottom_toTopOf="@id/rec_msg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/showMessaged"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"/>
+
+
+        </LinearLayout>
+
+
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/rec_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/showMSG"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -149,14 +176,14 @@
 
 
                 <LinearLayout
+                    android:id="@+id/sendMessageLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:id="@+id/sendMessageLayout"
                     android:background="@drawable/msgbg_"
                     android:gravity="center"
-                    android:visibility="visible"
                     android:orientation="horizontal"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sendMessage"
                     app:layout_constraintStart_toStartOf="parent"
@@ -175,10 +202,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:id="@+id/emojiKeyoard"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:src="@drawable/emoji"
-                        android:tint="@color/colorPrimaryDark" />
+                        app:tint="@color/colorPrimaryDark" />
 
                     <ImageView
                         android:id="@+id/sendImage"
@@ -188,8 +216,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="15dp"
                         android:src="@drawable/sendimage"
-                        android:tint="@color/colorPrimaryDark" />
-
+                        app:tint="@color/colorPrimaryDark" />
 
 
                 </LinearLayout>
@@ -200,42 +227,42 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_toLeftOf="@id/sendMessage"
-                    app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
-                    app:slide_to_cancel_arrow_color="#000000"
-                    app:slide_to_cancel_bounds="8dp"
                     android:visibility="gone"
-                    app:slide_to_cancel_margin_right="10dp"
-                    app:slide_to_cancel_text="Slide To Cancel"
                     app:counter_time_color="#ff0000"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sendMessage"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
+                    app:slide_to_cancel_arrow_color="#000000"
+                    app:slide_to_cancel_bounds="8dp"
+                    app:slide_to_cancel_margin_right="10dp"
+                    app:slide_to_cancel_text="Slide To Cancel" />
 
                 <LinearLayout
+                    android:id="@+id/sendMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sendMessage"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.5">
+
                     <ImageView
                         android:id="@+id/sendMessageBTN"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:visibility="gone"
                         android:background="@drawable/bg_send"
                         android:src="@drawable/send_btn"
-                        />
+                        android:visibility="gone" />
+
                     <com.devlomi.record_view.RecordButton
                         android:id="@+id/sendVoiceBTN"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/bg_send"
                         android:src="@drawable/voicmic"
-                        />
+                        tools:ignore="SpeakableTextPresentCheck" />
 
                 </LinearLayout>
 

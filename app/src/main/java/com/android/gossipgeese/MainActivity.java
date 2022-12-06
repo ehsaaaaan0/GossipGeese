@@ -91,18 +91,18 @@ public class MainActivity extends AppCompatActivity {
         rv = findViewById(R.id.recent_rv);
         hide = findViewById(R.id.hide_layout);
         storyRv = findViewById(R.id.stories_rv);
-        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
-            @Override
-            public void onSuccess(String s) {
-                FirebaseMessaging.getInstance().subscribeToTopic(s);
-                HashMap<String,Object> map = new HashMap<>();
-                map.put("token",s);
-                FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid())
-                                .updateChildren(map);
-
-            }
-        });
-
+//        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+//            @Override
+//            public void onSuccess(String s) {
+//                FirebaseMessaging.getInstance().subscribeToTopic(s);
+//                HashMap<String,Object> map = new HashMap<>();
+//                map.put("token",s);
+//                FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid())
+//                                .updateChildren(map);
+//
+//            }
+//        });
+        FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().getUid());
         storyList = new ArrayList<>();
         StoryAdapter adapter1 = new StoryAdapter(storyList, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -268,6 +268,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (item.getItemId()==R.id.status){
                     startActivity(new Intent(MainActivity.this, MyProfile.class));
+                }else if (item.getItemId()==R.id.callLog){
+                    startActivity(new Intent(MainActivity.this,CallLog.class));
                 }
 
                 return true;

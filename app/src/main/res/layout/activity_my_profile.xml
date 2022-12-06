@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_bg"
+            android:background="@drawable/button_bg"
             android:padding="5dp"
             android:text="Save"
             android:textColor="@color/white" />

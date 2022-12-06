@@ -71,7 +71,7 @@ public class EnterOTP extends AppCompatActivity {
 
 
         Intent i = getIntent();
-        String phoneNumber = i.getStringExtra("phone");
+        String phoneNumber = getIntent().getStringExtra("phone");
         full_name = i.getStringExtra("full_name");
         password = i.getStringExtra("password");
         date = i.getStringExtra("date");
@@ -91,91 +91,6 @@ public class EnterOTP extends AppCompatActivity {
             }
         });
     }
-
-
-//    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//
-//                            FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                    if (snapshot.exists()){
-//                                        startActivity(new Intent(EnterOTP.this, MainActivity.class));
-//                                    }else{
-//
-//
-//                                        Uri uri = Uri.parse(username);
-//                                        final StorageReference reference = FirebaseStorage.getInstance().getReference().child("profile").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                                        reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                                            @Override
-//                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                                    @Override
-//                                                    public void onSuccess(Uri uri) {
-//                                                        String image = uri.toString();
-//                                                        String id = FirebaseAuth.getInstance().getUid();
-//                                                        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
-//                                                            @Override
-//                                                            public void onSuccess(String s) {
-//
-//                                                        RegisterModel model = new RegisterModel(id,full_name,phoneNumber,password,image,date,"12:00",s);
-//                                                        FirebaseDatabase.getInstance().getReference().child("users").child(id).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                            @Override
-//                                                            public void onSuccess(Void unused) {
-//                                                                creating.dismiss();
-//
-//                                                                NotificationCompat.Builder builder = new NotificationCompat.Builder(EnterOTP.this, "My Notification");
-//                                                                builder.setContentTitle("Your Account is Registered SuccessFully");
-//                                                                builder.setContentText("Let's Have Some Chat with Each Other");
-//                                                                builder.setSmallIcon(R.drawable.ic_gossipgeese);
-//                                                                builder.setAutoCancel(true);
-//
-//                                                                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(EnterOTP.this);
-//                                                                managerCompat.notify(1, builder.build() );
-//                                                                startActivity(new Intent(EnterOTP.this, MainActivity.class));
-//                                                            }
-//                                                        }).addOnFailureListener(new OnFailureListener() {
-//                                                            @Override
-//                                                            public void onFailure(@NonNull Exception e) {
-//                                                                creating.dismiss();
-//                                                                Toast.makeText(EnterOTP.this, "Account Registered, But Unable to Save Information", Toast.LENGTH_SHORT).show();
-//                                                            }
-//                                                        });
-//
-//
-//                                                            }
-//                                                        });
-//                                                    }
-//                                                });
-//                                            }
-//                                        }).addOnFailureListener(new OnFailureListener() {
-//                                            @Override
-//                                            public void onFailure(@NonNull Exception e) {
-//                                                creating.dismiss();
-//                                                Toast.makeText(EnterOTP.this, "Unable to Save Information", Toast.LENGTH_SHORT).show();
-//                                            }
-//                                        });
-//
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                }
-//                            });
-//
-//                        } else {
-//                            creating.dismiss();
-//                            Toast.makeText(EnterOTP.this, "Try again latter", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//    }
 
     private void sendVerificationCode(String number) {
         // this method is used for getting

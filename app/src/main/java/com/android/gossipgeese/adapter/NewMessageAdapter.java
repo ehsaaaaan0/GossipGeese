@@ -59,8 +59,8 @@ public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.my
         holder.lastMessage.setText(model.getLastMsg());
         Glide.with(context).load(model.getImage()).placeholder(R.drawable.ic_gossipgeese).into(holder.image);
         String time =model.getTime();
-        String sub1 = time.substring(0,5);
-        holder.time.setText(sub1);
+//        String sub1 = time.substring(0,5);
+        holder.time.setText(time);
 
         FirebaseDatabase.getInstance().getReference().child("chats")
                 .child(FirebaseAuth.getInstance().getUid() + model.getId())
