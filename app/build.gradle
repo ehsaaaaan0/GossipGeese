@@ -129,6 +129,9 @@ dependencies {
     // Jitsi Meet
     implementation('org.jitsi.react:jitsi-meet-sdk:5.1.0') { transitive = true }
     implementation "androidx.work:work-runtime:2.8.0-beta02"
+    //browser
+    implementation 'androidx.browser:browser:1.4.0'
+
 
 
 }
