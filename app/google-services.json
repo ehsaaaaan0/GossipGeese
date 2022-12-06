@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "253041757426",
+    "firebase_url": "https://gossipgeese-1-default-rtdb.firebaseio.com",
     "project_id": "gossipgeese-1",
     "storage_bucket": "gossipgeese-1.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "253041757426-rd64383jk2bbf5jpj7q0dpph61vtruvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.gossipgeese",
+            "certificate_hash": "ebdad280083cd787d5ee0ac56c0946fb1fde364e"
+          }
+        },
         {
           "client_id": "253041757426-ub7htd0s92ab655vtrjssdj2drf3uq3e.apps.googleusercontent.com",
           "client_type": 3

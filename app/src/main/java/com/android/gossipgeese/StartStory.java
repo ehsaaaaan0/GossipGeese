@@ -56,7 +56,7 @@ public class StartStory extends AppCompatActivity {
         saveImage = findViewById(R.id.saveImage);
         story_image = findViewById(R.id.story_image);
         name.setText(n);
-        Picasso.get().load(i).placeholder(R.drawable.ic_gossipgeese).into(profile);
+        Picasso.get().load(i).placeholder(R.drawable.ic_profile).into(profile);
         FirebaseDatabase.getInstance().getReference().child("stories").child(id).child("userstories").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
