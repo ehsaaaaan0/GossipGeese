@@ -8,6 +8,15 @@
         <deviceKey>
           <Key>
             <type value="SERIAL_NUMBER" />
+            <value value="QKQ4CM75EYCYMNLR" />
+          </Key>
+        </deviceKey>
+      </Target>
+      <Target>
+        <type value="RUNNING_DEVICE_TARGET" />
+        <deviceKey>
+          <Key>
+            <type value="SERIAL_NUMBER" />
             <value value="192fdc73" />
           </Key>
         </deviceKey>
