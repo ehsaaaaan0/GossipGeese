@@ -2,6 +2,7 @@ package com.android.gossipgeese;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
@@ -13,6 +14,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -108,6 +110,7 @@ public class StartMessaging extends AppCompatActivity {
     RequestQueue requestQueue;
     ProgressDialog audioDialog;
     CurrentUserModel c = new CurrentUserModel();
+    ImageView emojiKeyboard;
 
     private NotificationManagerCompat notificationManager;
     @Override
@@ -125,6 +128,7 @@ public class StartMessaging extends AppCompatActivity {
         sendImage = findViewById(R.id.sendImage);
         userStatus = findViewById(R.id.userStatus);
         userName = findViewById(R.id.userName);
+        emojiKeyboard = findViewById(R.id.emojiKeyoard);
         sendM = findViewById(R.id.sendMessageLayout);
         vc = findViewById(R.id.vc);/////// Video Call
         ac=findViewById(R.id.ac);/////// Audio Call
@@ -322,6 +326,14 @@ public class StartMessaging extends AppCompatActivity {
             }
         });
 
+        emojiKeyboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                msg.requestFocus();
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(msg, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
 
         msg.addTextChangedListener(new TextWatcher() {
             @Override
