@@ -174,7 +174,7 @@ public class MainLoginScreen extends AppCompatActivity {
 
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList(EMAIL));
+        loginButton.setReadPermissions("email", "public_profile", "user_friends");
         callbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -202,6 +202,7 @@ public class MainLoginScreen extends AppCompatActivity {
             @Override
             public void onError(FacebookException exception) {
                 Log.d("onError", "facebook:onError");
+                Toast.makeText(MainLoginScreen.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         btn_fb.setOnClickListener(new View.OnClickListener() {

@@ -15,9 +15,9 @@
         android:id="@+id/calls"
         android:icon="@drawable/grouopchat"
         android:title="Public Chat" />
-
     <item
         android:id="@+id/status"
         android:icon="@drawable/proprofile"
         android:title="Profile" />
+
 </menu>
