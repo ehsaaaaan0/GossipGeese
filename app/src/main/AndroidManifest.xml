@@ -173,7 +173,13 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
+        <service android:name=".notification.MyFirebaseIdService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
         <service
             android:name=".notification.MyFirebaseMessagingService"
             android:exported="false">
@@ -181,6 +187,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <service
             android:name="org.jitsi.meet.sdk.ConnectionService"
             android:exported="true"
@@ -189,6 +196,10 @@
                 <action android:name="android.telecom.ConnectionService" />
             </intent-filter>
         </service>
+
+    <meta-data
+        android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+        android:value="ocr" />
     </application>
 
 </manifest>

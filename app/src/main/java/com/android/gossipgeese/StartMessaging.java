@@ -37,6 +37,11 @@ import com.android.gossipgeese.model.CurrentUserModel;
 import com.android.gossipgeese.model.MessageModel;
 import com.android.gossipgeese.model.NewMessageModel;
 import com.android.gossipgeese.model.User;
+import com.android.gossipgeese.notification.APIService;
+import com.android.gossipgeese.notification.Client;
+import com.android.gossipgeese.notification.Data;
+import com.android.gossipgeese.notification.MyResponse;
+import com.android.gossipgeese.notification.Sender;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,9 +55,12 @@ import com.devlomi.record_view.RecordView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -80,10 +88,12 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class StartMessaging extends AppCompatActivity {
 
-
+    FirebaseUser fuser;
     String receiverId;
     User user = new User();
     String token;
@@ -98,6 +108,7 @@ public class StartMessaging extends AppCompatActivity {
     RecordView recordView;
     RecordButton voice;
     ChatAdapter adapter;
+    APIService apiService;
     ArrayList<MessageModel>list;
     Uri uri;
     String senderName;
@@ -118,6 +129,7 @@ public class StartMessaging extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         setContentView(R.layout.activity_start_messaging);
         video = findViewById(R.id.videoLiner);
         send = findViewById(R.id.sendMessageBTN);
@@ -143,8 +155,7 @@ public class StartMessaging extends AppCompatActivity {
         token = i.getStringExtra("token");
         name = i.getStringExtra("name");
         userName.setText(name);
-
-
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         FirebaseDatabase.getInstance().getReference().child("users").child(receiverId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -304,7 +315,8 @@ public class StartMessaging extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child(key).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                sendNotification(name,message,token);
+//                                sendNotification(name,message,token);
+                                sendNotification(receiverId, c.getFirstName(),message,token);
                                 adapter.notifyDataSetChanged();
                             }
                         });
@@ -465,6 +477,8 @@ public class StartMessaging extends AppCompatActivity {
     }
 
 
+
+
     private boolean checkPermission(){
         int first = ActivityCompat.checkSelfPermission(StartMessaging.this, Manifest.permission.RECORD_AUDIO);
         int scond  = ActivityCompat.checkSelfPermission(StartMessaging.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -553,87 +567,114 @@ public class StartMessaging extends AppCompatActivity {
     }
 
 
-    private void sendMessagenotification(String message) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("to","/topics/"+receiverId);
-            JSONObject jsonObject1 = new JSONObject();
-            jsonObject1.put("title", "Message from "+senderName);
-            jsonObject1.put("body",message);
-            JSONObject jsonObject2 = new JSONObject();
-            jsonObject2.put("userId",FirebaseAuth.getInstance().getUid());
-            jsonObject2.put("recId",receiverId);
-            jsonObject2.put("type","sms");
-            jsonObject.put("notification",jsonObject1);
-            jsonObject.put("data",jsonObject2);
+//    private void sendMessagenotification(String message) {
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("to","/topics/"+receiverId);
+//            JSONObject jsonObject1 = new JSONObject();
+//            jsonObject1.put("title", "Message from "+senderName);
+//            jsonObject1.put("body",message);
+//            JSONObject jsonObject2 = new JSONObject();
+//            jsonObject2.put("userId",FirebaseAuth.getInstance().getUid());
+//            jsonObject2.put("recId",receiverId);
+//            jsonObject2.put("type","sms");
+//            jsonObject.put("notification",jsonObject1);
+//            jsonObject.put("data",jsonObject2);
+//
+//            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,URL, jsonObject, new Response.Listener<JSONObject>() {
+//                @Override
+//                public void onResponse(JSONObject response) {
+//                }
+//            }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                }
+//            }){
+//                @Override
+//                public Map<String, String> getHeaders() throws AuthFailureError {
+//                    Map<String,String>map = new HashMap<>();
+//                    map.put("content-type","application/json");
+//                    map.put("authorization","key=AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E");
+//                    return map;
+//                }
+//            };
+//            requestQueue.add(request);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,URL, jsonObject, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String>map = new HashMap<>();
-                    map.put("content-type","application/json");
-                    map.put("authorization","key=AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E");
-                    return map;
-                }
-            };
-            requestQueue.add(request);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    void sendNotification(String name, String message,String token){
-        try {
-            RequestQueue queue = Volley.newRequestQueue(this);
-
-            String url = "https://fcm.googleapis.com/fcm/send";
-
-            JSONObject data = new JSONObject();
-            data.put("title", name);
-            data.put("body", message);
-            JSONObject notificationData = new JSONObject();
-            notificationData.put("notification", data);
-            notificationData.put("to","/topics/"+token);
-
-            JsonObjectRequest request = new JsonObjectRequest(url, notificationData
-                    , new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    // Toast.makeText(ChatActivity.this, "success", Toast.LENGTH_SHORT).show();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(StartMessaging.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> map = new HashMap<>();
-                    String key = "Key=AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E";
-                    map.put("Content-Type", "application/json");
-                    map.put("Authorization", key);
-
-                    return map;
-                }
-            };
-
-            queue.add(request);
+//    void sendNotification(String name, String message,String token){
+//        try {
+//            RequestQueue queue = Volley.newRequestQueue(this);
+//
+//            String url = "https://fcm.googleapis.com/fcm/send";
+//
+//            JSONObject data = new JSONObject();
+//            data.put("title", name);
+//            data.put("body", message);
+//            JSONObject notificationData = new JSONObject();
+//            notificationData.put("notification", data);
+//            notificationData.put("to","/topics/"+token);
+//
+//            JsonObjectRequest request = new JsonObjectRequest(url, notificationData
+//                    , new Response.Listener<JSONObject>() {
+//                @Override
+//                public void onResponse(JSONObject response) {
+//                    // Toast.makeText(ChatActivity.this, "success", Toast.LENGTH_SHORT).show();
+//                }
+//            }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    Toast.makeText(StartMessaging.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            }) {
+//                @Override
+//                public Map<String, String> getHeaders() throws AuthFailureError {
+//                    HashMap<String, String> map = new HashMap<>();
+//                    String key = "Key=AAAAOup2zPI:APA91bGH1SJluZyFSvuMKU1d1qZCQf-Kw03GMoUMnJsf08D79QhA9Qbe13TwPJKSXbPdhXjPVBCaYnHUFlP-J8_FFCfWl13tokOh-9aqZXsTnsA-lIQznmzfRVe5Ki40LYYbNMjLzr9E";
+//                    map.put("Content-Type", "application/json");
+//                    map.put("Authorization", key);
+//
+//                    return map;
+//                }
+//            };
+//
+//            queue.add(request);
+//
+//
+//        } catch (Exception ex) {
+//
+//        }
+//
+//
+//    }
+private void sendNotification(String receiver, String username, String message, String token) {
 
 
-        } catch (Exception ex) {
+                Data data = new Data(fuser.getUid(), R.mipmap.ic_launcher, username+": "+message, "New Message",
+                        receiver);
 
-        }
+                Sender sender = new Sender(data, token);
+
+                apiService.sendNotification(sender)
+                        .enqueue(new Callback<MyResponse>() {
+                            @Override
+                            public void onResponse(Call<MyResponse> call, retrofit2.Response<MyResponse> response) {
+                                if (response.code() == 200){
+                                    if (response.body().success != 1){
+                                        Toast.makeText(StartMessaging.this, "Notification Failed!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                            }
+                        });
 
 
-    }
 
+}
 }
